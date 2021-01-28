@@ -1,0 +1,101 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
+/*   Updated: 2021/01/27 15:30:50 by spark            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_H
+# define CUB3D_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct	s_img
+{
+	void	*img_ptr;
+	int		*data;
+	int		size_l;
+	int		bpp;
+	int		endian;
+	int		img_width;
+	int		img_height;
+}				t_img;
+
+typedef struct	s_set
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	int		up;
+	int		left;
+	int		right;
+	int		down;
+	int		map;
+	t_img	img;
+}				t_set;
+
+#define BOX_SIZE 40
+#define MAP_BOX_SIZE 10
+
+#define COLS 24
+#define ROWS 24
+// #define WIDTH (BOX_SIZE * COLS)
+// #define HEIGHT (BOX_SIZE * ROWS)
+#define BOX_WIDTH (MAP_BOX_SIZE * COLS)
+#define BOX_HEIGHT (MAP_BOX_SIZE * ROWS)
+
+#define ESC_KEY 53
+#define UP_KEY 13
+#define DOWN_KEY 1
+#define LEFT_KEY 0
+#define RIGHT_KEY 2
+#define SPACE_KEY 49
+#define M_KEY 46
+#define C_KEY 8
+#define E_KEY 14
+#define Q_KEY 12
+#define F_KEY 3
+#define R_KEY 15
+#define KeyPress    2
+#define KeyRelease  3
+
+#define START_POSITION_X (WIDTH - (BOX_SIZE * 2))
+#define START_POSITION_Y (HEIGHT - (BOX_SIZE * 2))
+
+#define CLR_LBL 0xadd8e6
+#define CLR_CRD 0xdc143c
+#define CLR_ORG 0xff8c00
+#define CLR_DGR 0x8fbc8f
+#define CLR_KAK 0xbdb76b
+
+
+// int		map[ROWS][COLS] = {
+// 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,},
+// 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,},
+// 	};
+
+#endif
