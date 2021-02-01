@@ -6,28 +6,11 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/01/28 12:45:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/01/28 13:22:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h" 
-
-t_point point;
-t_set	set;
-t_sprite spt;
-
-int		spriteOrder[numSprite];
-int		spriteDistance[numSprite];
-
-//based on referrence
-void 	my_mlx_pixel_put(t_img *data, int x, int y, int color)
-{
-  int *dst;
-
- // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
-  dst = data->data + (y * screenWidth + x );
-  *(unsigned int*)dst = color;
-}
 
 void	draw_square(t_img set, int start, int color)
 {
@@ -42,7 +25,7 @@ void	draw_square(t_img set, int start, int color)
 			set.data[start + i] = color;
 			i++;
 		}
-		start += screenWidth;
+		start += SCREEN_WIDTH;
 		j++;
 	}
 }
@@ -52,7 +35,7 @@ void    arrange_Sprite(void)
     int     tmp;
     double  dis_tmp;
     double  max = 0;
-    for(int i = 0; i < numSprite - 1; i++)
+    for(int i = 0; i < SPRITE_NUM - 1; i++)
     {
         max = spriteDistance[i];
         for(int j = i + 1; j < numSprite; j++)
@@ -488,17 +471,17 @@ void	carl_ray(t_set *set, t_point *p)
 	}
 }
 
-void    sprite_cast(t_point *p)
+void    sprite_cast(t_set *set)
 {
-    for(int i = 0; i < numSprite; i++)
+    for(int i = 0; i < SPRITE_NUM; i++)
     {
-        spriteOrder[i] = i;
-        spriteDistance[i] = ((p->pos_X - spr[i].x) *  (p->pos_X - spr[i].x) + (p->pos_Y - spr[i].y) * (p->pos_Y - spr[i].y));
+        set->spriteOrder[i] = i;
+        set->spriteDistance[i] = ((set->p.pos_X - spr[i].x) *  (set->p.pos_X - spr[i].x) + (set->p.pos_Y - spr[i].y) * (set->p.pos_Y - spr[i].y));
     }
     // 거리가 먼 순으로 sprite를 정렬한다.
     arrange_Sprite();
     // 정렬된 sprite로 screen에 그리기
-    for(int i = 0; i < numSprite; i++)
+    for(int i = 0; i < SPRITE_NUM; i++)
     {
         // 가장 거리가 먼 sprite부터 시작
         double  spriteX = spr[spriteOrder[i]].x - p->pos_X;
@@ -556,117 +539,87 @@ void	clean_screen(t_set *set)
 	int		i;
 
 	i = 0;
-	while (i <= screenHeight * screenWidth)
+	while (i <= SCREEN_HEIGHT * SCREEN_WIDTH)
 		set->img.data[i++] = 0;
 }
 
 int		main_loop(t_set *set)
 {
 	clean_screen(set);
-	carl_ray(set, &point);
-	sprite_cast(&point);
+	carl_ray(set);
+	sprite_cast(set);
 
 	if (set->map == 1)
 		parse_draw_map(set->img, worldMap, 0xcc82cc);
-	//parse_draw_line(set->img, worldMap, 0xffe6c1);
 	key_action(set);
 
 	mlx_put_image_to_window(set->mlx_ptr, set->win_ptr, set->img.img_ptr, 0, 0);
 	return (0);
 }
 
-void	draw_texture()
+void	load_file(t_set *set, int num, char *path)
 {
-	int i;
-	int j;
-	
-	i = 0;
-	j = 0;
-	
-	while (i < texWidth)
-	{
-		j = 0;
-		while (j < texHeight)
-		{
-			int xorcolor = (i * 256 / texWidth) ^ (j * 256 / texHeight);
-			int ycolor = j * 256 / texHeight;
-			int xycolor = j * 128 / texHeight + i * 128 / texWidth;
-			point.texture[0][texWidth * j + i] = 65536 * 254 * (i != j && i != texWidth - j); //flat red texture with black cross
-			point.texture[1][texWidth * j + i] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
-			point.texture[2][texWidth * j + i] = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
-			point.texture[3][texWidth * j + i] = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
-			point.texture[4][texWidth * j + i] = 256 * xorcolor; //xor green
-			point.texture[5][texWidth * j + i] = 65536 * 192 * (i % 16 && j % 16); //red bricks
-			point.texture[6][texWidth * j + i] = 65536 * ycolor; //red gradient
-			point.texture[7][texWidth * j + i] = 128 + 256 * 128 + 65536 * 128; //flat grey texture
-			j++;
-		}
-		i++;
-	}
-}
-
-void	load_file(t_point *point, int num, char *path)
-{
-	t_img img;
+	t_img img_tmp;
 	int x;
 	int y;
 	
 
-	img.img_ptr = mlx_xpm_file_to_image(set.mlx_ptr, path, &img.img_width, &img.img_height);
-	img.data = (int *)mlx_get_data_addr(img.img_ptr, &img.bpp, &img.size_l, &img.endian);
+	img_tmp.img_ptr = mlx_xpm_file_to_image(set->mlx_ptr, path, &img_tmp.img_width, &img_tmp.img_height);
+	img_tmp.data = (int *)mlx_get_data_addr(img_tmp.img_ptr, &img_tmp.bpp, &img_tmp.size_l, &img_tmp.endian);
 
 	x = 0;
 	y = 0;
 	
-	while (y < img.img_height)
+	while (y < img_tmp.img_height)
 	{
 		x = 0;
-		while (x < img.img_width)
+		while (x < img_tmp.img_width)
 		{
-			point->texture[num][img.img_width * y + x] = img.data[img.img_width * y + x];
+			set->p.texture[num][img_tmp.img_width * y + x] = img_tmp.data[img_tmp.img_width * y + x];
 			x++;
 		}
 		y++;
 	}
-	mlx_destroy_image(set.mlx_ptr, img.img_ptr);
+	mlx_destroy_image(set->mlx_ptr, img_tmp.img_ptr);
 }
 
-void	load_tex(void)
+void	load_tex(t_set *set)
 {
-	load_file(&point, 0, "img/eagle.xpm");
-	load_file(&point, 1, "img/redbrick.xpm");
-	load_file(&point, 2, "img/purplestone.xpm");
-	load_file(&point, 3, "img/greystone.xpm");
-	load_file(&point, 4, "img/bluestone.xpm");
-	load_file(&point, 5, "img/mossy.xpm");
-	load_file(&point, 6, "img/wood.xpm");
-	load_file(&point, 7, "img/colorstone.xpm");
+	load_file(set, 0, "img/eagle.xpm");
+	load_file(set, 1, "img/redbrick.xpm");
+	load_file(set, 2, "img/purplestone.xpm");
+	load_file(set, 3, "img/greystone.xpm");
+	load_file(set, 4, "img/bluestone.xpm");
+	load_file(set, 5, "img/mossy.xpm");
+	load_file(set, 6, "img/wood.xpm");
+	load_file(set, 7, "img/colorstone.xpm");
 	
 	// sprite texture
-	load_file(&point, 8, "img/barrel.xpm");
-	load_file(&point, 9, "../image02_resize.xpm");
-	load_file(&point, 10, "img/greenlight.xpm");
+	load_file(set, 8, "img/barrel.xpm");
+	load_file(set, 9, "../image02_resize.xpm");
+	load_file(set, 10, "img/greenlight.xpm");
 }
 
 int		main(int ac, char *av[])
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_set	set;
 
-	point.pos_X = 22.0;
-	point.pos_Y = 11.5;
-	point.dir_X = -1;
-	point.dir_Y = 0;
-	point.plane_X = 0;
-	point.plane_Y = 0.66;
-	point.rotspeed = 0.02;
-	point.movespeed = 0.1;
+	set.p.pos_X = 22.0;
+	set.p.pos_Y = 11.5;
+	set.p.dir_X = -1;
+	set.p.dir_Y = 0;
+	set.p.plane_X = 0;
+	set.p.plane_Y = 0.66;
+	set.p.rotspeed = 0.02;
+	set.p.movespeed = 0.1;
 
 	set.up = 0;
 	set.left = 0;
 	set.right = 0;
 	set.down = 0;
-	point.hit = 0;
+	set.p.hit = 0;
 
 	set.mlx_ptr = mlx_init();
 
@@ -674,8 +627,7 @@ int		main(int ac, char *av[])
 	j = 0;
 	
 	make_window(&set);
-	load_tex();
-	// draw_texture();
+	load_tex(&set);
 	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);
 	mlx_hook(set.win_ptr, KeyRelease, 0, key_release, &set);
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
