@@ -1,10 +1,11 @@
 NAME = cub3D
-GNL = gnl.a
+LIBFT = libft.a
 
-GNL_DIR = ./gnl
+LIBFT_DIR = ./libft
 IMG_DIR = ./img
 MLX_DIR = ./mlx
 INC_DIR = ./includes
+SRC_DIR = ./sources
 
 CC = gcc
 GCC_FLAG = -Wall -Wextra -Werror
@@ -12,40 +13,42 @@ RM = rm
 RMFLAGS = -f
 AR = ar crs
 
+SRC =  $(addprefix $(SRC_DIR)/, cub3D.c)
+
 MLX_FLAG = -framework OpenGL -framework Appkit
 
-OBJS = ./*.o
-GNL_SRC_FILES = gnl/get_next_line_bonus \
-			gnl/get_next_line_bonus \
+GREEN = \033[32m
+PURPLE = \033[35m
+MINT = \033[36m
+RED = \033[31m
+BLINK = \033[5m
+BOLD = \033[1m
+BACKGRAY = \033[100m
+NO_COLOR = \e[0m
 
-# GREEN = \033[32m
-# PURPLE = \033[35m
-# MINT = \033[36m
-# RED = \033[31m
-# BLINK = \033[5m
-# BOLD = \033[1m
-# BACKGRAY = \033[100m
-# NO_COLOR = \e[0m
+all : $(NAME)
 
-# all : $(NAME)
+$(NAME) : 
+	@echo "${PURPLE}[${RED} Makefile${PURPLE} :starting.. ]"
+	@(make -C $(LIBFT_DIR))
+	@echo "${PURPLE}->making libft.a , and add src.o.."
+	@echo "${PURPLE}->resting.. drinking some coffee..."
+	@(cp $(LIBFT_DIR)/$(LIBFT) .)
+	$(CC) $(GCC_FLAG) -l ft -I $(INC_DIR) -I $(LIBFT_DIR)/$(INC_DIR) -L $(MLX_DIR) -lmlx $(MLX_FLAG) $(SRC) -o cub3D
+	@make clean
+	@echo "${MINT}making Done."
 
-# $(NAME) : $(OBJS) 
-# 	@echo "${PURPLE}[${RED} Makefile${PURPLE} :starting.. ]"
-# 	@(make -C $(LIBFT_DIR))
-# 	@echo "${PURPLE}->making libft.a , and add src.o.."
-# 	@echo "${PURPLE}->resting.. drinking some coffee..."
-# 	@(cp $(LIBFT_DIR)/$(LIBFT) .)
-# 	@(mv $(LIBFT) $(NAME))
-# 	@($(AR) $(NAME) $(OBJS))
-# 	@make clean
-# 	@echo "${MINT}making Done."
+clean :
+	@echo "${PURPLE}[${RED} cleaning ${PURPLE} : erase objects file.]"
+	@(make -C $(LIBFT_DIR) clean)
+	@echo "${PURPLE}->kill every objects, include libft objects.."
+	@echo "${PURPLE}->clearing dead bodys..."
+	@echo "${MINT}cleaning Done."
 
-# $(OBJS) : 
-# 	@$(CC) $(CFLAGS) -g -I $(LIBFT_INC_DIR) -I $(INC_DIR) -c $(SRCS)
-
-# all : $(NAME)
-
-# run :
-# 	$(CC) 2d_map.c -L $(MLX_DIR) -l mlx $(MLX_FLAG) 
-# 	./a.out
-# 	rm -rf ./a.out
+fclean : clean
+	@echo "${PURPLE}[${RED} fcleaning ${PURPLE} : erase objects & lib.a file.]"
+	@echo "${PURPLE}->kill all lib.a files... bye bye!"
+	@($(RM) $(RMFLAGS) $(LIBFT_DIR)/$(LIBFT))
+	@($(RM) $(RMFLAGS) $(NAME))
+	@($(RM) $(RMFLAGS) $(LIBFT))
+	@echo "${MINT}fcleaning Done."

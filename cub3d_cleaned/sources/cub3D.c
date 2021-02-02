@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   2d_map.c                                           :+:      :+:    :+:   */
+/*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/01/28 13:22:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/02 18:15:27 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h" 
+#include "cub3d.h" 
 
 void	draw_square(t_img set, int start, int color)
 {
@@ -30,29 +30,39 @@ void	draw_square(t_img set, int start, int color)
 	}
 }
 
-void    arrange_Sprite(void)
+
+void    arrange_Sprite(t_set *s)
 {
     int     tmp;
     double  dis_tmp;
     double  max = 0;
     for(int i = 0; i < SPRITE_NUM - 1; i++)
     {
-        max = spriteDistance[i];
-        for(int j = i + 1; j < numSprite; j++)
+        max = s->spr.spriteDistance[i];
+        for(int j = i + 1; j < SPRITE_NUM; j++)
         {
-            if (max <= spriteDistance[j])
+            if (max <= s->spr.spriteDistance[j])
             {
-                max = spriteDistance[j];
-                tmp = spriteOrder[i];
-                spriteOrder[i] = spriteOrder[j];
-                spriteOrder[j] = tmp;
-                dis_tmp = spriteDistance[i];
-                spriteDistance[i] = spriteDistance[j];
-                spriteDistance[j] = dis_tmp;
+                max = s->spr.spriteDistance[j];
+                tmp = s->spr.spriteOrder[i];
+                s->spr.spriteOrder[i] = s->spr.spriteOrder[j];
+                s->spr.spriteOrder[j] = tmp;
+                dis_tmp = s->spr.spriteDistance[i];
+                s->spr.spriteDistance[i] = s->spr.spriteDistance[j];
+                s->spr.spriteDistance[j] = dis_tmp;
             }
         }
     }
 }
+
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 						&&&&&&&& move 변수들 구조체에 맞게 변경중 &&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+
 
 int		move(void)
 {
@@ -231,195 +241,185 @@ int		key_release(int keycode, t_set *set)
   return (0);
 }
 
-void	key_action(t_set *set)
+void	key_action(t_set *s)
 {
 	double	olddir_x;
 	double	oldplane_x;
 	
-	if (set->up == 1)
+	if (s->up == 1)
 	{
-		if (!worldMap[(int)(point.pos_X + point.dir_X * point.movespeed)][(int)point.pos_Y])
-			point.pos_X += point.dir_X * point.movespeed;
-		if (!worldMap[(int)point.pos_X][(int)(point.pos_Y + point.dir_Y * point.movespeed)])
-			point.pos_Y += point.dir_Y * point.movespeed;
+		if (!worldMap[(int)(s->p.pos_X + s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
+			s->p.pos_X += s->p.dir_X * s->p.movespeed;
+		if (!worldMap[(int)s->p.pos_X][(int)(s->p.pos_Y + s->p.dir_Y * s->p.movespeed)])
+			s->p.pos_Y += s->p.dir_Y * s->p.movespeed;
 	}
-	if (set->down == 1)
+	if (s->down == 1)
 	{
-		if (!worldMap[(int)(point.pos_X - point.dir_X * point.movespeed)][(int)point.pos_Y])
-			point.pos_X -= point.dir_X * point.movespeed;
-		if (!worldMap[(int)point.pos_X][(int)(point.pos_Y - point.dir_Y * point.movespeed)])
-			point.pos_Y -= point.dir_Y * point.movespeed;
+		if (!worldMap[(int)(s->p.pos_X - s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
+			s->p.pos_X -= s->p.dir_X * s->p.movespeed;
+		if (!worldMap[(int)s->p.pos_X][(int)(s->p.pos_Y - s->p.dir_Y * s->p.movespeed)])
+			s->p.pos_Y -= s->p.dir_Y * s->p.movespeed;
 	}
-	if (set->right == 1)
+	if (s->right == 1)
 	{
-		olddir_x = point.dir_X;
-		point.dir_X = point.dir_X * cos(-point.rotspeed) - point.dir_Y * sin(-point.rotspeed);
-		point.dir_Y = olddir_x * sin(-point.rotspeed) + point.dir_Y * cos(-point.rotspeed);
-		oldplane_x = point.plane_X;
-		point.plane_X = point.plane_X * cos(-point.rotspeed) - point.plane_Y * sin(-point.rotspeed);
-		point.plane_Y = oldplane_x * sin(-point.rotspeed) + point.plane_Y * cos(-point.rotspeed);
+		olddir_x = s->p.dir_X;
+		s->p.dir_X = s->p.dir_X * cos(-s->p.rotspeed) - s->p.dir_Y * sin(-s->p.rotspeed);
+		s->p.dir_Y = olddir_x * sin(-s->p.rotspeed) + s->p.dir_Y * cos(-s->p.rotspeed);
+		oldplane_x = s->p.plane_X;
+		s->p.plane_X = s->p.plane_X * cos(-s->p.rotspeed) - s->p.plane_Y * sin(-s->p.rotspeed);
+		s->p.plane_Y = oldplane_x * sin(-s->p.rotspeed) + s->p.plane_Y * cos(-s->p.rotspeed);
 	}
-	if (set->left == 1)
+	if (s->left == 1)
 	{
-		olddir_x = point.dir_X;
-		point.dir_X = point.dir_X * cos(point.rotspeed) - point.dir_Y * sin(point.rotspeed);
-		point.dir_Y = olddir_x * sin(point.rotspeed) + point.dir_Y * cos(point.rotspeed);
-		oldplane_x = point.plane_X;
-		point.plane_X = point.plane_X * cos(point.rotspeed) - point.plane_Y * sin(point.rotspeed);
-		point.plane_Y = oldplane_x * sin(point.rotspeed) + point.plane_Y * cos(point.rotspeed);
+		olddir_x = s->p.dir_X;
+		s->p.dir_X = s->p.dir_X * cos(s->p.rotspeed) - s->p.dir_Y * sin(s->p.rotspeed);
+		s->p.dir_Y = olddir_x * sin(s->p.rotspeed) + s->p.dir_Y * cos(s->p.rotspeed);
+		oldplane_x = s->p.plane_X;
+		s->p.plane_X = s->p.plane_X * cos(s->p.rotspeed) - s->p.plane_Y * sin(s->p.rotspeed);
+		s->p.plane_Y = oldplane_x * sin(s->p.rotspeed) + s->p.plane_Y * cos(s->p.rotspeed);
 	}
 }
 
 void	make_window(t_set *set)
 {
-	set->win_ptr = mlx_new_window(set->mlx_ptr, screenWidth, screenHeight, "Raycaster Practice");
-	set->img.img_ptr = mlx_new_image(set->mlx_ptr, screenWidth, screenHeight);
+	set->win_ptr = mlx_new_window(set->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "Raycaster Practice");
+	set->img.img_ptr = mlx_new_image(set->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	set->img.data = (int*)mlx_get_data_addr(set->img.img_ptr, &set->img.bpp, &set->img.size_l, &set->img.endian);
 }
 
-void	carl_ray(t_set *set, t_point *p)
-{
-	int x;
-	double w;
+void	carl_ray(t_set *s)
+{	
+	int		x;
+	int		y;
 	int		i;
-	int		texY;
-	int		texX;
-	double	wallX;
-	int		texture_kind;
-	int		line_screenHeight;
-	int		draw_start;
-	int		draw_end;
-	int		color;
+	double	w;
 	
+	w = SCREEN_WIDTH;
 	x = 0;
+	y = 0;
 	i = 0;
-	w = screenWidth;
+	
 
-	for(int y = 0; y < screenHeight; y++)
+	while(y < SCREEN_HEIGHT)
 	{
 		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
-		float rayDirX0 = p->dir_X - p->plane_X;
-		float rayDirY0 = p->dir_Y - p->plane_Y;
-		float rayDirX1 = p->dir_X + p->plane_X;
-		float rayDirY1 = p->dir_Y + p->plane_Y;
+		s->flr.rayDirX0 = s->p.dir_X - s->p.plane_X;
+		s->flr.rayDirY0 = s->p.dir_Y - s->p.plane_Y;
+		s->flr.rayDirX1 = s->p.dir_X + s->p.plane_X;
+		s->flr.rayDirY1 = s->p.dir_Y + s->p.plane_Y;
 
 		// Current y position compared to the center of the screen (the horizon)
-		int center = y - screenHeight / 2;
+		s->flr.center = y - SCREEN_HEIGHT / 2;
 
 		// Vertical position of the camera.
-		float posZ = 0.5 * screenHeight;
+		s->flr.posZ = 0.5 * SCREEN_HEIGHT;
 
 		// Horizontal distance from the camera to the floor for the current row.
 		// 0.5 is the z position exactly in the middle between floor and ceiling.
-		float rowDistance = posZ / center;
+		s->flr.rowDistance = s->flr.posZ / s->flr.center;
 
 		// calculate the real world step vector we have to add for each x (parallel to camera plane)
 		// adding step by step avoids multiplications with a weight in the inner loop
-		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
-		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenWidth;
+		s->flr.floorStepX = s->flr.rowDistance * (s->flr.rayDirX1 - s->flr.rayDirX0) / SCREEN_WIDTH;
+		s->flr.floorStepY = s->flr.rowDistance * (s->flr.rayDirY1 - s->flr.rayDirY0) / SCREEN_WIDTH;
 
 		// real world coordinates of the leftmost column. This will be updated as we step to the right.
-		float floorX = p->pos_X + rowDistance * rayDirX0;
-		float floorY = p->pos_Y + rowDistance * rayDirY0;
+		s->flr.floorX = s->p.pos_X + s->flr.rowDistance * s->flr.rayDirX0;
+		s->flr.floorY = s->p.pos_Y + s->flr.rowDistance * s->flr.rayDirY0;
 
-		for(int k = 0; k < screenWidth; ++k)
+		while(i < SCREEN_WIDTH)
 		{
-			// the cell coord is simply got from the integer parts of floorX and floorY
-			int cellX = (int)(floorX);
-			int cellY = (int)(floorY);
-
 			// get the texture coordinate from the fractional part
-			int tx = (int)(texWidth * (floorX - cellX)) & (texWidth -1);
-			int ty = (int)(texHeight * (floorY - cellY)) & (texHeight -1);
+			s->flr.tx = (int)(TEX_WIDTH * (s->flr.floorX - (int)(s->flr.floorX))) & (TEX_WIDTH -1);
+			s->flr.ty = (int)(TEX_HEIGHT * (s->flr.floorY - (int)(s->flr.floorY))) & (TEX_HEIGHT -1);
 
-			floorX += floorStepX;
-			floorY += floorStepY;
+			s->flr.floorX += s->flr.floorStepX;
+			s->flr.floorY += s->flr.floorStepY;
 
 			// choose texture and draw the pixel
-			int floorTexture = 3;
-			int ceilingTexture = 5;
-
-			int color;
-
+			s->tex.floorTexture = 3;
+			s->tex.ceilingTexture = 5;
 			// floor
-			color = p->texture[floorTexture][texWidth * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
+			s->tex.color = s->p.texture[s->tex.floorTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
+			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
 
-			set->img.data[y * screenWidth + k] = color;
+			s->img.data[y * SCREEN_WIDTH + i] = s->tex.color;
 
-			color = p->texture[ceilingTexture][texWidth * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
+			s->tex.color = s->p.texture[s->tex.ceilingTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
+			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
 
-			set->img.data[(screenHeight - y - 1) * screenWidth + k] = color;
+			s->img.data[(SCREEN_HEIGHT - y - 1) * SCREEN_WIDTH + i] = s->tex.color;
+			i++;
 		}
+		i = 0;
 	}
 
 	
 	while (x < (int)w)
 	{
-		p->hit = 0;
+		s->p.hit = 0;
 		
-		p->camera_X = 2 * x / w - 1;
-		p->raydir_X = p->dir_X + p->plane_X * p->camera_X;
-		p->raydir_Y = p->dir_Y + p->plane_Y * p->camera_X;
+		s->p.camera_X = 2 * x / w - 1;
+		s->p.raydir_X = s->p.dir_X + s->p.plane_X * s->p.camera_X;
+		s->p.raydir_Y = s->p.dir_Y + s->p.plane_Y * s->p.camera_X;
 
-		p->position_X = (int)p->pos_X;
-		p->position_Y = (int)p->pos_Y;
+		s->p.position_X = (int)s->p.pos_X;
+		s->p.position_Y = (int)s->p.pos_Y;
 		
-		p->deltadist_X = fabs(1 / p->raydir_X);
-		p->deltadist_Y = fabs(1 / p->raydir_Y);
+		s->p.deltadist_X = fabs(1 / s->p.raydir_X);
+		s->p.deltadist_Y = fabs(1 / s->p.raydir_Y);
 
-		if (p->raydir_X < 0)
+		if (s->p.raydir_X < 0)
 		{
-			p->step_X = -1;
-			p->side_X = (p->pos_X - p->position_X) * p->deltadist_X;
+			s->p.step_X = -1;
+			s->p.side_X = (s->p.pos_X - s->p.position_X) * s->p.deltadist_X;
 		}
 		else
 		{
-			p->step_X = 1;
-			p->side_X = (p->position_X + 1.0 - p->pos_X) * p->deltadist_X;
+			s->p.step_X = 1;
+			s->p.side_X = (s->p.position_X + 1.0 - s->p.pos_X) * s->p.deltadist_X;
 		}
-		if (p->raydir_Y < 0)
+		if (s->p.raydir_Y < 0)
 		{
-			p->step_Y = -1;
-			p->side_Y = (p->pos_Y - p->position_Y) * p->deltadist_Y;
+			s->p.step_Y = -1;
+			s->p.side_Y = (s->p.pos_Y - s->p.position_Y) * s->p.deltadist_Y;
 		}
 		else
 		{
-			p->step_Y = 1;
-			p->side_Y = (p->position_Y + 1.0 - p->pos_Y) * p->deltadist_Y;
+			s->p.step_Y = 1;
+			s->p.side_Y = (s->p.position_Y + 1.0 - s->p.pos_Y) * s->p.deltadist_Y;
 		}
 		
-		while (p->hit == 0)
+		while (s->p.hit == 0)
 		{
-			if (p->side_X < p->side_Y)
+			if (s->p.side_X < s->p.side_Y)
 			{
-				p->side_X += p->deltadist_X;
-				p->position_X += p->step_X;
-				p->hit_side = 0;
+				s->p.side_X += s->p.deltadist_X;
+				s->p.position_X += s->p.step_X;
+				s->p.hit_side = 0;
 			}
 			else
 			{
-				p->side_Y += p->deltadist_Y;
-				p->position_Y += p->step_Y;
-				p->hit_side = 1;
+				s->p.side_Y += s->p.deltadist_Y;
+				s->p.position_Y += s->p.step_Y;
+				s->p.hit_side = 1;
 			}
-			if (worldMap[p->position_X][p->position_Y] > 0)
-				p->hit = 1;
+			if (worldMap[s->p.position_X][s->p.position_Y] > 0)
+				s->p.hit = 1;
 		}
 
-		if (p->hit_side == 0)
-			p->perpwalldist = (p->position_X - p->pos_X + (1 - p->step_X) / 2) / p->raydir_X;
+		if (s->p.hit_side == 0)
+			s->p.perpwalldist = (s->p.position_X - s->p.pos_X + (1 - s->p.step_X) / 2) / s->p.raydir_X;
 		else
-			p->perpwalldist = (p->position_Y - p->pos_Y + (1 - p->step_Y) / 2) / p->raydir_Y;
+			s->p.perpwalldist = (s->p.position_Y - s->p.pos_Y + (1 - s->p.step_Y) / 2) / s->p.raydir_Y;
 		
-		line_screenHeight = (int)(screenHeight / p->perpwalldist);
-		draw_start = -line_screenHeight / 2 + screenHeight / 2;
-		if (draw_start < 0)
-			draw_start = 0;
-		draw_end = line_screenHeight / 2 + screenHeight / 2;
-		if (draw_end >= screenHeight)
-			draw_end = screenHeight - 1;
+		s->cr.line_screenHeight = (int)(SCREEN_HEIGHT / s->p.perpwalldist);
+		s->cr.draw_start = -s->cr.line_screenHeight / 2 + SCREEN_HEIGHT / 2;
+		if (s->cr.draw_start < 0)
+			s->cr.draw_start = 0;
+		s->cr.draw_end = s->cr.line_screenHeight / 2 + SCREEN_HEIGHT / 2;
+		if (s->cr.draw_end >= SCREEN_HEIGHT)
+			s->cr.draw_end = SCREEN_HEIGHT - 1;
 		
 		// if (worldMap[p->position_X][p->position_Y] == 1)
 		// 	color = CLR_LBL;
@@ -435,102 +435,119 @@ void	carl_ray(t_set *set, t_point *p)
 		// 	color = color / 2;
 		// draw_vertical(x, draw_start, draw_end, color);
 
-		texture_kind = worldMap[p->position_X][p->position_Y] - 1;
+		s->tex.texture_kind = worldMap[s->p.position_X][s->p.position_Y] - 1;
 
-		point.step = 1.0 * texHeight / line_screenHeight; 
-		point.texture_pos = (draw_start - screenHeight / 2 + line_screenHeight / 2) * point.step;
+		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight; 
+		s->p.texture_pos = (s->cr.draw_start - SCREEN_HEIGHT / 2 + s->cr.line_screenHeight / 2) * s->p.step;
 
-		if (p->hit_side == 0)
-			wallX = p->pos_Y + p->perpwalldist * p->raydir_Y;
+		if (s->p.hit_side == 0)
+			s->cr.wallX = s->p.pos_Y + s->p.perpwalldist * s->p.raydir_Y;
 		else
-			wallX = p->pos_X + p->perpwalldist * p->raydir_X;
-		wallX -= floor(wallX); 
+			s->cr.wallX = s->p.pos_X + s->p.perpwalldist * s->p.raydir_X;
+		s->cr.wallX -= floor(s->cr.wallX); 
 			
-		texX = (int)(wallX * (double)texWidth);
-		if (p->hit_side == 0 && p->raydir_X > 0)
-			texX = texWidth - texX - 1;
-		if (p->hit_side == 1 && p->raydir_X < 0)
-			texX = texWidth - texX - 1;
+		s->tex.texX = (int)(s->cr.wallX * (double)TEX_WIDTH);
+		if (s->p.hit_side == 0 && s->p.raydir_X > 0)
+			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
+		if (s->p.hit_side == 1 && s->p.raydir_X < 0)
+			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
 		
-		i = draw_start;
+		i = s->cr.draw_start;
 		
-		while (i < draw_end)
+		while (i < s->cr.draw_end)
 		{
-			texY = (int)point.texture_pos & (texHeight - 1);
-			point.texture_pos += point.step;
-			color = point.texture[texture_kind][texHeight * texY + texX];
-			if (p->hit_side == 1)
-				color = (color >> 1) & 8355711;
+			s->tex.texY = (int)s->p.texture_pos & (TEX_HEIGHT - 1);
+			s->p.texture_pos += s->p.step;
+			s->tex.color = s->p.texture[s->tex.texture_kind][TEX_HEIGHT * s->tex.texY + s->tex.texX];
+			if (s->p.hit_side == 1)
+				s->tex.color = (s->tex.color >> 1) & 8355711;
 			// color /= 2;
-			set->img.data[i * screenWidth + x] = color;
+			s->img.data[i * SCREEN_WIDTH + x] = s->tex.color;
 			i++;
 		}
 		// sprite를 위한 것
-		p->zBuffer[x] = p->perpwalldist;
+		s->p.zBuffer[x] = s->p.perpwalldist;
 		x++;
 	}
 }
 
-void    sprite_cast(t_set *set)
+void    sprite_cast(t_set *s)
 {
-    for(int i = 0; i < SPRITE_NUM; i++)
+	int i;
+	int x;
+	int y;
+
+	i = 0;
+	x = 0;
+	y = 0;
+    while(i < SPRITE_NUM)
     {
-        set->spriteOrder[i] = i;
-        set->spriteDistance[i] = ((set->p.pos_X - spr[i].x) *  (set->p.pos_X - spr[i].x) + (set->p.pos_Y - spr[i].y) * (set->p.pos_Y - spr[i].y));
-    }
+        s->spr.spriteOrder[i] = i;
+        s->spr.spriteDistance[i] = ((s->p.pos_X - spr[i].x) *  (s->p.pos_X - spr[i].x) + (s->p.pos_Y - spr[i].y) * (s->p.pos_Y - spr[i].y));
+		i++;
+	}
+	i = 0;
     // 거리가 먼 순으로 sprite를 정렬한다.
-    arrange_Sprite();
+    arrange_Sprite(s);
     // 정렬된 sprite로 screen에 그리기
-    for(int i = 0; i < SPRITE_NUM; i++)
+    while(i < SPRITE_NUM)
     {
         // 가장 거리가 먼 sprite부터 시작
-        double  spriteX = spr[spriteOrder[i]].x - p->pos_X;
-        double  spriteY = spr[spriteOrder[i]].y - p->pos_Y;
+        s->spr.spriteX = spr[s->spr.spriteOrder[i]].x - s->p.pos_X;
+        s->spr.spriteY = spr[s->spr.spriteOrder[i]].y - s->p.pos_Y;
         //transform sprite with the inverse camera matrix
         // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
         // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
         // [ planeY   dirY ]                                          [ -planeY  planeX ]
-        double  invDet = 1.0 / (p->plane_X * p->dir_Y - p->dir_X * p->plane_Y);
-        double  transformX = invDet * (p->dir_Y * spriteX - p->dir_X * spriteY);
-        double  transformY = invDet * (-p->plane_Y * spriteX + p->plane_X * spriteY);
-        int spriteScreenX = (int)((screenWidth / 2) * (1 + transformX / transformY));
+        s->spr.invDet = 1.0 / (s->p.plane_X * s->p.dir_Y - s->p.dir_X * s->p.plane_Y);
+        s->spr.transformX = s->spr.invDet * (s->p.dir_Y * s->spr.spriteX - s->p.dir_X * s->spr.spriteY);
+        s->spr.transformY = s->spr.invDet * (-s->p.plane_Y * s->spr.spriteX + s->p.plane_X * s->spr.spriteY);
+        s->spr.spriteScreenX = (int)((SCREEN_WIDTH / 2) * (1 + s->spr.transformX / s->spr.transformY));
         // sprite 크기 조절을 해주는 변수
-        int     uDiv = 1;
-        int     vDiv = 1;
-        double  vMove = 0.0;
-        int     vMoveScreen = (int)(vMove / transformY);
+        s->spr.uDiv = 1;
+        s->spr.vDiv = 1;
+        s->spr.vMove = 0.0;
+        s->spr.vMoveScreen = (int)(s->spr.vMove / s->spr.transformY);
         // spritescreenHeight, spritescreenWidth 계산
         // 어안렌즈를 방지하기위해 transfromY를 사용
-        int     spritescreenHeight = (int)fabs((screenHeight / transformY) / vDiv);
-        int     drawStartY = (screenHeight / 2 + vMoveScreen) - spritescreenHeight / 2;
-        int     drawEndY = (screenHeight / 2 + vMoveScreen) + spritescreenHeight / 2;
-        drawStartY = drawStartY < 0 ? 0 : drawStartY;
-        drawEndY = drawEndY >= screenHeight ? screenHeight - 1: drawEndY;
-        int     spritescreenWidth = (int)fabs((screenHeight / transformY) / uDiv);
-        int     drawStartX = spriteScreenX - spritescreenWidth / 2;
-        int     drawEndX = spriteScreenX + spritescreenWidth / 2;
-        drawStartX = drawStartX < 0 ? 0 : drawStartX;
-        drawEndX = drawEndX >= screenWidth ? screenWidth - 1 : drawEndX;
+
+        s->spr.spritescreenHeight = (int)fabs((SCREEN_HEIGHT / s->spr.transformY) / s->spr.vDiv);
+        s->spr.drawStartY = (SCREEN_HEIGHT / 2 + s->spr.vMoveScreen) - s->spr.spritescreenHeight / 2;
+        s->spr.drawEndY = (SCREEN_HEIGHT / 2 + s->spr.vMoveScreen) + s->spr.spritescreenHeight / 2;
+        s->spr.drawStartY = s->spr.drawStartY < 0 ? 0 : s->spr.drawStartY;
+        s->spr.drawEndY = s->spr.drawEndY >= SCREEN_HEIGHT ? SCREEN_HEIGHT - 1: s->spr.drawEndY;
+		
+        s->spr.spritescreenWidth = (int)fabs((SCREEN_HEIGHT / s->spr.transformY) / s->spr.uDiv);
+        s->spr.drawStartX = s->spr.spriteScreenX - s->spr.spritescreenWidth / 2;
+        s->spr.drawEndX = s->spr.spriteScreenX + s->spr.spritescreenWidth / 2;
+
+		s->spr.drawStartX = s->spr.drawStartX < 0 ? 0 : s->spr.drawStartX;
+        s->spr.drawEndX = s->spr.drawEndX >= SCREEN_WIDTH ? SCREEN_WIDTH - 1 : s->spr.drawEndX;
         // 세로로 sprite를 그려준다.
-        for(int x = drawStartX; x < drawEndX; x++)
+        x = s->spr.drawStartX;
+		while(x < s->spr.drawEndX)
         {
-            int texX = (int)((256 * (x - (-spritescreenWidth / 2 + spriteScreenX)) * texWidth / spritescreenWidth) / 256);
+            s->spr.texX = (int)((256 * (x - (-s->spr.spritescreenWidth / 2 + s->spr.spriteScreenX)) * TEX_WIDTH / s->spr.spritescreenWidth) / 256);
             // sprite를 그릴지 안그릴지 결정한다.
             // 내 시야의 밖에 있거나, 벽에 너머에 있거나를 계산한다.
-            int w = screenWidth;
+            // int w = screenWidth;
             //if (0 < transformY < (int)ptr->info.zBuffer[x] && 0 < x < w)
-            if(transformY > 0 && x > 0 && x < w && transformY < p->zBuffer[x])
+            if(s->spr.transformY > 0 && x > 0 && x < SCREEN_WIDTH && s->spr.transformY < s->p.zBuffer[x])
             {
-                for (int y = drawStartY; y < drawEndY; y++)
+				y = s->spr.drawStartY;
+                while (y < s->spr.drawEndY)
                 {
-                    int d = (y - vMoveScreen) * 256 - screenHeight * 128 + spritescreenHeight * 128;
-                    int texY = ((d * texHeight) / spritescreenHeight) / 256;
-                    int color = p->texture[spr[spriteOrder[i]].texnum][texY * texWidth + texX];
-                    if ((color & 0x00FFFFFF) != 0)
-                        set.img.data[y * screenWidth + x] = color;
-                }
+                    s->spr.d = (y - s->spr.vMoveScreen) * 256 - SCREEN_HEIGHT * 128 + s->spr.spritescreenHeight * 128;
+                    s->spr.texY = ((s->spr.spr_colord * TEX_HEIGHT) / s->spr.spritescreenHeight) / 256;
+                    s->spr.spr_color = s->p.texture[spr[s->spr.spriteOrder[i]].texnum][s->spr.texY * TEX_WIDTH + s->spr.texX];
+                    if ((s->spr.spr_color & 0x00FFFFFF) != 0)
+                        s->img.data[y * SCREEN_WIDTH + x] = s->spr.spr_color;
+					y++;
+				}
             }
+			x++;
         }
+		i++;
     }
 }
 

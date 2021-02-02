@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/01/28 12:56:09 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/02 18:09:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_point
 	
 	int		hit;
 	int		hit_side;
+	int		wall_face;
 	
 	int   texture[TEX_NUM][TEX_WIDTH * TEX_HEIGHT];
 	double   step;
@@ -68,12 +69,73 @@ typedef struct s_point
 	double zBuffer[SCREEN_WIDTH];
 }				t_point;
 
-typedef struct s_sprite
+typedef struct s_spr_cast
 {
+		
+	int			spriteOrder[SPRITE_NUM];
+	int			spriteDistance[SPRITE_NUM];
 	double	x;
 	double	y;
 	int		texnum;
-}				t_sprite;
+	double  spriteX; 
+	double  spriteY;
+	double  invDet;
+	double  transformX;
+	double  transformY;
+	int		spriteScreenX;
+	int     uDiv;
+    int     vDiv;
+    double  vMove;
+    int     vMoveScreen;
+	int     spritescreenHeight;
+	int     drawStartY;
+	int     drawEndY;
+	int     spritescreenWidth;
+	int     drawStartX;
+	int     drawEndX;
+	int 	texX;
+	int 	texY;
+	int		d;
+	int		spr_color;
+}				t_spr_cast;
+
+typedef struct s_cal_ray
+{
+	int		draw_start;
+	int		draw_end;
+	int		line_screenHeight;
+	double	wallX;
+}				t_cal_ray;
+
+typedef struct s_flr
+{
+	int		x;
+	double	w;
+	int		i;
+	float	rayDirX0;
+	float	rayDirY0;
+	float	rayDirX1;
+	float	rayDirY1;
+	int		center;
+	float	posZ;
+	float	rowDistance;
+	float	floorStepX; 
+	float	floorStepY; 
+	float	floorX;
+	float	floorY;
+	int		tx;
+	int		ty;
+}				t_flr;
+
+typedef struct s_tex
+{
+	int		texY;
+	int		texX;
+	int		texture_kind;
+	int		floorTexture;
+	int		ceilingTexture;
+	int		color;
+}				t_tex;
 
 typedef struct	s_set
 {
@@ -84,11 +146,12 @@ typedef struct	s_set
 	int			right;
 	int			down;
 	int			map;
-	int		spriteOrder[SPRITE_NUM];
-	int		spriteDistance[SPRITE_NUM];
 	t_img		img;
 	t_point		p;
-	t_sprite	spr;
+	t_spr_cast	spr;
+	t_cal_ray	cr;
+	t_flr		flr;
+	t_tex		tex;
 }				t_set;
 
 int worldMap[MAP_WIDTH][MAP_HEIGHT]=
@@ -118,6 +181,13 @@ int worldMap[MAP_WIDTH][MAP_HEIGHT]=
   {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
+
+typedef struct s_sprite
+{
+	double	x;
+	double	y;
+	int		texnum;
+}				t_sprite;
 
 t_sprite    spr[SPRITE_NUM] =
 {
