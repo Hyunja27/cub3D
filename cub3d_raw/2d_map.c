@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/01/27 18:33:38 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/02 15:13:59 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -647,7 +647,7 @@ void	load_tex(void)
 	
 	// sprite texture
 	load_file(&point, 8, "img/barrel.xpm");
-	load_file(&point, 9, "../image02_resize.xpm");
+	load_file(&point, 9, "../xpm_image/image02_resize.xpm");
 	load_file(&point, 10, "img/greenlight.xpm");
 }
 
