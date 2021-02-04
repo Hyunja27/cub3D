@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/04 16:13:40 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/04 16:24:38 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,6 @@ void    arrange_Sprite(t_set *s)
         }
     }
 }
-
-// 										&&&&&&&&&&&&&&&&&&&&&&
-// 										&&&&&&&&&&&&&&&&&&&&&&
-// 										&&&&&&&&&&&&&&&&&&&&&&
-// 						&&&&&&&& move 변수들 구조체에 맞게 변경중 &&&&&&&&&&&&&
-// 										&&&&&&&&&&&&&&&&&&&&&&
-// 										&&&&&&&&&&&&&&&&&&&&&&
-// 										&&&&&&&&&&&&&&&&&&&&&&
-
 
 int		move(t_set *s)
 {
@@ -628,17 +619,52 @@ void	load_tex(t_set *set)
 	load_file(set, 10, "img/greenlight.xpm");
 }
 
-void	get_resol(t_set *s)
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 						&&&&&&&& map_parsing 로직 만드눈쥴 &&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+// 										&&&&&&&&&&&&&&&&&&&&&&
+
+int		check_str(char *tg, char *src, int len)
+{
+	int i;
+
+	i = -1;
+	while (--i < len)
+	{
+		if (tg[i] != src[i])
+			return (0);
+	}
+	return (1);
+}
+
+void	get_resol(t_set *s, int fd, char **line)
+{
+	
+}
+
+void	get_text(t_set *s, int fd, char **line)
+{
+	
+}
+
+void	get_corl(t_set *s, int fd, char **line)
 {
 	
 }
 
 void	parse_map(t_set *s)
 {
-	is_map(s);
-	get_resol(s);
-	get_text(s);
-	get_corl(s);
+	char*	line;
+	int		fd;
+
+	fd = open ("test_map.cub", O_RDONLY);
+	is_map(s, fd, &line);
+	get_resol(s, fd, &line);
+	get_text(s, fd, &line);
+	get_corl(s, fd, &line);
 }
 
 int		main(void)
