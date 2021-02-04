@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/04 16:01:09 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/04 16:13:40 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -628,6 +628,19 @@ void	load_tex(t_set *set)
 	load_file(set, 10, "img/greenlight.xpm");
 }
 
+void	get_resol(t_set *s)
+{
+	
+}
+
+void	parse_map(t_set *s)
+{
+	is_map(s);
+	get_resol(s);
+	get_text(s);
+	get_corl(s);
+}
+
 int		main(void)
 {
 	int		i;
@@ -654,6 +667,7 @@ int		main(void)
 	i = 0;
 	j = 0;
 	
+	parse_map(set);
 	make_window(&set);
 	load_tex(&set);
 	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);

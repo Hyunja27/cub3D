@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/04 15:44:28 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/04 16:11:36 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,13 @@ typedef struct	s_set
 	int			right;
 	int			down;
 	int			map;
+	char*		S_tex;
+	char*		W_tex;
+	char*		N_tex;
+	char*		E_tex;
+	char*		SPR_tex;
+	int			F_corl;
+	int			S_corl;
 	t_img		img;
 	t_point		p;
 	t_spr_cast	spr;
