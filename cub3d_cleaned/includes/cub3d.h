@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/02 18:09:52 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/04 15:44:28 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "cub3d_macro.h"
 #include "mlx.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 typedef struct	s_img

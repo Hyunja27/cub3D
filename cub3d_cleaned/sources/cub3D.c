@@ -6,13 +6,23 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/02 18:15:27 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/04 16:01:09 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h" 
+#include "cub3d.h"
 
-void	draw_square(t_img set, int start, int color)
+void  my_mlx_pixel_put(t_img *data, int x, int y, int color)
+{
+  int *dst;
+
+ // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
+  dst = data->data + (y * SCREEN_WIDTH + x );
+  *(unsigned int*)dst = color;
+}
+
+
+void	draw_square(t_set *s, int start, int color)
 {
 	int		i = 0;
 	int		j = 0;
@@ -22,7 +32,7 @@ void	draw_square(t_img set, int start, int color)
 		i = 0;
 		while (i < MAP_BOX_SIZE)
 		{
-			set.data[start + i] = color;
+			s->img.data[start + i] = color;
 			i++;
 		}
 		start += SCREEN_WIDTH;
@@ -64,7 +74,7 @@ void    arrange_Sprite(t_set *s)
 // 										&&&&&&&&&&&&&&&&&&&&&&
 
 
-int		move(void)
+int		move(t_set *s)
 {
 	int i;
 	int j;
@@ -74,68 +84,68 @@ int		move(void)
 	// for(int a = 0; a < screenHeight * screenWidth; a++)
 	// 	set->img.data[a] = 0;
 
-	map2d_pos_X = point.pos_X * MAP_BOX_SIZE;
-	map2d_pos_Y = point.pos_Y * MAP_BOX_SIZE;
+	map2d_pos_X = s->p.pos_X * MAP_BOX_SIZE;
+	map2d_pos_Y = s->p.pos_Y * MAP_BOX_SIZE;
 	for (i = (int)map2d_pos_X, k = 4; i < map2d_pos_X + 2; i++, k -= 2)
 		{
 			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-			my_mlx_pixel_put(&set.img, j, i, 0x0000FF00);
+			my_mlx_pixel_put(&s->img, j, i, 0x0000FF00);
 		}
 	for (i = map2d_pos_X + 2, k = 0; i < map2d_pos_X + 4; i++, k += 2)
 		{
 			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-			my_mlx_pixel_put(&set.img, j, i, 0x0000FF00);
+			my_mlx_pixel_put(&s->img, j, i, 0x0000FF00);
 		}
 	// draw_square(set, point.pos_X, 0x0000FF00);
 	
 	return (0);
 }
 
-void	draw_cross_line(t_img set, int start, int color)
-{
-	int		i = 0;
+// void	draw_cross_line(t_img set, int start, int color)
+// {
+// 	int		i = 0;
 
-	while ((((start + i) % screenWidth) != 0))
-		set.data[start + i++] = color;
-	i = 0;
-	while ((((start - i) % screenWidth) != 0))
-		set.data[start - i++] = color;
-	i = 0;
-	while (((i * screenWidth) <= screenWidth * screenHeight) && (((start + (i * screenWidth)) % screenWidth) != 0))
-		set.data[start + (i++ * screenWidth)] = color;
-	i = 0;
-	while (((start - (i * screenWidth)) >= 0) && (((start + (i * screenWidth)) % screenWidth) != 0))
-		set.data[start - (i++ * screenWidth)] = color;
-}
+// 	while ((((start + i) % SCREEN_WIDTH) != 0))
+// 		set.data[start + i++] = color;
+// 	i = 0;
+// 	while ((((start - i) % SCREEN_WIDTH) != 0))
+// 		set.data[start - i++] = color;
+// 	i = 0;
+// 	while (((i * SCREEN_WIDTH) <= SCREEN_WIDTH * SCREEN_HEIGHT) && (((start + (i * SCREEN_WIDTH)) % SCREEN_WIDTH) != 0))
+// 		set.data[start + (i++ * SCREEN_WIDTH)] = color;
+// 	i = 0;
+// 	while (((start - (i * SCREEN_WIDTH)) >= 0) && (((start + (i * SCREEN_WIDTH)) % SCREEN_WIDTH) != 0))
+// 		set.data[start - (i++ * SCREEN_WIDTH)] = color;
+// }
 
-void	parse_draw_line(t_img set, int worldmap[24][24],int color)
-{
-	int i;
-	int j;
-	int point;
+// void	parse_draw_line(t_img set, int worldmap[24][24],int color)
+// {
+// 	int i;
+// 	int j;
+// 	int point;
 
-	i = 0;
-	j = 0;
-	point = 0;
-	while (i < COLS)
-	{
-		while (j < ROWS)
-		{
-			if (worldMap[i][j] == 1)
-			{
-				point = (i * (screenWidth * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
-				// if (point > BOX_screenWidth)
-				// 	draw_cross_line(set, point, color);
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	// draw_strange_line(set, 5000, 0xffffff);
-}
+// 	i = 0;
+// 	j = 0;
+// 	point = 0;
+// 	while (i < COLS)
+// 	{
+// 		while (j < ROWS)
+// 		{
+// 			if (worldMap[i][j] == 1)
+// 			{
+// 				point = (i * (SCREEN_WIDTH * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
+// 				// if (point > BOX_screenWidth)
+// 				// 	draw_cross_line(set, point, color);
+// 			}
+// 			j++;
+// 		}
+// 		j = 0;
+// 		i++;
+// 	}
+// 	// draw_strange_line(set, 5000, 0xffffff);
+// }
 
-void	parse_draw_map(t_img set, int worldmap[24][24],int color)
+void	parse_draw_map(t_set *s, int world[24][24],int color)
 {
 	int i;
 	int j;
@@ -149,19 +159,19 @@ void	parse_draw_map(t_img set, int worldmap[24][24],int color)
 	{
 		while (j < ROWS)
 		{
-			point = (i * (screenWidth * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
+			point = (i * (SCREEN_WIDTH * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 			//draw_square(set, point, 0);
-			if (worldMap[i][j] != 0)
+			if (world[i][j] != 0)
 			{
-				point = (i * (screenWidth * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
-				draw_square(set, point, color);
+				point = (i * (SCREEN_WIDTH * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
+				draw_square(s, point, color);
 			}
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	move();
+	move(s);
 }
 
 int		key_press(int keycode, t_set *set)
@@ -351,6 +361,7 @@ void	carl_ray(t_set *s)
 			s->img.data[(SCREEN_HEIGHT - y - 1) * SCREEN_WIDTH + i] = s->tex.color;
 			i++;
 		}
+		y++;
 		i = 0;
 	}
 
@@ -510,7 +521,6 @@ void    sprite_cast(t_set *s)
         s->spr.vMoveScreen = (int)(s->spr.vMove / s->spr.transformY);
         // spritescreenHeight, spritescreenWidth 계산
         // 어안렌즈를 방지하기위해 transfromY를 사용
-
         s->spr.spritescreenHeight = (int)fabs((SCREEN_HEIGHT / s->spr.transformY) / s->spr.vDiv);
         s->spr.drawStartY = (SCREEN_HEIGHT / 2 + s->spr.vMoveScreen) - s->spr.spritescreenHeight / 2;
         s->spr.drawEndY = (SCREEN_HEIGHT / 2 + s->spr.vMoveScreen) + s->spr.spritescreenHeight / 2;
@@ -527,18 +537,20 @@ void    sprite_cast(t_set *s)
         x = s->spr.drawStartX;
 		while(x < s->spr.drawEndX)
         {
+	
+	
             s->spr.texX = (int)((256 * (x - (-s->spr.spritescreenWidth / 2 + s->spr.spriteScreenX)) * TEX_WIDTH / s->spr.spritescreenWidth) / 256);
             // sprite를 그릴지 안그릴지 결정한다.
             // 내 시야의 밖에 있거나, 벽에 너머에 있거나를 계산한다.
-            // int w = screenWidth;
+            int w = SCREEN_WIDTH;
             //if (0 < transformY < (int)ptr->info.zBuffer[x] && 0 < x < w)
-            if(s->spr.transformY > 0 && x > 0 && x < SCREEN_WIDTH && s->spr.transformY < s->p.zBuffer[x])
+            if(s->spr.transformY > 0 && x > 0 && x < w && s->spr.transformY < s->p.zBuffer[x])
             {
 				y = s->spr.drawStartY;
                 while (y < s->spr.drawEndY)
                 {
                     s->spr.d = (y - s->spr.vMoveScreen) * 256 - SCREEN_HEIGHT * 128 + s->spr.spritescreenHeight * 128;
-                    s->spr.texY = ((s->spr.spr_colord * TEX_HEIGHT) / s->spr.spritescreenHeight) / 256;
+                    s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.spritescreenHeight) / 256;
                     s->spr.spr_color = s->p.texture[spr[s->spr.spriteOrder[i]].texnum][s->spr.texY * TEX_WIDTH + s->spr.texX];
                     if ((s->spr.spr_color & 0x00FFFFFF) != 0)
                         s->img.data[y * SCREEN_WIDTH + x] = s->spr.spr_color;
@@ -567,7 +579,7 @@ int		main_loop(t_set *set)
 	sprite_cast(set);
 
 	if (set->map == 1)
-		parse_draw_map(set->img, worldMap, 0xcc82cc);
+		parse_draw_map(set, worldMap, 0xcc82cc);
 	key_action(set);
 
 	mlx_put_image_to_window(set->mlx_ptr, set->win_ptr, set->img.img_ptr, 0, 0);
@@ -579,11 +591,10 @@ void	load_file(t_set *set, int num, char *path)
 	t_img img_tmp;
 	int x;
 	int y;
-	
 
 	img_tmp.img_ptr = mlx_xpm_file_to_image(set->mlx_ptr, path, &img_tmp.img_width, &img_tmp.img_height);
 	img_tmp.data = (int *)mlx_get_data_addr(img_tmp.img_ptr, &img_tmp.bpp, &img_tmp.size_l, &img_tmp.endian);
-
+	
 	x = 0;
 	y = 0;
 	
@@ -613,11 +624,11 @@ void	load_tex(t_set *set)
 	
 	// sprite texture
 	load_file(set, 8, "img/barrel.xpm");
-	load_file(set, 9, "../image02_resize.xpm");
+	load_file(set, 9, "img/image02_resize.xpm");
 	load_file(set, 10, "img/greenlight.xpm");
 }
 
-int		main(int ac, char *av[])
+int		main(void)
 {
 	int		i;
 	int		j;
@@ -649,6 +660,11 @@ int		main(int ac, char *av[])
 	mlx_hook(set.win_ptr, KeyRelease, 0, key_release, &set);
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
 	mlx_loop(set.mlx_ptr);
+
+
+//		printf("*\n");
+
+
 
 	return (0);
 }
