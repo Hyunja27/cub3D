@@ -52,3 +52,8 @@ fclean : clean
 	@($(RM) $(RMFLAGS) $(NAME))
 	@($(RM) $(RMFLAGS) $(LIBFT))
 	@echo "${MINT}fcleaning Done."
+
+test : 
+	@(make fclean)
+	@(make)
+	@(./cub3D)

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/04 15:52:33 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/08 16:59:27 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 # define CUB3D_MACRO_H
 
 #define BOX_SIZE 40
-#define MAP_BOX_SIZE 10
 
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
+#define MAP_BOX_SIZE 10
 
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 960
 
 #define TEX_NUM 11
 #define SPRITE_NUM 29

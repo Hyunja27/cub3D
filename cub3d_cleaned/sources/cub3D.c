@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/04 16:24:38 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/08 17:45:37 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,8 +338,8 @@ void	carl_ray(t_set *s)
 			s->flr.floorY += s->flr.floorStepY;
 
 			// choose texture and draw the pixel
-			s->tex.floorTexture = 3;
-			s->tex.ceilingTexture = 5;
+			s->tex.floorTexture = 6;
+			s->tex.ceilingTexture = 6;
 			// floor
 			s->tex.color = s->p.texture[s->tex.floorTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
 			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
@@ -355,7 +355,6 @@ void	carl_ray(t_set *s)
 		y++;
 		i = 0;
 	}
-
 	
 	while (x < (int)w)
 	{
@@ -437,7 +436,30 @@ void	carl_ray(t_set *s)
 		// 	color = color / 2;
 		// draw_vertical(x, draw_start, draw_end, color);
 
-		s->tex.texture_kind = worldMap[s->p.position_X][s->p.position_Y] - 1;
+
+		// s->tex.texture_kind = worldMap[s->p.position_X][s->p.position_Y] - 1;
+
+		// 0 = 동
+		// 1 = 서
+		// 2 = 남
+		// 3 = 북
+	
+		if (s->p.hit_side == 1)
+		{
+			if (s->p.raydir_Y > 0)
+				s->tex.texture_kind = 0;
+			else
+				s->tex.texture_kind = 1;
+		}
+		else if (s->p.hit_side == 0)
+		{
+			if (s->p.raydir_X > 0)
+				s->tex.texture_kind = 2;
+			else
+				s->tex.texture_kind = 3;
+		}
+
+
 
 		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight; 
 		s->p.texture_pos = (s->cr.draw_start - SCREEN_HEIGHT / 2 + s->cr.line_screenHeight / 2) * s->p.step;
@@ -457,12 +479,12 @@ void	carl_ray(t_set *s)
 		i = s->cr.draw_start;
 		
 		while (i < s->cr.draw_end)
-		{
+		{	
 			s->tex.texY = (int)s->p.texture_pos & (TEX_HEIGHT - 1);
 			s->p.texture_pos += s->p.step;
 			s->tex.color = s->p.texture[s->tex.texture_kind][TEX_HEIGHT * s->tex.texY + s->tex.texX];
-			if (s->p.hit_side == 1)
-				s->tex.color = (s->tex.color >> 1) & 8355711;
+			// if (s->p.hit_side == 1)
+			// 	s->tex.color = (s->tex.color >> 1) & 8355711;
 			// color /= 2;
 			s->img.data[i * SCREEN_WIDTH + x] = s->tex.color;
 			i++;
@@ -567,7 +589,7 @@ int		main_loop(t_set *set)
 {
 	clean_screen(set);
 	carl_ray(set);
-	sprite_cast(set);
+	//sprite_cast(set);
 
 	if (set->map == 1)
 		parse_draw_map(set, worldMap, 0xcc82cc);
@@ -599,15 +621,16 @@ void	load_file(t_set *set, int num, char *path)
 		}
 		y++;
 	}
+	printf("%s\n", path);
 	mlx_destroy_image(set->mlx_ptr, img_tmp.img_ptr);
 }
 
 void	load_tex(t_set *set)
 {
-	load_file(set, 0, "img/eagle.xpm");
-	load_file(set, 1, "img/redbrick.xpm");
-	load_file(set, 2, "img/purplestone.xpm");
-	load_file(set, 3, "img/greystone.xpm");
+	load_file(set, 0, "img/wall_e.xpm");
+	load_file(set, 1, "img/wall_w.xpm");
+	load_file(set, 2, "img/wall_s.xpm");
+	load_file(set, 3, "img/wall_n.xpm");
 	load_file(set, 4, "img/bluestone.xpm");
 	load_file(set, 5, "img/mossy.xpm");
 	load_file(set, 6, "img/wood.xpm");
@@ -627,45 +650,45 @@ void	load_tex(t_set *set)
 // 										&&&&&&&&&&&&&&&&&&&&&&
 // 										&&&&&&&&&&&&&&&&&&&&&&
 
-int		check_str(char *tg, char *src, int len)
-{
-	int i;
+// int		check_str(char *tg, char *src, int len)
+// {
+// 	int i;
 
-	i = -1;
-	while (--i < len)
-	{
-		if (tg[i] != src[i])
-			return (0);
-	}
-	return (1);
-}
+// 	i = -1;
+// 	while (--i < len)
+// 	{
+// 		if (tg[i] != src[i])
+// 			return (0);
+// 	}
+// 	return (1);
+// }
 
-void	get_resol(t_set *s, int fd, char **line)
-{
+// void	get_resol(t_set *s, int fd, char **line)
+// {
 	
-}
+// }
 
-void	get_text(t_set *s, int fd, char **line)
-{
+// void	get_text(t_set *s, int fd, char **line)
+// {
 	
-}
+// }
 
-void	get_corl(t_set *s, int fd, char **line)
-{
+// void	get_corl(t_set *s, int fd, char **line)
+// {
 	
-}
+// }
 
-void	parse_map(t_set *s)
-{
-	char*	line;
-	int		fd;
+// void	parse_map(t_set *s)
+// {
+// 	char*	line;
+// 	int		fd;
 
-	fd = open ("test_map.cub", O_RDONLY);
-	is_map(s, fd, &line);
-	get_resol(s, fd, &line);
-	get_text(s, fd, &line);
-	get_corl(s, fd, &line);
-}
+// 	fd = open ("test_map.cub", O_RDONLY);
+// 	is_map(s, fd, &line);
+// 	get_resol(s, fd, &line);
+// 	get_text(s, fd, &line);
+// 	get_corl(s, fd, &line);
+// }
 
 int		main(void)
 {
@@ -693,7 +716,7 @@ int		main(void)
 	i = 0;
 	j = 0;
 	
-	parse_map(set);
+	// parse_map(set);
 	make_window(&set);
 	load_tex(&set);
 	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);
@@ -702,7 +725,7 @@ int		main(void)
 	mlx_loop(set.mlx_ptr);
 
 
-//		printf("*\n");
+		// printf("*\n");
 
 
 
