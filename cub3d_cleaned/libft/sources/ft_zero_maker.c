@@ -6,13 +6,13 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:22:41 by hyunja            #+#    #+#             */
-/*   Updated: 2020/11/20 03:06:04 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:20:41 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char			*ft_zero_maker_2(t_set *set, int wid)
+static char			*ft_zero_maker_2(t_libset *set, int wid)
 {
 	char	*be_free;
 	char	*head_zero;
@@ -35,7 +35,7 @@ static char			*ft_zero_maker_2(t_set *set, int wid)
 	return (rt);
 }
 
-char				*ft_zero_maker(t_set *set, int pre, int wid)
+char				*ft_zero_maker(t_libset *set, int pre, int wid)
 {
 	char	*be_free;
 	char	*head_zero;

@@ -6,13 +6,13 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:22:41 by hyunja            #+#    #+#             */
-/*   Updated: 2020/11/20 03:06:00 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:21:21 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_manti_to_a_3_2(t_set *set, char **base)
+static void	ft_manti_to_a_3_2(t_libset *set, char **base)
 {
 	if (ft_strlen(*base) > 2)
 	{
@@ -23,7 +23,7 @@ static void	ft_manti_to_a_3_2(t_set *set, char **base)
 	}
 }
 
-static void	ft_manti_to_a_3(t_set *set, char **base, int i)
+static void	ft_manti_to_a_3(t_libset *set, char **base, int i)
 {
 	char	*be_free;
 
@@ -84,7 +84,7 @@ static int	ft_manti_to_a_2(char **rt, double manti, int pre)
 	return (tmp_int);
 }
 
-char		*ft_manti_to_a(t_set *set, double manti, char *base, int pre)
+char		*ft_manti_to_a(t_libset *set, double manti, char *base, int pre)
 {
 	int		i;
 	char	*rt;

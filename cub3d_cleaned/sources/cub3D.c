@@ -6,18 +6,18 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/08 17:45:37 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:57:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void  my_mlx_pixel_put(t_img *data, int x, int y, int color)
+void  my_mlx_pixel_put(t_set *s, int x, int y, int color)
 {
   int *dst;
 
  // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
-  dst = data->data + (y * SCREEN_WIDTH + x );
+  dst = s->img.data + (y * s->minfo.s_width + x );
   *(unsigned int*)dst = color;
 }
 
@@ -35,7 +35,7 @@ void	draw_square(t_set *s, int start, int color)
 			s->img.data[start + i] = color;
 			i++;
 		}
-		start += SCREEN_WIDTH;
+		start += s->minfo.s_width;
 		j++;
 	}
 }
@@ -80,12 +80,12 @@ int		move(t_set *s)
 	for (i = (int)map2d_pos_X, k = 4; i < map2d_pos_X + 2; i++, k -= 2)
 		{
 			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-			my_mlx_pixel_put(&s->img, j, i, 0x0000FF00);
+			my_mlx_pixel_put(s, j, i, 0x0000FF00);
 		}
 	for (i = map2d_pos_X + 2, k = 0; i < map2d_pos_X + 4; i++, k += 2)
 		{
 			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-			my_mlx_pixel_put(&s->img, j, i, 0x0000FF00);
+			my_mlx_pixel_put(s, j, i, 0x0000FF00);
 		}
 	// draw_square(set, point.pos_X, 0x0000FF00);
 	
@@ -96,17 +96,17 @@ int		move(t_set *s)
 // {
 // 	int		i = 0;
 
-// 	while ((((start + i) % SCREEN_WIDTH) != 0))
+// 	while ((((start + i) % s->minfo.s_width) != 0))
 // 		set.data[start + i++] = color;
 // 	i = 0;
-// 	while ((((start - i) % SCREEN_WIDTH) != 0))
+// 	while ((((start - i) % s->minfo.s_width) != 0))
 // 		set.data[start - i++] = color;
 // 	i = 0;
-// 	while (((i * SCREEN_WIDTH) <= SCREEN_WIDTH * SCREEN_HEIGHT) && (((start + (i * SCREEN_WIDTH)) % SCREEN_WIDTH) != 0))
-// 		set.data[start + (i++ * SCREEN_WIDTH)] = color;
+// 	while (((i * s->minfo.s_width) <= s->minfo.s_width * s->minfo.s_height) && (((start + (i * s->minfo.s_width)) % s->minfo.s_width) != 0))
+// 		set.data[start + (i++ * s->minfo.s_width)] = color;
 // 	i = 0;
-// 	while (((start - (i * SCREEN_WIDTH)) >= 0) && (((start + (i * SCREEN_WIDTH)) % SCREEN_WIDTH) != 0))
-// 		set.data[start - (i++ * SCREEN_WIDTH)] = color;
+// 	while (((start - (i * s->minfo.s_width)) >= 0) && (((start + (i * s->minfo.s_width)) % s->minfo.s_width) != 0))
+// 		set.data[start - (i++ * s->minfo.s_width)] = color;
 // }
 
 // void	parse_draw_line(t_img set, int worldmap[24][24],int color)
@@ -124,7 +124,7 @@ int		move(t_set *s)
 // 		{
 // 			if (worldMap[i][j] == 1)
 // 			{
-// 				point = (i * (SCREEN_WIDTH * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
+// 				point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 // 				// if (point > BOX_screenWidth)
 // 				// 	draw_cross_line(set, point, color);
 // 			}
@@ -150,11 +150,11 @@ void	parse_draw_map(t_set *s, int world[24][24],int color)
 	{
 		while (j < ROWS)
 		{
-			point = (i * (SCREEN_WIDTH * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
+			point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 			//draw_square(set, point, 0);
 			if (world[i][j] != 0)
 			{
-				point = (i * (SCREEN_WIDTH * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
+				point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 				draw_square(s, point, color);
 			}
 			j++;
@@ -234,10 +234,10 @@ int		key_release(int keycode, t_set *set)
     set->down = 0;
 	if (keycode == M_KEY)
     {
-		if (set->map == 0)
-			set->map = 1;
+		if (set->map1 == 0)
+			set->map1 = 1;
 		else
-			set->map = 0;
+			set->map1 = 0;
 	}
   return (0);
 }
@@ -281,11 +281,11 @@ void	key_action(t_set *s)
 	}
 }
 
-void	make_window(t_set *set)
+void	make_window(t_set *s)
 {
-	set->win_ptr = mlx_new_window(set->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "Raycaster Practice");
-	set->img.img_ptr = mlx_new_image(set->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
-	set->img.data = (int*)mlx_get_data_addr(set->img.img_ptr, &set->img.bpp, &set->img.size_l, &set->img.endian);
+	s->win_ptr = mlx_new_window(s->mlx_ptr, s->minfo.s_width, s->minfo.s_height, "Raycaster Practice");
+	s->img.img_ptr = mlx_new_image(s->mlx_ptr, s->minfo.s_width, s->minfo.s_height);
+	s->img.data = (int*)mlx_get_data_addr(s->img.img_ptr, &s->img.bpp, &s->img.size_l, &s->img.endian);
 }
 
 void	carl_ray(t_set *s)
@@ -295,13 +295,13 @@ void	carl_ray(t_set *s)
 	int		i;
 	double	w;
 	
-	w = SCREEN_WIDTH;
+	w = s->minfo.s_width;
 	x = 0;
 	y = 0;
 	i = 0;
 	
 
-	while(y < SCREEN_HEIGHT)
+	while(y < s->minfo.s_height)
 	{
 		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
 		s->flr.rayDirX0 = s->p.dir_X - s->p.plane_X;
@@ -310,10 +310,10 @@ void	carl_ray(t_set *s)
 		s->flr.rayDirY1 = s->p.dir_Y + s->p.plane_Y;
 
 		// Current y position compared to the center of the screen (the horizon)
-		s->flr.center = y - SCREEN_HEIGHT / 2;
+		s->flr.center = y - s->minfo.s_height / 2;
 
 		// Vertical position of the camera.
-		s->flr.posZ = 0.5 * SCREEN_HEIGHT;
+		s->flr.posZ = 0.5 * s->minfo.s_height;
 
 		// Horizontal distance from the camera to the floor for the current row.
 		// 0.5 is the z position exactly in the middle between floor and ceiling.
@@ -321,14 +321,14 @@ void	carl_ray(t_set *s)
 
 		// calculate the real world step vector we have to add for each x (parallel to camera plane)
 		// adding step by step avoids multiplications with a weight in the inner loop
-		s->flr.floorStepX = s->flr.rowDistance * (s->flr.rayDirX1 - s->flr.rayDirX0) / SCREEN_WIDTH;
-		s->flr.floorStepY = s->flr.rowDistance * (s->flr.rayDirY1 - s->flr.rayDirY0) / SCREEN_WIDTH;
+		s->flr.floorStepX = s->flr.rowDistance * (s->flr.rayDirX1 - s->flr.rayDirX0) / s->minfo.s_width;
+		s->flr.floorStepY = s->flr.rowDistance * (s->flr.rayDirY1 - s->flr.rayDirY0) / s->minfo.s_width;
 
 		// real world coordinates of the leftmost column. This will be updated as we step to the right.
 		s->flr.floorX = s->p.pos_X + s->flr.rowDistance * s->flr.rayDirX0;
 		s->flr.floorY = s->p.pos_Y + s->flr.rowDistance * s->flr.rayDirY0;
 
-		while(i < SCREEN_WIDTH)
+		while(i < s->minfo.s_width)
 		{
 			// get the texture coordinate from the fractional part
 			s->flr.tx = (int)(TEX_WIDTH * (s->flr.floorX - (int)(s->flr.floorX))) & (TEX_WIDTH -1);
@@ -344,12 +344,12 @@ void	carl_ray(t_set *s)
 			s->tex.color = s->p.texture[s->tex.floorTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
 			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
 
-			s->img.data[y * SCREEN_WIDTH + i] = s->tex.color;
+			s->img.data[y * s->minfo.s_width + i] = s->tex.color;
 
 			s->tex.color = s->p.texture[s->tex.ceilingTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
 			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
 
-			s->img.data[(SCREEN_HEIGHT - y - 1) * SCREEN_WIDTH + i] = s->tex.color;
+			s->img.data[(s->minfo.s_height - y - 1) * s->minfo.s_width + i] = s->tex.color;
 			i++;
 		}
 		y++;
@@ -414,13 +414,13 @@ void	carl_ray(t_set *s)
 		else
 			s->p.perpwalldist = (s->p.position_Y - s->p.pos_Y + (1 - s->p.step_Y) / 2) / s->p.raydir_Y;
 		
-		s->cr.line_screenHeight = (int)(SCREEN_HEIGHT / s->p.perpwalldist);
-		s->cr.draw_start = -s->cr.line_screenHeight / 2 + SCREEN_HEIGHT / 2;
+		s->cr.line_screenHeight = (int)(s->minfo.s_height / s->p.perpwalldist);
+		s->cr.draw_start = -s->cr.line_screenHeight / 2 + s->minfo.s_height / 2;
 		if (s->cr.draw_start < 0)
 			s->cr.draw_start = 0;
-		s->cr.draw_end = s->cr.line_screenHeight / 2 + SCREEN_HEIGHT / 2;
-		if (s->cr.draw_end >= SCREEN_HEIGHT)
-			s->cr.draw_end = SCREEN_HEIGHT - 1;
+		s->cr.draw_end = s->cr.line_screenHeight / 2 + s->minfo.s_height / 2;
+		if (s->cr.draw_end >= s->minfo.s_height)
+			s->cr.draw_end = s->minfo.s_height - 1;
 		
 		// if (worldMap[p->position_X][p->position_Y] == 1)
 		// 	color = CLR_LBL;
@@ -433,17 +433,51 @@ void	carl_ray(t_set *s)
 		// else if  (worldMap[p->position_X][p->position_Y] == 5)
 		// 	color = CLR_DGR;
 		// if (p->hit_side == 1)
-		// 	color = color / 2;
+		// 	color = color / 2;x
 		// draw_vertical(x, draw_start, draw_end, color);
 
-
+		// if (worldMap[s->p.position_X][s->p.position_Y] - 1 == 2)
+		// {
+		// 	s->spr.spriteX = s->p.position_X - s->p.pos_X;
+		// 	s->spr.spriteY = s->p.position_Y - s->p.pos_Y;
+		// }
 		// s->tex.texture_kind = worldMap[s->p.position_X][s->p.position_Y] - 1;
 
 		// 0 = 동
 		// 1 = 서
 		// 2 = 남
 		// 3 = 북
-	
+		// if (s->p.hit_side == 1)
+		// {
+		// 	if (s->p.raydir_Y > 0)
+		// 		s->tex.texture_kind = 0;
+		// 	else
+		// 		s->tex.texture_kind = 1;
+		// }
+		// else if (s->p.hit_side == 0)
+		// {
+		// 	if (s->p.raydir_X > 0)
+		// 		s->tex.texture_kind = 2;
+		// 	else
+		// 		s->tex.texture_kind = 3;
+		// }
+
+		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight; 
+		s->p.texture_pos = (s->cr.draw_start - s->minfo.s_height / 2 + s->cr.line_screenHeight / 2) * s->p.step;
+
+		if (s->p.hit_side == 0)
+			s->cr.wallX = s->p.pos_Y + s->p.perpwalldist * s->p.raydir_Y;
+		else
+			s->cr.wallX = s->p.pos_X + s->p.perpwalldist * s->p.raydir_X;
+		s->cr.wallX -= floor(s->cr.wallX); 
+			
+		s->tex.texX = (int)(s->cr.wallX * (double)TEX_WIDTH);
+		if (s->p.hit_side == 0 && s->p.raydir_X > 0)
+			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
+		if (s->p.hit_side == 1 && s->p.raydir_Y < 0)
+			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
+
+
 		if (s->p.hit_side == 1)
 		{
 			if (s->p.raydir_Y > 0)
@@ -459,25 +493,8 @@ void	carl_ray(t_set *s)
 				s->tex.texture_kind = 3;
 		}
 
-
-
-		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight; 
-		s->p.texture_pos = (s->cr.draw_start - SCREEN_HEIGHT / 2 + s->cr.line_screenHeight / 2) * s->p.step;
-
-		if (s->p.hit_side == 0)
-			s->cr.wallX = s->p.pos_Y + s->p.perpwalldist * s->p.raydir_Y;
-		else
-			s->cr.wallX = s->p.pos_X + s->p.perpwalldist * s->p.raydir_X;
-		s->cr.wallX -= floor(s->cr.wallX); 
-			
-		s->tex.texX = (int)(s->cr.wallX * (double)TEX_WIDTH);
-		if (s->p.hit_side == 0 && s->p.raydir_X > 0)
-			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
-		if (s->p.hit_side == 1 && s->p.raydir_X < 0)
-			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
 		
 		i = s->cr.draw_start;
-		
 		while (i < s->cr.draw_end)
 		{	
 			s->tex.texY = (int)s->p.texture_pos & (TEX_HEIGHT - 1);
@@ -486,7 +503,7 @@ void	carl_ray(t_set *s)
 			// if (s->p.hit_side == 1)
 			// 	s->tex.color = (s->tex.color >> 1) & 8355711;
 			// color /= 2;
-			s->img.data[i * SCREEN_WIDTH + x] = s->tex.color;
+			s->img.data[i * s->minfo.s_width + x] = s->tex.color;
 			i++;
 		}
 		// sprite를 위한 것
@@ -512,7 +529,7 @@ void    sprite_cast(t_set *s)
 	}
 	i = 0;
     // 거리가 먼 순으로 sprite를 정렬한다.
-    arrange_Sprite(s);
+	arrange_Sprite(s);
     // 정렬된 sprite로 screen에 그리기
     while(i < SPRITE_NUM)
     {
@@ -526,7 +543,7 @@ void    sprite_cast(t_set *s)
         s->spr.invDet = 1.0 / (s->p.plane_X * s->p.dir_Y - s->p.dir_X * s->p.plane_Y);
         s->spr.transformX = s->spr.invDet * (s->p.dir_Y * s->spr.spriteX - s->p.dir_X * s->spr.spriteY);
         s->spr.transformY = s->spr.invDet * (-s->p.plane_Y * s->spr.spriteX + s->p.plane_X * s->spr.spriteY);
-        s->spr.spriteScreenX = (int)((SCREEN_WIDTH / 2) * (1 + s->spr.transformX / s->spr.transformY));
+        s->spr.spriteScreenX = (int)((s->minfo.s_width / 2) * (1 + s->spr.transformX / s->spr.transformY));
         // sprite 크기 조절을 해주는 변수
         s->spr.uDiv = 1;
         s->spr.vDiv = 1;
@@ -534,18 +551,18 @@ void    sprite_cast(t_set *s)
         s->spr.vMoveScreen = (int)(s->spr.vMove / s->spr.transformY);
         // spritescreenHeight, spritescreenWidth 계산
         // 어안렌즈를 방지하기위해 transfromY를 사용
-        s->spr.spritescreenHeight = (int)fabs((SCREEN_HEIGHT / s->spr.transformY) / s->spr.vDiv);
-        s->spr.drawStartY = (SCREEN_HEIGHT / 2 + s->spr.vMoveScreen) - s->spr.spritescreenHeight / 2;
-        s->spr.drawEndY = (SCREEN_HEIGHT / 2 + s->spr.vMoveScreen) + s->spr.spritescreenHeight / 2;
+        s->spr.spritescreenHeight = (int)fabs((s->minfo.s_height / s->spr.transformY) / s->spr.vDiv);
+        s->spr.drawStartY = (s->minfo.s_height / 2 + s->spr.vMoveScreen) - s->spr.spritescreenHeight / 2;
+        s->spr.drawEndY = (s->minfo.s_height / 2 + s->spr.vMoveScreen) + s->spr.spritescreenHeight / 2;
         s->spr.drawStartY = s->spr.drawStartY < 0 ? 0 : s->spr.drawStartY;
-        s->spr.drawEndY = s->spr.drawEndY >= SCREEN_HEIGHT ? SCREEN_HEIGHT - 1: s->spr.drawEndY;
+        s->spr.drawEndY = s->spr.drawEndY >= s->minfo.s_height ? s->minfo.s_height - 1: s->spr.drawEndY;
 		
-        s->spr.spritescreenWidth = (int)fabs((SCREEN_HEIGHT / s->spr.transformY) / s->spr.uDiv);
+        s->spr.spritescreenWidth = (int)fabs((s->minfo.s_height / s->spr.transformY) / s->spr.uDiv);
         s->spr.drawStartX = s->spr.spriteScreenX - s->spr.spritescreenWidth / 2;
         s->spr.drawEndX = s->spr.spriteScreenX + s->spr.spritescreenWidth / 2;
 
 		s->spr.drawStartX = s->spr.drawStartX < 0 ? 0 : s->spr.drawStartX;
-        s->spr.drawEndX = s->spr.drawEndX >= SCREEN_WIDTH ? SCREEN_WIDTH - 1 : s->spr.drawEndX;
+        s->spr.drawEndX = s->spr.drawEndX >= s->minfo.s_width ? s->minfo.s_width - 1 : s->spr.drawEndX;
         // 세로로 sprite를 그려준다.
         x = s->spr.drawStartX;
 		while(x < s->spr.drawEndX)
@@ -555,18 +572,18 @@ void    sprite_cast(t_set *s)
             s->spr.texX = (int)((256 * (x - (-s->spr.spritescreenWidth / 2 + s->spr.spriteScreenX)) * TEX_WIDTH / s->spr.spritescreenWidth) / 256);
             // sprite를 그릴지 안그릴지 결정한다.
             // 내 시야의 밖에 있거나, 벽에 너머에 있거나를 계산한다.
-            int w = SCREEN_WIDTH;
+            int w = s->minfo.s_width;
             //if (0 < transformY < (int)ptr->info.zBuffer[x] && 0 < x < w)
             if(s->spr.transformY > 0 && x > 0 && x < w && s->spr.transformY < s->p.zBuffer[x])
             {
 				y = s->spr.drawStartY;
                 while (y < s->spr.drawEndY)
                 {
-                    s->spr.d = (y - s->spr.vMoveScreen) * 256 - SCREEN_HEIGHT * 128 + s->spr.spritescreenHeight * 128;
+                    s->spr.d = (y - s->spr.vMoveScreen) * 256 - s->minfo.s_height * 128 + s->spr.spritescreenHeight * 128;
                     s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.spritescreenHeight) / 256;
                     s->spr.spr_color = s->p.texture[spr[s->spr.spriteOrder[i]].texnum][s->spr.texY * TEX_WIDTH + s->spr.texX];
                     if ((s->spr.spr_color & 0x00FFFFFF) != 0)
-                        s->img.data[y * SCREEN_WIDTH + x] = s->spr.spr_color;
+                        s->img.data[y * s->minfo.s_width + x] = s->spr.spr_color;
 					y++;
 				}
             }
@@ -576,22 +593,22 @@ void    sprite_cast(t_set *s)
     }
 }
 
-void	clean_screen(t_set *set)
+void	clean_screen(t_set *s)
 {
 	int		i;
 
 	i = 0;
-	while (i <= SCREEN_HEIGHT * SCREEN_WIDTH)
-		set->img.data[i++] = 0;
+	while (i <= s->minfo.s_height * s->minfo.s_width)
+		s->img.data[i++] = 0;
 }
 
 int		main_loop(t_set *set)
 {
 	clean_screen(set);
 	carl_ray(set);
-	//sprite_cast(set);
+	sprite_cast(set);
 
-	if (set->map == 1)
+	if (set->map1 == 1)
 		parse_draw_map(set, worldMap, 0xcc82cc);
 	key_action(set);
 
@@ -625,6 +642,11 @@ void	load_file(t_set *set, int num, char *path)
 	mlx_destroy_image(set->mlx_ptr, img_tmp.img_ptr);
 }
 
+		// 0 = 동
+		// 1 = 서
+		// 2 = 남
+		// 3 = 북
+		
 void	load_tex(t_set *set)
 {
 	load_file(set, 0, "img/wall_e.xpm");
@@ -635,7 +657,6 @@ void	load_tex(t_set *set)
 	load_file(set, 5, "img/mossy.xpm");
 	load_file(set, 6, "img/wood.xpm");
 	load_file(set, 7, "img/colorstone.xpm");
-	
 	// sprite texture
 	load_file(set, 8, "img/barrel.xpm");
 	load_file(set, 9, "img/image02_resize.xpm");
@@ -650,45 +671,278 @@ void	load_tex(t_set *set)
 // 										&&&&&&&&&&&&&&&&&&&&&&
 // 										&&&&&&&&&&&&&&&&&&&&&&
 
-// int		check_str(char *tg, char *src, int len)
-// {
-// 	int i;
+int		check_str(char *chk, char **line, int len)
+{
+	int	i;
 
-// 	i = -1;
-// 	while (--i < len)
-// 	{
-// 		if (tg[i] != src[i])
-// 			return (0);
-// 	}
-// 	return (1);
-// }
+	i = -1;
+	while (++i < len)
+	{
+		if (chk[i] != **line)
+			return (0);
+		(*line)++;
+	}
+	return (1);
+}
 
-// void	get_resol(t_set *s, int fd, char **line)
-// {
-	
-// }
+int		get_resolution(int fd, char **line, t_set *set)
+{
+	get_next_line(fd, line);
+	if (!check_str("R ", line, 2))
+		return (0);
+	if ((set->minfo.s_width = ft_atoi(*line)) < 0)
+		return (0);
+	(*line) += ft_ilencal(set->minfo.s_width);
+	if (!check_str(" ", line, 1))
+		return (0);
+	if ((set->minfo.s_height = ft_atoi(*line)) < 0)
+		return (0);
+	return (1);
+}
 
-// void	get_text(t_set *s, int fd, char **line)
-// {
-	
-// }
+int		get_path(int fd, char **line, t_set *set)
+{
+	get_next_line(fd, line);
+	if (!check_str("NO ", line, 3))
+		return (0);
+	set->minfo.no_path = ft_strdup(*line);
+	get_next_line(fd, line);
+	if (!check_str("SO ", line, 3))
+		return (0);
+	set->minfo.so_path = ft_strdup(*line);
+	get_next_line(fd, line);
+	if (!check_str("WE ", line, 3))
+		return (0);
+	set->minfo.we_path = ft_strdup(*line);
+	get_next_line(fd, line);
+	if (!check_str("EA ", line, 3))
+		return (0);
+	set->minfo.ea_path = ft_strdup(*line);
+	get_next_line(fd, line);
+	get_next_line(fd, line);
+	if (!check_str("S ", line, 2))
+		return (0);
+	set->minfo.sp_path = ft_strdup(*line);
+	return (1);
+}
 
-// void	get_corl(t_set *s, int fd, char **line)
-// {
-	
-// }
 
-// void	parse_map(t_set *s)
-// {
-// 	char*	line;
-// 	int		fd;
+int		get_color(char *line)
+{
+	int	r;
+	int	g;
+	int	b;
 
-// 	fd = open ("test_map.cub", O_RDONLY);
-// 	is_map(s, fd, &line);
-// 	get_resol(s, fd, &line);
-// 	get_text(s, fd, &line);
-// 	get_corl(s, fd, &line);
-// }
+	r = ft_atoi(line);
+	while (*line != ',' && *line)
+	{
+		line++;
+		if (!(*line))
+			return (-1);
+	}
+	g = ft_atoi(++line);
+	while (*line != ',' && *line)
+	{
+		line++;
+		if (!(*line))
+			return (0);
+	}
+	b = ft_atoi(++line);
+	return ((r * 256 * 256) + (g * 256) + b);
+}
+
+
+int		get_fc(int fd, char **line,  t_set *set)
+{
+	get_next_line(fd, line);
+	if (!check_str("F ", line, 2))
+		return (0);
+	if (!ft_isdigit(**line))
+		return (0);
+	if ((set->minfo.floor = get_color(*line)) < 0)
+		return (0);
+	get_next_line(fd, line);
+	if (!check_str("C ", line, 2))
+		return (0);
+	if (!ft_isdigit(**line))
+		return (0);
+	if ((set->minfo.ceiling = get_color(*line)) < 0)
+		return (0);
+	return (1);
+}
+
+// map 읽어서 저장
+void	change_map(t_set *set, int **map, char *temp_map)
+{
+	int		j;
+
+	j = -1;
+	while (++j < set->minfo.m_width)
+		(*map)[j] = -1;
+	j = -1;
+	while (temp_map[++j] != 0)
+	{
+		(*map)[j] = temp_map[j] == ' ' ? -1 : temp_map[j] - '0';
+		if ((*map)[j] == 2)
+			set->minfo.num_sprite++;
+	}
+}
+
+void	get_map_size(t_set *set, int fd, int fd_2, char **line)
+{
+	int		temp_size;
+
+	get_next_line(fd, line);
+	set->minfo.m_height = 0;
+	set->minfo.m_width = 0;
+	while ((get_next_line(fd, line)) > 0)
+	{
+		temp_size = ft_strlen(*line);
+		if (set->minfo.m_width < temp_size)
+			set->minfo.m_width = temp_size;
+		set->minfo.m_height++;
+		write(fd_2, *line, temp_size);
+		write(fd_2, "\n", 1);
+	}
+}
+
+int		get_map(int fd, char **line, t_set *set)
+{
+	int		i;
+	int		fd_2;
+	char	*temp_map;
+
+	i = -1;
+	fd_2 = open("tmp_map", O_CREAT | O_RDWR, 0777);
+	get_map_size(set, fd, fd_2, line);
+	set->minfo.num_sprite = 0;
+	set->map2 = (int **)malloc(sizeof(int *) * set->minfo.m_height);
+	while (++i < set->minfo.m_height)
+		set->map2[i] = (int *)malloc(sizeof(int) * set->minfo.m_width);
+	close(fd);
+	close(fd_2);
+	fd_2 = open("tmp_map", O_RDONLY);
+	i = 0;
+	while ((get_next_line(fd_2, &temp_map) > 0))
+	{
+		change_map(set, &(set->map2[i++]), temp_map);
+		free(temp_map);
+	}
+	free(temp_map);
+	close(fd_2);
+	return (1);
+}
+
+// map 유효성 검사
+void	init_ck_map(t_set *set, int ***ck_map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < (set->minfo.m_height + 2))
+	{
+		j = 0;
+		while (j < (set->minfo.m_width + 2))
+		{
+			if (i == 0 || j == 0 || i == set->minfo.m_height + 1 || j == set->minfo.m_width + 1)
+			{
+				(*ck_map)[i][j] = -1;
+			}
+			else
+			{
+				//printf("* %d %d\n", i, j);
+				(*ck_map)[i][j] = set->map2[i - 1][j - 1];
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+int		is_road(t_set *set, int ***ck_map, int x, int y)
+{
+	int		dir_x[4];
+	int		dir_y[4];
+	int		i;
+
+	dir_x[0] = -1;
+	dir_x[1] = 0;
+	dir_x[2] = 1;
+	dir_x[3] = 0;
+	i = -1;
+	while (++i < 4)
+		dir_y[3 - i] = dir_x[i];
+	i = -1;
+	if ((*ck_map)[x][y] == 1 || (*ck_map)[x][y] == -2)
+		return (1);
+	if ((*ck_map)[x][y] == -1)
+		return (0);
+	(*ck_map)[x][y] = -2;
+	i = -1;
+	while (++i < 4)
+		if (!is_road(set, ck_map, x + dir_x[i], y + dir_y[i]))
+			return (0);
+	return (1);
+}
+
+int		is_map(t_set *set, int **ck_map)
+{
+	int		is_zero;
+	int		i;
+	int		j;
+
+	is_zero = 0;
+	i = -1;
+	while (++i < set->minfo.m_height)
+	{
+		j = -1;
+		while (++j < set->minfo.m_width)
+		{
+			if (ck_map[i][j] == 0)
+			{
+				is_zero = 1;
+				if (is_road(set, &ck_map, i, j) == 0)
+					return (0);
+			}
+
+		}
+	}
+	if (!is_zero)
+		return (0);
+	else
+		return (1);
+}
+
+int		check_map(t_set *set)
+{
+	int		**ck_map;
+	int		i;
+
+	ck_map = (int **)malloc(sizeof(int *) * (set->minfo.m_height + 2));
+	i = -1;
+	while (++i < set->minfo.m_width + 2)
+		ck_map[i] = (int *)malloc(sizeof(int) * (set->minfo.m_width + 2));
+	init_ck_map(set, &ck_map);
+	return (is_map(set, ck_map));
+}
+
+void	parse_map(t_set *set)
+{
+	char	*line;
+	int		fd = open("test_map.cub", O_RDONLY);
+
+	if (!get_resolution(fd, &line, set))
+		printf("Error1\n");
+	if (!get_path(fd, &line, set))
+		printf("Error2\n");
+	// texture로 주어지는 상황 2개 모두 고려할 것인가?
+	if (!get_fc(fd, &line, set))
+		printf("Error3\n");
+	get_map(fd, &line, set);
+	if (!check_map(set))
+		printf("Error4\n");
+}
 
 int		main(void)
 {
@@ -716,7 +970,28 @@ int		main(void)
 	i = 0;
 	j = 0;
 	
-	// parse_map(set);
+	parse_map(&set);
+
+		printf("s_width : %d\n", set.minfo.s_width);
+	printf("s_height : %d\n", set.minfo.s_height);
+	printf("no_path : %s\n", set.minfo.no_path);
+	printf("so_path : %s\n", set.minfo.so_path);
+	printf("we_path : %s\n", set.minfo.we_path);
+	printf("ea_path : %s\n", set.minfo.ea_path);
+	printf("s_path : %s\n", set.minfo.sp_path);
+	printf("floor : %d\n", set.minfo.floor);
+	printf("ceiling : %d\n", set.minfo.ceiling);
+	printf("m_height : %d\n", set.minfo.m_height);
+	printf("m_width : %d\n", set.minfo.m_width);
+	printf("num_sprite : %d\n", set.minfo.num_sprite);
+	for(int i = 0; i < set.minfo.m_height; i++)
+	{
+		for(int j = 0; j < set.minfo.m_width; j++)
+			printf("%3d", set.map2[i][j]);
+		printf("\n");
+	}
+
+	
 	make_window(&set);
 	load_tex(&set);
 	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);
@@ -726,8 +1001,5 @@ int		main(void)
 
 
 		// printf("*\n");
-
-
-
 	return (0);
 }

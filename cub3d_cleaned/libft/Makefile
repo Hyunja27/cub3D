@@ -12,7 +12,7 @@ SRCS = $(addprefix ./sources/, ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_
 		ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_strchrs.c ft_memset_chr.c \
 		ft_int_len.c ft_itoa_no_minus.c ft_ltoa.c ft_convert_base_u.c ft_convert_base.c ft_is_space.c ft_print_memory.c ft_strcat_chr.c ft_ltoa_no_minus.c ft_chrcat_chr.c ft_memmove_f.c ft_ultoa.c \
 		ft_dtoa_in_fix.c ft_ltoa_no_minus_round.c ft_free_va.c ft_strjoin_free.c ft_db_len.c ft_power.c ft_zero_maker.c ft_manti_to_a.c ft_array_round.c \
-		ft_ilencal.c)
+		ft_ilencal.c ft_get_next_line.c)
 
 ALLSRCS = $(addprefix ./sources/, ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
 		ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_strchrs.c \
@@ -21,7 +21,7 @@ ALLSRCS = $(addprefix ./sources/, ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c 
 		ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c ft_memset_chr.c \
 		ft_int_len.c ft_itoa_no_minus.c ft_ltoa.c ft_convert_base_u.c ft_convert_base.c ft_is_space.c ft_print_memory.c ft_strcat_chr.c ft_ltoa_no_minus.c ft_chrcat_chr.c ft_memmove_f.c ft_ultoa.c \
 		ft_dtoa_in_fix.c ft_ltoa_no_minus_round.c ft_free_va.c ft_strjoin_free.c ft_db_len.c ft_power.c ft_zero_maker.c ft_manti_to_a.c ft_array_round.c \
-		ft_ilencal.c)
+		ft_ilencal.c ft_get_next_line.c)
 
 ALLOBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(ALLSRCS:.c=.o))) 
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))

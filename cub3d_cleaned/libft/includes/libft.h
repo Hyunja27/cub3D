@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 14:32:23 by hyunja            #+#    #+#             */
-/*   Updated: 2021/02/02 15:26:53 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:18:47 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct							s_ex_type
 	int									hh;
 }										t_ex_type;
 
-typedef struct							s_set
+typedef struct							s_libset
 {
 	void								*val;
 	char								type;
@@ -103,7 +103,7 @@ typedef struct							s_set
 	t_flag_set							flags;
 	t_lenth_set							lenths;
 	t_ex_type							ex;
-}										t_set;
+}										t_libset;
 
 char									*ft_strnstr(const char *str, \
 										const char *to_find, size_t n);
@@ -180,9 +180,9 @@ char									*ft_convert_base(char *nbr, \
 char									*ft_ltoa_no_minus_round(long long n);
 void									ft_free_va(int cnt, ...);
 char									*ft_strjoin_free(char *s1, char *s2);
-int										ft_db_len(t_set *set, double n, \
+int										ft_db_len(t_libset *set, double n, \
 										int pre, int wid);
-char									*ft_dtoa_in_fix(t_set *set, double n, \
+char									*ft_dtoa_in_fix(t_libset *set, double n, \
 										int pre, int wid);
 unsigned long long						ft_power(int time);
 t_list									*ft_lstnew(void *content);
@@ -201,11 +201,11 @@ void									ft_lstiter(t_list *lst, \
 t_list									*ft_lstmap(t_list *lst, \
 										void *(*f)(void *), \
 										void (*del)(void *));
-char									*ft_zero_maker(t_set *set, \
+char									*ft_zero_maker(t_libset *set, \
 										int pre, int wid);
-char									*ft_manti_to_a(t_set *set, \
+char									*ft_manti_to_a(t_libset *set, \
 										double manti, char *base, int pre);
-char									ft_array_round(t_set *set, \
+char									ft_array_round(t_libset *set, \
 										char *str, int pre);
 int										ft_ilencal(long long n);
 int										get_next_line(int fd, char **line);

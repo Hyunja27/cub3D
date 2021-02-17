@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:22:41 by hyunja            #+#    #+#             */
-/*   Updated: 2020/11/20 03:07:15 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:21:53 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_array_round_3(char *str, int i)
 		str[i] = '\0';
 }
 
-static void	ft_array_round_2(t_set *set, char *str, int pre, int i)
+static void	ft_array_round_2(t_libset *set, char *str, int pre, int i)
 {
 	if (((set->f.s_bit.sgnfi) << (pre + 1 + \
 	(set->f.s_bit.expond - 1023)) << 12) == 0)
@@ -48,7 +48,7 @@ static void	ft_array_round_2(t_set *set, char *str, int pre, int i)
 		ft_array_round_3(str, i);
 }
 
-char		ft_array_round(t_set *set, char *str, int pre)
+char		ft_array_round(t_libset *set, char *str, int pre)
 {
 	int	len;
 	int	i;

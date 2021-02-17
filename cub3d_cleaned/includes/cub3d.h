@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/04 16:11:36 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:26:15 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "cub3d_macro.h"
 #include "mlx.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -138,6 +139,21 @@ typedef struct s_tex
 	int		color;
 }				t_tex;
 
+typedef struct	s_minfo
+{
+	int			s_width;
+	int			s_height;
+	int			m_width;
+	int			m_height;
+	int			num_sprite;
+	char		*no_path;
+	char		*so_path;
+	char		*we_path;
+	char		*ea_path;
+	char		*sp_path;
+	int			floor;
+	int			ceiling;
+}				t_minfo;
 typedef struct	s_set
 {
 	void		*mlx_ptr;
@@ -146,7 +162,8 @@ typedef struct	s_set
 	int			left;
 	int			right;
 	int			down;
-	int			map;
+	int			map1;
+	int**		map2;
 	char*		S_tex;
 	char*		W_tex;
 	char*		N_tex;
@@ -160,6 +177,7 @@ typedef struct	s_set
 	t_cal_ray	cr;
 	t_flr		flr;
 	t_tex		tex;
+	t_minfo		minfo;
 }				t_set;
 
 int worldMap[MAP_WIDTH][MAP_HEIGHT]=

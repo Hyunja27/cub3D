@@ -6,13 +6,13 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/18 16:45:30 by spark             #+#    #+#             */
-/*   Updated: 2020/11/04 14:27:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:20:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_db_len(t_set *set, double n, int pre, int wid)
+int		ft_db_len(t_libset *set, double n, int pre, int wid)
 {
 	char	*tmp;
 	int		rt;

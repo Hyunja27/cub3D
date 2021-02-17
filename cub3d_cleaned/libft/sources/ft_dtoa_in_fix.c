@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 10:22:41 by hyunja            #+#    #+#             */
-/*   Updated: 2020/11/20 03:12:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 17:19:34 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void			ft_dtoa_2_2(int i, char **rt, char **be_free)
 	}
 }
 
-static void			ft_dtoa_2(t_set *set, double n, char **rt, char **be_free)
+static void			ft_dtoa_2(t_libset *set, double n, char **rt, char **be_free)
 {
 	int				i;
 	double			db;
@@ -54,7 +54,7 @@ static void			ft_dtoa_2(t_set *set, double n, char **rt, char **be_free)
 	}
 }
 
-char				*ft_dtoa_in_fix(t_set *set, double n, int pre, int wid)
+char				*ft_dtoa_in_fix(t_libset *set, double n, int pre, int wid)
 {
 	char			*rt;
 	char			*be_free;
