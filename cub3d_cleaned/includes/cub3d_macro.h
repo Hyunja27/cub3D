@@ -6,18 +6,18 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/17 19:20:02 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 20:36:15 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_MACRO_H
 # define CUB3D_MACRO_H
 
-#define BOX_SIZE 40
+// #define BOX_SIZE 40
 
 // #define MAP_WIDTH 24
 // #define MAP_HEIGHT 24
-#define MAP_BOX_SIZE 5
+#define MAP_BOX_SIZE 7
 
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64

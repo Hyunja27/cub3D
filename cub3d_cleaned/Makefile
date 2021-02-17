@@ -57,4 +57,6 @@ test :
 	@(make fclean)
 	@(make)
 	@(./cub3D)
+	@(rm cub3D)
 	@(rm tmp_map)
+	

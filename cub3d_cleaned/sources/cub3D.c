@@ -6,39 +6,39 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/17 19:31:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 22:43:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void  my_mlx_pixel_put(t_set *s, int x, int y, int color)
-{
-  int *dst;
+// void  my_mlx_pixel_put(t_set *s, int x, int y, int color)
+// {
+//   int *dst;
 
- // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
-  dst = s->img.data + (y * s->minfo.s_width + x );
-  *(unsigned int*)dst = color;
-}
+//  // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
+//   dst = s->img.data + (y * s->minfo.s_width + x );
+//   *(unsigned int*)dst = color;
+// }
 
 
-void	draw_square(t_set *s, int start, int color)
-{
-	int		i = 0;
-	int		j = 0;
+// void	draw_square(t_set *s, int start, int color)
+// {
+// 	int		i = 0;
+// 	int		j = 0;
 	
-	while (j < MAP_BOX_SIZE)
-	{
-		i = 0;
-		while (i < MAP_BOX_SIZE)
-		{
-			s->img.data[start + i] = color;
-			i++;
-		}
-		start += s->minfo.s_width;
-		j++;
-	}
-}
+// 	while (j < MAP_BOX_SIZE)
+// 	{
+// 		i = 0;
+// 		while (i < MAP_BOX_SIZE)
+// 		{
+// 			s->img.data[start + i] = color;
+// 			i++;
+// 		}
+// 		start += s->minfo.s_width;
+// 		j++;
+// 	}
+// }
 
 
 void    arrange_Sprite(t_set *s)
@@ -65,32 +65,43 @@ void    arrange_Sprite(t_set *s)
     }
 }
 
-int		move(t_set *s)
-{
-	int i;
-	int j;
-	int k;
-	int map2d_pos_X;
-	int map2d_pos_Y;
-	// for(int a = 0; a < screenHeight * screenWidth; a++)
-	// 	set->img.data[a] = 0;
+// int		move(t_set *s)
+// {
+// 	int i;
+// 	int j;
+// 	int a;
+// 	// int k;
+// 	// int map2d_pos_X;
+// 	// int map2d_pos_Y;
+// 	// for(int a = 0; a < screenHeight * screenWidth; a++)
+// 	// 	set->img.data[a] = 0;
 
-	map2d_pos_X = s->p.pos_X * MAP_BOX_SIZE;
-	map2d_pos_Y = s->p.pos_Y * MAP_BOX_SIZE;
-	for (i = (int)map2d_pos_X, k = 4; i < map2d_pos_X + 2; i++, k -= 2)
-		{
-			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-			my_mlx_pixel_put(s, j, i, 0x0000FF00);
-		}
-	for (i = map2d_pos_X + 2, k = 0; i < map2d_pos_X + 4; i++, k += 2)
-		{
-			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-			my_mlx_pixel_put(s, j, i, 0x0000FF00);
-		}
-	// draw_square(s, s->p.pos_X, 0x0000FF00);
+// 	// map2d_pos_X = s->p.pos_X * MAP_BOX_SIZE;
+// 	// map2d_pos_Y = s->p.pos_Y * MAP_BOX_SIZE;
+// 	// for (i = (int)map2d_pos_X, k = 4; i < map2d_pos_X + 2; i++, k -= 2)
+// 	// 	{
+// 	// 		for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
+// 	// 		my_mlx_pixel_put(s, i, j, 0x0000FF00);
+// 	// 	}
+// 	// for (i = map2d_pos_X + 2, k = 0; i < map2d_pos_X + 4; i++, k += 2)
+// 	// 	{
+// 	// 		for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
+// 	// 		my_mlx_pixel_put(s, i, j, 0x0000FF00);
+// 	// 	}
+// 	// draw_square(s, s->p.pos_X, 0x0000FF00);
+
+// 	i = s->p.pos_X * MAP_BOX_SIZE;
+// 	j = s->p.pos_Y * MAP_BOX_SIZE;
+// 	printf("%d %d\n", i, j);
+// 	a = -1;
+// 	while (++a < 2)
+// 	{
+// 		for(int b = 0; b < 3; b++)
+// 			s->img.data[(j + a) * s->minfo.s_width + (i + b)] = 0xff0000;
+// 	}
 	
-	return (0);
-}
+// 	return (0);
+// }
 
 // void	draw_cross_line(t_img set, int start, int color)
 // {
@@ -136,33 +147,63 @@ int		move(t_set *s)
 // 	// draw_strange_line(set, 5000, 0xffffff);
 // }
 
-void	parse_draw_map(t_set *s, int color)
+void	draw_rect(t_set *set, int x, int y)
 {
 	int i;
 	int j;
-	int point;
 
+	x *= MAP_BOX_SIZE;
+	y *= MAP_BOX_SIZE;
 	i = 0;
-	j = 0;
-	point = 0;
-	
-	while (i < s->minfo.m_height)
+	while (i < MAP_BOX_SIZE)
 	{
-		while (j < s->minfo.m_width)
+		j = 0;
+		while (j < MAP_BOX_SIZE)
 		{
-			point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
-			//draw_square(set, point, 0);
-			if (s->map2[i][j] != 0)
-			{
-				point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
-				draw_square(s, point, color);
-			}
+			set->img.data[(x + i) * set->minfo.s_width + y + j] = 0xFFFFFF;
 			j++;
 		}
-		j = 0;
 		i++;
 	}
-	move(s);
+}
+
+void	draw_all_rect(t_set *set)
+{
+
+	int i;
+	int j;
+
+	i = 0;
+	while (i < set->minfo.m_height)
+	{
+		j = 0;
+		while (j < set->minfo.m_width)
+		{
+			if (set->map2[i][j] > 0)
+				draw_rect(set, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	parse_draw_map(t_set *s)
+{
+	int	i;
+	int j;
+	int	a;
+	int	b;
+	
+	draw_all_rect(s);
+	i = s->p.pos_X * MAP_BOX_SIZE;
+	j = s->p.pos_Y * MAP_BOX_SIZE;
+	a = -1;
+	while (++a < 2)
+	{
+		b = -1;
+		for(b = 0; b < 3; b++)
+			s->img.data[(i + a) * s->minfo.s_width + (j + b)] = 0xff0000;
+	}
 }
 
 int		key_press(int keycode, t_set *set)
@@ -264,20 +305,20 @@ void	key_action(t_set *s)
 	if (s->right == 1)
 	{
 		olddir_x = s->p.dir_X;
-		s->p.dir_X = s->p.dir_X * cos(-s->p.rotspeed) - s->p.dir_Y * sin(-s->p.rotspeed);
-		s->p.dir_Y = olddir_x * sin(-s->p.rotspeed) + s->p.dir_Y * cos(-s->p.rotspeed);
-		oldplane_x = s->p.plane_X;
-		s->p.plane_X = s->p.plane_X * cos(-s->p.rotspeed) - s->p.plane_Y * sin(-s->p.rotspeed);
-		s->p.plane_Y = oldplane_x * sin(-s->p.rotspeed) + s->p.plane_Y * cos(-s->p.rotspeed);
-	}
-	if (s->left == 1)
-	{
-		olddir_x = s->p.dir_X;
 		s->p.dir_X = s->p.dir_X * cos(s->p.rotspeed) - s->p.dir_Y * sin(s->p.rotspeed);
 		s->p.dir_Y = olddir_x * sin(s->p.rotspeed) + s->p.dir_Y * cos(s->p.rotspeed);
 		oldplane_x = s->p.plane_X;
 		s->p.plane_X = s->p.plane_X * cos(s->p.rotspeed) - s->p.plane_Y * sin(s->p.rotspeed);
 		s->p.plane_Y = oldplane_x * sin(s->p.rotspeed) + s->p.plane_Y * cos(s->p.rotspeed);
+	}
+	if (s->left == 1)
+	{
+		olddir_x = s->p.dir_X;
+		s->p.dir_X = s->p.dir_X * cos(-s->p.rotspeed) - s->p.dir_Y * sin(-s->p.rotspeed);
+		s->p.dir_Y = olddir_x * sin(-s->p.rotspeed) + s->p.dir_Y * cos(-s->p.rotspeed);
+		oldplane_x = s->p.plane_X;
+		s->p.plane_X = s->p.plane_X * cos(-s->p.rotspeed) - s->p.plane_Y * sin(-s->p.rotspeed);
+		s->p.plane_Y = oldplane_x * sin(-s->p.rotspeed) + s->p.plane_Y * cos(-s->p.rotspeed);
 	}
 }
 
@@ -461,9 +502,6 @@ void	carl_ray(t_set *s)
 		// 		s->tex.texture_kind = 3;
 		// }
 
-		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight; 
-		s->p.texture_pos = (s->cr.draw_start - s->minfo.s_height / 2 + s->cr.line_screenHeight / 2) * s->p.step;
-
 		if (s->p.hit_side == 0)
 			s->cr.wallX = s->p.pos_Y + s->p.perpwalldist * s->p.raydir_Y;
 		else
@@ -476,20 +514,22 @@ void	carl_ray(t_set *s)
 		if (s->p.hit_side == 1 && s->p.raydir_Y < 0)
 			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
 
+		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight; 
+		s->p.texture_pos = (s->cr.draw_start - s->minfo.s_height / 2 + s->cr.line_screenHeight / 2) * s->p.step;
 
 		if (s->p.hit_side == 1)
 		{
 			if (s->p.raydir_Y > 0)
-				s->tex.texture_kind = 0;
+				s->tex.texture_kind = 2;
 			else
-				s->tex.texture_kind = 1;
+				s->tex.texture_kind = 3;
 		}
 		else if (s->p.hit_side == 0)
 		{
 			if (s->p.raydir_X > 0)
-				s->tex.texture_kind = 2;
+				s->tex.texture_kind = 0;
 			else
-				s->tex.texture_kind = 3;
+				s->tex.texture_kind = 1;
 		}
 
 		
@@ -605,10 +645,10 @@ int		main_loop(t_set *set)
 {
 	clean_screen(set);
 	carl_ray(set);
-	sprite_cast(set);
+	//sprite_cast(set);
 
 	if (set->map1 == 1)
-		parse_draw_map(set, 0xcc82cc);
+		parse_draw_map(set);
 	key_action(set);
 
 	mlx_put_image_to_window(set->mlx_ptr, set->win_ptr, set->img.img_ptr, 0, 0);
@@ -793,15 +833,15 @@ void	set_pos(t_set *set, char pos)
 		{
 			set->p.dir_X = 0;
 			set->p.dir_Y = 1;
-			set->p.plane_X = 0;
-			set->p.plane_Y = 0.66;
+			set->p.plane_X = 0.66;
+			set->p.plane_Y = 0;
 		}
 		if (pos == 'N')
 		{
 			set->p.dir_X = 0;
 			set->p.dir_Y = -1;
-			set->p.plane_X = 0;
-			set->p.plane_Y = 0.66;
+			set->p.plane_X = 0.66;
+			set->p.plane_Y = 0;
 		}
 }
 
@@ -1013,18 +1053,24 @@ int		main(void)
 	
 	parse_map(&set);
 
-		printf("s_width : %d\n", set.minfo.s_width);
-	printf("s_height : %d\n", set.minfo.s_height);
-	printf("no_path : %s\n", set.minfo.no_path);
-	printf("so_path : %s\n", set.minfo.so_path);
-	printf("we_path : %s\n", set.minfo.we_path);
-	printf("ea_path : %s\n", set.minfo.ea_path);
-	printf("s_path : %s\n", set.minfo.sp_path);
-	printf("floor : %d\n", set.minfo.floor);
-	printf("ceiling : %d\n", set.minfo.ceiling);
-	printf("m_height : %d\n", set.minfo.m_height);
-	printf("m_width : %d\n", set.minfo.m_width);
-	printf("num_sprite : %d\n", set.minfo.num_sprite);
+	// printf("%f ", set.p.dir_X);
+	// printf("%f ", set.p.dir_Y);
+	// printf("%f ", set.p.pos_X);
+	// printf("%f \n", set.p.pos_Y);
+	
+
+	// printf("s_width : %d\n", set.minfo.s_width);
+	// printf("s_height : %d\n", set.minfo.s_height);
+	// printf("no_path : %s\n", set.minfo.no_path);
+	// printf("so_path : %s\n", set.minfo.so_path);
+	// printf("we_path : %s\n", set.minfo.we_path);
+	// printf("ea_path : %s\n", set.minfo.ea_path);
+	// printf("s_path : %s\n", set.minfo.sp_path);
+	// printf("floor : %d\n", set.minfo.floor);
+	// printf("ceiling : %d\n", set.minfo.ceiling);
+	// printf("m_height : %d\n", set.minfo.m_height);
+	// printf("m_width : %d\n", set.minfo.m_width);
+	// printf("num_sprite : %d\n", set.minfo.num_sprite);
 	for(int i = 0; i < set.minfo.m_height; i++)
 	{
 		for(int j = 0; j < set.minfo.m_width; j++)
