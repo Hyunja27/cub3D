@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/17 17:57:17 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/17 19:31:45 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		move(t_set *s)
 			for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
 			my_mlx_pixel_put(s, j, i, 0x0000FF00);
 		}
-	// draw_square(set, point.pos_X, 0x0000FF00);
+	// draw_square(s, s->p.pos_X, 0x0000FF00);
 	
 	return (0);
 }
@@ -109,7 +109,7 @@ int		move(t_set *s)
 // 		set.data[start - (i++ * s->minfo.s_width)] = color;
 // }
 
-// void	parse_draw_line(t_img set, int worldmap[24][24],int color)
+// void	parse_draw_line(t_img set, int s->map2[24][24],int color)
 // {
 // 	int i;
 // 	int j;
@@ -118,11 +118,11 @@ int		move(t_set *s)
 // 	i = 0;
 // 	j = 0;
 // 	point = 0;
-// 	while (i < COLS)
+// 	while (i < m->height)
 // 	{
-// 		while (j < ROWS)
+// 		while (j < s->m_width)
 // 		{
-// 			if (worldMap[i][j] == 1)
+// 			if (s->map2[i][j] == 1)
 // 			{
 // 				point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 // 				// if (point > BOX_screenWidth)
@@ -136,7 +136,7 @@ int		move(t_set *s)
 // 	// draw_strange_line(set, 5000, 0xffffff);
 // }
 
-void	parse_draw_map(t_set *s, int world[24][24],int color)
+void	parse_draw_map(t_set *s, int color)
 {
 	int i;
 	int j;
@@ -146,13 +146,13 @@ void	parse_draw_map(t_set *s, int world[24][24],int color)
 	j = 0;
 	point = 0;
 	
-	while (i < COLS)
+	while (i < s->minfo.m_height)
 	{
-		while (j < ROWS)
+		while (j < s->minfo.m_width)
 		{
 			point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 			//draw_square(set, point, 0);
-			if (world[i][j] != 0)
+			if (s->map2[i][j] != 0)
 			{
 				point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
 				draw_square(s, point, color);
@@ -189,16 +189,16 @@ int		key_press(int keycode, t_set *set)
 	// 해당 부분을 메인 함수 루프 바디에서 실행해볼 것, 키 릴리즈와 프레스는 플래그만 바꿔주도록.
 	// if (set->up == 1)
 	// {
-	// 	if (!worldMap[(int)(point.pos_X + point.dir_X * point.movespeed)][(int)point.pos_Y])
+	// 	if (!s->map2[(int)(point.pos_X + point.dir_X * point.movespeed)][(int)point.pos_Y])
 	// 		point.pos_X += point.dir_X * point.movespeed;
-	// 	if (!worldMap[(int)point.pos_X][(int)(point.pos_Y + point.dir_Y * point.movespeed)])
+	// 	if (!s->map2[(int)point.pos_X][(int)(point.pos_Y + point.dir_Y * point.movespeed)])
 	// 		point.pos_Y += point.dir_Y * point.movespeed;
 	// }
 	// if (set->down == 1)
 	// {
-	// 	if (!worldMap[(int)(point.pos_X - point.dir_X * point.movespeed)][(int)point.pos_Y])
+	// 	if (!s->map2[(int)(point.pos_X - point.dir_X * point.movespeed)][(int)point.pos_Y])
 	// 		point.pos_X -= point.dir_X * point.movespeed;
-	// 	if (!worldMap[(int)point.pos_X][(int)(point.pos_Y - point.dir_Y * point.movespeed)])
+	// 	if (!s->map2[(int)point.pos_X][(int)(point.pos_Y - point.dir_Y * point.movespeed)])
 	// 		point.pos_Y -= point.dir_Y * point.movespeed;
 	// }
 	// if (set->right == 1)
@@ -249,16 +249,16 @@ void	key_action(t_set *s)
 	
 	if (s->up == 1)
 	{
-		if (!worldMap[(int)(s->p.pos_X + s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
+		if (!s->map2[(int)(s->p.pos_X + s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
 			s->p.pos_X += s->p.dir_X * s->p.movespeed;
-		if (!worldMap[(int)s->p.pos_X][(int)(s->p.pos_Y + s->p.dir_Y * s->p.movespeed)])
+		if (!s->map2[(int)s->p.pos_X][(int)(s->p.pos_Y + s->p.dir_Y * s->p.movespeed)])
 			s->p.pos_Y += s->p.dir_Y * s->p.movespeed;
 	}
 	if (s->down == 1)
 	{
-		if (!worldMap[(int)(s->p.pos_X - s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
+		if (!s->map2[(int)(s->p.pos_X - s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
 			s->p.pos_X -= s->p.dir_X * s->p.movespeed;
-		if (!worldMap[(int)s->p.pos_X][(int)(s->p.pos_Y - s->p.dir_Y * s->p.movespeed)])
+		if (!s->map2[(int)s->p.pos_X][(int)(s->p.pos_Y - s->p.dir_Y * s->p.movespeed)])
 			s->p.pos_Y -= s->p.dir_Y * s->p.movespeed;
 	}
 	if (s->right == 1)
@@ -300,7 +300,6 @@ void	carl_ray(t_set *s)
 	y = 0;
 	i = 0;
 	
-
 	while(y < s->minfo.s_height)
 	{
 		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
@@ -405,7 +404,7 @@ void	carl_ray(t_set *s)
 				s->p.position_Y += s->p.step_Y;
 				s->p.hit_side = 1;
 			}
-			if (worldMap[s->p.position_X][s->p.position_Y] > 0)
+			if (s->map2[s->p.position_X][s->p.position_Y] > 0)
 				s->p.hit = 1;
 		}
 
@@ -422,26 +421,26 @@ void	carl_ray(t_set *s)
 		if (s->cr.draw_end >= s->minfo.s_height)
 			s->cr.draw_end = s->minfo.s_height - 1;
 		
-		// if (worldMap[p->position_X][p->position_Y] == 1)
+		// if (s->map2[p->position_X][p->position_Y] == 1)
 		// 	color = CLR_LBL;
-		// else if  (worldMap[p->position_X][p->position_Y] == 2)
+		// else if  (s->map2[p->position_X][p->position_Y] == 2)
 		// 	color = CLR_ORG;
-		// else if  (worldMap[p->position_X][p->position_Y] == 3)
+		// else if  (s->map2[p->position_X][p->position_Y] == 3)
 		// 	color = CLR_CRD;
-		// else if  (worldMap[p->position_X][p->position_Y] == 4)
+		// else if  (s->map2[p->position_X][p->position_Y] == 4)
 		// 	color = CLR_KAK;
-		// else if  (worldMap[p->position_X][p->position_Y] == 5)
+		// else if  (s->map2[p->position_X][p->position_Y] == 5)
 		// 	color = CLR_DGR;
 		// if (p->hit_side == 1)
 		// 	color = color / 2;x
 		// draw_vertical(x, draw_start, draw_end, color);
 
-		// if (worldMap[s->p.position_X][s->p.position_Y] - 1 == 2)
+		// if (s->map2[s->p.position_X][s->p.position_Y] - 1 == 2)
 		// {
 		// 	s->spr.spriteX = s->p.position_X - s->p.pos_X;
 		// 	s->spr.spriteY = s->p.position_Y - s->p.pos_Y;
 		// }
-		// s->tex.texture_kind = worldMap[s->p.position_X][s->p.position_Y] - 1;
+		// s->tex.texture_kind = s->map2[s->p.position_X][s->p.position_Y] - 1;
 
 		// 0 = 동
 		// 1 = 서
@@ -609,7 +608,7 @@ int		main_loop(t_set *set)
 	sprite_cast(set);
 
 	if (set->map1 == 1)
-		parse_draw_map(set, worldMap, 0xcc82cc);
+		parse_draw_map(set, 0xcc82cc);
 	key_action(set);
 
 	mlx_put_image_to_window(set->mlx_ptr, set->win_ptr, set->img.img_ptr, 0, 0);
@@ -772,7 +771,41 @@ int		get_fc(int fd, char **line,  t_set *set)
 }
 
 // map 읽어서 저장
-void	change_map(t_set *set, int **map, char *temp_map)
+
+void	set_pos(t_set *set, char pos)
+{
+	if (pos == 'E')
+		{
+			set->p.dir_X = 1;
+			set->p.dir_Y = 0;
+			set->p.plane_X = 0;
+			set->p.plane_Y = 0.66;
+
+		}
+		if (pos == 'W')
+		{
+			set->p.dir_X = -1;
+			set->p.dir_Y = 0;
+			set->p.plane_X = 0;
+			set->p.plane_Y = 0.66;
+		}
+		if (pos == 'S')
+		{
+			set->p.dir_X = 0;
+			set->p.dir_Y = 1;
+			set->p.plane_X = 0;
+			set->p.plane_Y = 0.66;
+		}
+		if (pos == 'N')
+		{
+			set->p.dir_X = 0;
+			set->p.dir_Y = -1;
+			set->p.plane_X = 0;
+			set->p.plane_Y = 0.66;
+		}
+}
+
+void	change_map(t_set *set, int **map, char *temp_map, int i)
 {
 	int		j;
 
@@ -782,6 +815,13 @@ void	change_map(t_set *set, int **map, char *temp_map)
 	j = -1;
 	while (temp_map[++j] != 0)
 	{
+		if (temp_map[j] == 'E' || temp_map[j] == 'W' || temp_map[j] == 'S' || temp_map[j] == 'N')
+		{
+			set_pos(set, temp_map[j]);
+			set->p.pos_X = i;
+			set->p.pos_Y = j;
+			temp_map[j] = '0';
+		}
 		(*map)[j] = temp_map[j] == ' ' ? -1 : temp_map[j] - '0';
 		if ((*map)[j] == 2)
 			set->minfo.num_sprite++;
@@ -825,7 +865,8 @@ int		get_map(int fd, char **line, t_set *set)
 	i = 0;
 	while ((get_next_line(fd_2, &temp_map) > 0))
 	{
-		change_map(set, &(set->map2[i++]), temp_map);
+		change_map(set, &(set->map2[i]), temp_map, i);
+		i++;
 		free(temp_map);
 	}
 	free(temp_map);
@@ -950,12 +991,12 @@ int		main(void)
 	int		j;
 	t_set	set;
 
-	set.p.pos_X = 22.0;
-	set.p.pos_Y = 11.5;
-	set.p.dir_X = -1;
-	set.p.dir_Y = 0;
-	set.p.plane_X = 0;
-	set.p.plane_Y = 0.66;
+	// set.p.pos_X = 22.0;
+	// set.p.pos_Y = 11.5;
+	// set.p.dir_X = -1;
+	// set.p.dir_Y = 0;
+	// set.p.plane_X = 0;
+	// set.p.plane_Y = 0.66;
 	set.p.rotspeed = 0.02;
 	set.p.movespeed = 0.1;
 
@@ -991,7 +1032,8 @@ int		main(void)
 		printf("\n");
 	}
 
-	
+	if (!(set.p.zBuffer = malloc(sizeof(double) * set.minfo.s_width)))
+		return (-1);
 	make_window(&set);
 	load_tex(&set);
 	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);
