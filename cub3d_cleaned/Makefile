@@ -8,7 +8,7 @@ INC_DIR = ./includes
 SRC_DIR = ./sources
 
 CC = gcc
-GCC_FLAG = -Wall -Wextra -Werror
+GCC_FLAG = -Wall -Wextra -Werror -g
 RM = rm
 RMFLAGS = -f
 AR = ar crs
