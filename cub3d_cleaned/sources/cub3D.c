@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/18 22:07:56 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/18 22:32:34 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -740,15 +740,17 @@ int get_resolution(char **line, t_set *set)
 {
 	if (!check_str("R ", line, 2))
 		return (0);
-	if ((set->minfo.s_width = ft_atoi(*line)) < 0)
+	if ((set->minfo.s_width = ft_atoi(*line + 2)) < 0)
 		return (0);
-	(*line) += ft_ilencal(set->minfo.s_width);
-	if (!check_str(" ", line, 1))
-		return (0);
+	(*line) += ft_ilencal(set->minfo.s_width) + 2;
+	// if (!check_str(" ", line, 1))
+	// 	return (0);
+	(*line)++;
+	printf("\n\n\n\n!!%s", *line);
 	if ((set->minfo.s_height = ft_atoi(*line)) < 0)
 		return (0);
-	(*line) -= (2 + ft_ilencal(set->minfo.s_width) + 1);
-	free(*line);
+	// (*line) -= (2 + ft_ilencal(set->minfo.s_width) + 1);
+	// free(*line);
 	return (1);
 }
 
