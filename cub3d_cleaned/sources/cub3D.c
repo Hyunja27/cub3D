@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/18 14:41:00 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/18 15:32:03 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void    arrange_Sprite(t_set *s)
     int     tmp;
     double  dis_tmp;
     double  max = 0;
-    for(int i = 0; i < SPRITE_NUM - 1; i++)
+    for(int i = 0; i < s->minfo.num_sprite - 1; i++)
     {
         max = s->spr.spriteDistance[i];
-        for(int j = i + 1; j < SPRITE_NUM; j++)
+        for(int j = i + 1; j < s->minfo.num_sprite; j++)
         {
             if (max <= s->spr.spriteDistance[j])
             {
@@ -446,7 +446,7 @@ void	carl_ray(t_set *s)
 				s->p.position_Y += s->p.step_Y;
 				s->p.hit_side = 1;
 			}
-			if (s->map2[s->p.position_X][s->p.position_Y] == 0)
+			if (s->map2[s->p.position_X][s->p.position_Y] == 1)
 				s->p.hit = 1;
 		}
 
@@ -561,21 +561,23 @@ void    sprite_cast(t_set *s)
 	i = 0;
 	x = 0;
 	y = 0;
-    while(i < SPRITE_NUM)
+	s->spr.spriteOrder = (int*)malloc(sizeof(int) * s->minfo.num_sprite);
+	s->spr.spriteDistance = (int*)malloc(sizeof(int) * s->minfo.num_sprite);
+    while(i < s->minfo.num_sprite)
     {
         s->spr.spriteOrder[i] = i;
-        s->spr.spriteDistance[i] = ((s->p.pos_X - spr[i].x) *  (s->p.pos_X - spr[i].x) + (s->p.pos_Y - spr[i].y) * (s->p.pos_Y - spr[i].y));
+        s->spr.spriteDistance[i] = ((s->p.pos_X - s->spr.sprt[i].x) *  (s->p.pos_X - s->spr.sprt[i].x) + (s->p.pos_Y - s->spr.sprt[i].y) * (s->p.pos_Y - s->spr.sprt[i].y));
 		i++;
 	}
 	i = 0;
     // 거리가 먼 순으로 sprite를 정렬한다.
 	arrange_Sprite(s);
     // 정렬된 sprite로 screen에 그리기
-    while(i < SPRITE_NUM)
+    while(i < s->minfo.num_sprite)
     {
         // 가장 거리가 먼 sprite부터 시작
-        s->spr.spriteX = spr[s->spr.spriteOrder[i]].x - s->p.pos_X;
-        s->spr.spriteY = spr[s->spr.spriteOrder[i]].y - s->p.pos_Y;
+        s->spr.spriteX = s->spr.sprt[s->spr.spriteOrder[i]].x - s->p.pos_X;
+        s->spr.spriteY = s->spr.sprt[s->spr.spriteOrder[i]].y - s->p.pos_Y;
         //transform sprite with the inverse camera matrix
         // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
         // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
@@ -619,7 +621,7 @@ void    sprite_cast(t_set *s)
                 {
                     s->spr.d = (y - s->spr.vMoveScreen) * 256 - s->minfo.s_height * 128 + s->spr.spritescreenHeight * 128;
                     s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.spritescreenHeight) / 256;
-                    s->spr.spr_color = s->p.texture[spr[s->spr.spriteOrder[i]].texnum][s->spr.texY * TEX_WIDTH + s->spr.texX];
+                    s->spr.spr_color = s->p.texture[9][s->spr.texY * TEX_WIDTH + s->spr.texX];
                     if ((s->spr.spr_color & 0x00FFFFFF) != 0)
                         s->img.data[y * s->minfo.s_width + x] = s->spr.spr_color;
 					y++;
@@ -697,7 +699,7 @@ void	load_tex(t_set *set)
 	load_file(set, 7, "img/colorstone.xpm");
 	// // sprite texture
 	load_file(set, 8, "img/barrel.xpm");
-	load_file(set, 9, "img/image02_resize.xpm");
+	load_file(set, 9, set->minfo.sp_path);
 	load_file(set, 10, "img/greenlight.xpm");
 }
 
@@ -808,10 +810,13 @@ int		get_fc(int fd, char **line,  t_set *set)
 	get_next_line(fd, line);
 	if (!check_str("F ", line, 2))
 		return (0);
-	if (!ft_isdigit(**line))
-		return (0);
-	if ((set->minfo.floor = get_color(*line)) < 0)
-		return (0);
+	if (ft_isdigit(**line))
+	{
+		if ((set->minfo.floor = get_color(*line)) < 0)
+			return (0);
+	}
+	else
+		set->minfo.f_path
 	(*line) -= (2);
 	free(*line);
 	get_next_line(fd, line);
@@ -927,6 +932,7 @@ int		get_map(int fd, char **line, t_set *set)
 	}
 	free(temp_map);
 	close(fd_2);
+	set->spr.sprt = (t_sprite*)malloc(sizeof(t_sprite) * set->minfo.num_sprite);
 	return (1);
 }
 
@@ -935,8 +941,10 @@ void	init_ck_map(t_set *set, int ***ck_map)
 {
 	int	i;
 	int	j;
+	int a;
 
 	i = 0;
+	a = 0;
 	while (i < (set->minfo.m_height + 2))
 	{
 		j = 0;
@@ -948,8 +956,15 @@ void	init_ck_map(t_set *set, int ***ck_map)
 			}
 			else
 			{
+				if (set->map2[i - 1][j - 1] == 2)
+				{
+					set->spr.sprt[a].x = i - 1;
+					set->spr.sprt[a].y = j - 1;
+					a++;
+				}
 				//printf("* %d %d\n", i, j);
 				(*ck_map)[i][j] = set->map2[i - 1][j - 1];
+				
 			}
 			j++;
 		}
@@ -1074,13 +1089,12 @@ int		main(void)
 	j = 0;
 	
 	parse_map(&set);
-
-	// printf("%f ", set.p.dir_X);
-	// printf("%f ", set.p.dir_Y);
-	// printf("%f ", set.p.pos_X);
-	// printf("%f \n", set.p.pos_Y);
-	
-
+	while(i < set.minfo.num_sprite)
+	{
+		printf("\n%f / %f",set.spr.sprt[i].x,set.spr.sprt[i].y);
+		i++;
+	}
+	i = 0;
 	// printf("s_width : %d\n", set.minfo.s_width);
 	// printf("s_height : %d\n", set.minfo.s_height);
 	// printf("no_path : %s\n", set.minfo.no_path);
@@ -1092,7 +1106,7 @@ int		main(void)
 	// printf("ceiling : %d\n", set.minfo.ceiling);
 	// printf("m_height : %d\n", set.minfo.m_height);
 	// printf("m_width : %d\n", set.minfo.m_width);
-	// printf("num_sprite : %d\n", set.minfo.num_sprite);
+	printf("num_sprite : %d\n", set.minfo.num_sprite);
 	for(int i = 0; i < set.minfo.m_height; i++)
 	{
 		for(int j = 0; j < set.minfo.m_width; j++)

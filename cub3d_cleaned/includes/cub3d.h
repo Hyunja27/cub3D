@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/17 19:19:13 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/18 15:30:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,18 @@ typedef struct s_point
 	double *zBuffer;
 }				t_point;
 
+typedef struct s_sprite
+{
+	double	x;
+	double	y;
+	int		texnum;
+}				t_sprite;
+
 typedef struct s_spr_cast
 {
 		
-	int			spriteOrder[SPRITE_NUM];
-	int			spriteDistance[SPRITE_NUM];
+	int			*spriteOrder;
+	int			*spriteDistance;
 	double	x;
 	double	y;
 	int		texnum;
@@ -99,6 +106,7 @@ typedef struct s_spr_cast
 	int 	texY;
 	int		d;
 	int		spr_color;
+	t_sprite *sprt;
 }				t_spr_cast;
 
 typedef struct s_cal_ray
@@ -151,6 +159,10 @@ typedef struct	s_minfo
 	char		*we_path;
 	char		*ea_path;
 	char		*sp_path;
+	char		*f_path;
+	char		*c_path;
+	int			f_kind;
+	int			c_kind;
 	int			floor;
 	int			ceiling;
 }				t_minfo;
@@ -208,54 +220,47 @@ typedef struct	s_set
 //   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 // };
 
-typedef struct s_sprite
-{
-	double	x;
-	double	y;
-	int		texnum;
-}				t_sprite;
-
-t_sprite    spr[SPRITE_NUM] =
-{
-    {20.5, 11.5, 10}, //green light in front of playerstart
-    //green lights in every room
-    {18.5,4.5, 10},
-    {10.0,4.5, 10},
-    {10.0,12.5,10},
-    {3.5, 6.5, 10},
-    {3.5, 20.5,10},
-    {3.5, 14.5,10},
-    {14.5,20.5,10},
-    //row of pillars in front of wall: fisheye test
-    {18.5, 10.5, 9},
-    {18.5, 11.5, 9},
-    {18.5, 12.5, 9},
+// t_sprite    spr[SPRITE_NUM] =
+// {
+//     {20.5, 11.5, 10}, //green light in front of playerstart
+//     //green lights in every room
+//     {18.5,4.5, 10},
+//     {10.0,4.5, 10},
+//     {10.0,12.5,10},
+//     {3.5, 6.5, 10},
+//     {3.5, 20.5,10},
+//     {3.5, 14.5,10},
+//     {14.5,20.5,10},
+//     //row of pillars in front of wall: fisheye test
+//     {18.5, 10.5, 9},
+//     {18.5, 11.5, 9},
+//     {18.5, 12.5, 9},
 
 	
-	{18.5, 12.5, 9},
-	{19.5, 12.5, 9},
-	{20.5, 12.5, 9},
-	{21.5, 12.5, 9},
-	{22.5, 12.5, 9},
-	{23.5, 12.5, 9},
-	{23.5, 12.5, 9},
-	{24.5, 12.5, 9},
-	{25.5, 12.5, 9},
-	{26.5, 12.5, 9},
+// 	{18.5, 12.5, 9},
+// 	{19.5, 12.5, 9},
+// 	{20.5, 12.5, 9},
+// 	{21.5, 12.5, 9},
+// 	{22.5, 12.5, 9},
+// 	{23.5, 12.5, 9},
+// 	{23.5, 12.5, 9},
+// 	{24.5, 12.5, 9},
+// 	{25.5, 12.5, 9},
+// 	{26.5, 12.5, 9},
 	
 
 	
-	//some barrels around the map
-    {21.5, 1.5, 8},
-    {15.5, 1.5, 8},
-    {16.0, 1.8, 8},
-    {16.2, 1.2, 8},
-    {3.5,  2.5, 8},
-    {9.5, 15.5, 8},
-    {10.0, 15.1,8},
-    {10.5, 15.8,8},
+// 	//some barrels around the map
+//     {21.5, 1.5, 8},
+//     {15.5, 1.5, 8},
+//     {16.0, 1.8, 8},
+//     {16.2, 1.2, 8},
+//     {3.5,  2.5, 8},
+//     {9.5, 15.5, 8},
+//     {10.0, 15.1,8},
+//     {10.5, 15.8,8},
 
 	
-};
+// };
 
 #endif

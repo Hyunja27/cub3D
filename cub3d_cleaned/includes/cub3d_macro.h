@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/17 20:36:15 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/18 15:18:05 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // #define SCREEN_HEIGHT 960
 
 #define TEX_NUM 11
-#define SPRITE_NUM 29
+// #define SPRITE_NUM 29
 
 // #define COLS 24
 // // #define ROWS 24
