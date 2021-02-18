@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/17 22:43:52 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/18 14:41:00 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ int		key_press(int keycode, t_set *set)
 
 	if (keycode == ESC_KEY)
 	{
+		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
 		exit(0);
 	}
@@ -302,7 +303,7 @@ void	key_action(t_set *s)
 		if (!s->map2[(int)s->p.pos_X][(int)(s->p.pos_Y - s->p.dir_Y * s->p.movespeed)])
 			s->p.pos_Y -= s->p.dir_Y * s->p.movespeed;
 	}
-	if (s->right == 1)
+	if (s->left == 1)
 	{
 		olddir_x = s->p.dir_X;
 		s->p.dir_X = s->p.dir_X * cos(s->p.rotspeed) - s->p.dir_Y * sin(s->p.rotspeed);
@@ -311,7 +312,7 @@ void	key_action(t_set *s)
 		s->p.plane_X = s->p.plane_X * cos(s->p.rotspeed) - s->p.plane_Y * sin(s->p.rotspeed);
 		s->p.plane_Y = oldplane_x * sin(s->p.rotspeed) + s->p.plane_Y * cos(s->p.rotspeed);
 	}
-	if (s->left == 1)
+	if (s->right == 1)
 	{
 		olddir_x = s->p.dir_X;
 		s->p.dir_X = s->p.dir_X * cos(-s->p.rotspeed) - s->p.dir_Y * sin(-s->p.rotspeed);
@@ -445,7 +446,7 @@ void	carl_ray(t_set *s)
 				s->p.position_Y += s->p.step_Y;
 				s->p.hit_side = 1;
 			}
-			if (s->map2[s->p.position_X][s->p.position_Y] > 0)
+			if (s->map2[s->p.position_X][s->p.position_Y] == 0)
 				s->p.hit = 1;
 		}
 
@@ -606,8 +607,6 @@ void    sprite_cast(t_set *s)
         x = s->spr.drawStartX;
 		while(x < s->spr.drawEndX)
         {
-	
-	
             s->spr.texX = (int)((256 * (x - (-s->spr.spritescreenWidth / 2 + s->spr.spriteScreenX)) * TEX_WIDTH / s->spr.spritescreenWidth) / 256);
             // sprite를 그릴지 안그릴지 결정한다.
             // 내 시야의 밖에 있거나, 벽에 너머에 있거나를 계산한다.
@@ -645,7 +644,7 @@ int		main_loop(t_set *set)
 {
 	clean_screen(set);
 	carl_ray(set);
-	//sprite_cast(set);
+	sprite_cast(set);
 
 	if (set->map1 == 1)
 		parse_draw_map(set);
@@ -677,7 +676,7 @@ void	load_file(t_set *set, int num, char *path)
 		}
 		y++;
 	}
-	printf("%s\n", path);
+	// printf("%s\n", path);
 	mlx_destroy_image(set->mlx_ptr, img_tmp.img_ptr);
 }
 
@@ -688,15 +687,15 @@ void	load_file(t_set *set, int num, char *path)
 		
 void	load_tex(t_set *set)
 {
-	load_file(set, 0, "img/wall_e.xpm");
-	load_file(set, 1, "img/wall_w.xpm");
-	load_file(set, 2, "img/wall_s.xpm");
-	load_file(set, 3, "img/wall_n.xpm");
+	load_file(set, 0, "img/wall_s.xpm");
+	load_file(set, 1, "img/wall_n.xpm");
+	load_file(set, 2, "img/wall_e.xpm");
+	load_file(set, 3, "img/wall_w.xpm");
 	load_file(set, 4, "img/bluestone.xpm");
 	load_file(set, 5, "img/mossy.xpm");
 	load_file(set, 6, "img/wood.xpm");
 	load_file(set, 7, "img/colorstone.xpm");
-	// sprite texture
+	// // sprite texture
 	load_file(set, 8, "img/barrel.xpm");
 	load_file(set, 9, "img/image02_resize.xpm");
 	load_file(set, 10, "img/greenlight.xpm");
@@ -736,6 +735,8 @@ int		get_resolution(int fd, char **line, t_set *set)
 		return (0);
 	if ((set->minfo.s_height = ft_atoi(*line)) < 0)
 		return (0);
+	(*line) -= (2 + ft_ilencal(set->minfo.s_width) + 1);
+	free(*line);
 	return (1);
 }
 
@@ -745,23 +746,34 @@ int		get_path(int fd, char **line, t_set *set)
 	if (!check_str("NO ", line, 3))
 		return (0);
 	set->minfo.no_path = ft_strdup(*line);
+	(*line) -= 3;
+	free(*line);
 	get_next_line(fd, line);
 	if (!check_str("SO ", line, 3))
 		return (0);
 	set->minfo.so_path = ft_strdup(*line);
+	(*line) -= 3;
+	free(*line);
 	get_next_line(fd, line);
 	if (!check_str("WE ", line, 3))
 		return (0);
 	set->minfo.we_path = ft_strdup(*line);
+	(*line) -= 3;
+	free(*line);
 	get_next_line(fd, line);
 	if (!check_str("EA ", line, 3))
 		return (0);
 	set->minfo.ea_path = ft_strdup(*line);
+	(*line) -= 3;
+	free(*line);
 	get_next_line(fd, line);
+	free(*line);
 	get_next_line(fd, line);
 	if (!check_str("S ", line, 2))
 		return (0);
 	set->minfo.sp_path = ft_strdup(*line);
+	(*line) -= 2;
+	free(*line);
 	return (1);
 }
 
@@ -800,6 +812,8 @@ int		get_fc(int fd, char **line,  t_set *set)
 		return (0);
 	if ((set->minfo.floor = get_color(*line)) < 0)
 		return (0);
+	(*line) -= (2);
+	free(*line);
 	get_next_line(fd, line);
 	if (!check_str("C ", line, 2))
 		return (0);
@@ -807,6 +821,8 @@ int		get_fc(int fd, char **line,  t_set *set)
 		return (0);
 	if ((set->minfo.ceiling = get_color(*line)) < 0)
 		return (0);
+	(*line) -= (2);
+	free(*line);
 	return (1);
 }
 
@@ -816,32 +832,31 @@ void	set_pos(t_set *set, char pos)
 {
 	if (pos == 'E')
 		{
-			set->p.dir_X = 1;
-			set->p.dir_Y = 0;
-			set->p.plane_X = 0;
-			set->p.plane_Y = 0.66;
-
-		}
-		if (pos == 'W')
-		{
-			set->p.dir_X = -1;
-			set->p.dir_Y = 0;
-			set->p.plane_X = 0;
-			set->p.plane_Y = 0.66;
-		}
-		if (pos == 'S')
-		{
 			set->p.dir_X = 0;
 			set->p.dir_Y = 1;
 			set->p.plane_X = 0.66;
 			set->p.plane_Y = 0;
 		}
-		if (pos == 'N')
+		if (pos == 'W')
 		{
 			set->p.dir_X = 0;
 			set->p.dir_Y = -1;
-			set->p.plane_X = 0.66;
+			set->p.plane_X = -0.66;
 			set->p.plane_Y = 0;
+		}
+		if (pos == 'S')
+		{
+			set->p.dir_X = 1;
+			set->p.dir_Y = 0;
+			set->p.plane_X = 0;
+			set->p.plane_Y = -0.66;
+		}
+		if (pos == 'N')
+		{
+			set->p.dir_X = -1;
+			set->p.dir_Y = 0;
+			set->p.plane_X = 0;
+			set->p.plane_Y = 0.66;
 		}
 }
 
@@ -872,7 +887,6 @@ void	get_map_size(t_set *set, int fd, int fd_2, char **line)
 {
 	int		temp_size;
 
-	get_next_line(fd, line);
 	set->minfo.m_height = 0;
 	set->minfo.m_width = 0;
 	while ((get_next_line(fd, line)) > 0)
@@ -883,7 +897,9 @@ void	get_map_size(t_set *set, int fd, int fd_2, char **line)
 		set->minfo.m_height++;
 		write(fd_2, *line, temp_size);
 		write(fd_2, "\n", 1);
+		free(*line);
 	}
+	free(*line);
 }
 
 int		get_map(int fd, char **line, t_set *set)
@@ -999,13 +1015,19 @@ int		check_map(t_set *set)
 {
 	int		**ck_map;
 	int		i;
+	int		rt;
 
 	ck_map = (int **)malloc(sizeof(int *) * (set->minfo.m_height + 2));
 	i = -1;
-	while (++i < set->minfo.m_width + 2)
+	while (++i < set->minfo.m_height + 2)
 		ck_map[i] = (int *)malloc(sizeof(int) * (set->minfo.m_width + 2));
 	init_ck_map(set, &ck_map);
-	return (is_map(set, ck_map));
+	rt = is_map(set, ck_map);
+	i = 0;
+	while (i < set->minfo.m_height + 2)
+		free(ck_map[i++]);
+	free(ck_map);
+	return (rt);
 }
 
 void	parse_map(t_set *set)
@@ -1038,7 +1060,7 @@ int		main(void)
 	// set.p.plane_X = 0;
 	// set.p.plane_Y = 0.66;
 	set.p.rotspeed = 0.02;
-	set.p.movespeed = 0.1;
+	set.p.movespeed = 0.06;
 
 	set.up = 0;
 	set.left = 0;
@@ -1077,7 +1099,7 @@ int		main(void)
 			printf("%3d", set.map2[i][j]);
 		printf("\n");
 	}
-
+	i = 0;
 	if (!(set.p.zBuffer = malloc(sizeof(double) * set.minfo.s_width)))
 		return (-1);
 	make_window(&set);
@@ -1086,7 +1108,21 @@ int		main(void)
 	mlx_hook(set.win_ptr, KeyRelease, 0, key_release, &set);
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
 	mlx_loop(set.mlx_ptr);
-
+	
+	while (i < set.minfo.m_height)
+		free(set.map2[i++]);
+	free(set.map2);
+	free(set.S_tex);
+	free(set.W_tex);
+	free(set.N_tex);
+	free(set.E_tex);
+	free(set.SPR_tex);
+	free(set.minfo.no_path);
+	free(set.minfo.so_path);
+	free(set.minfo.we_path);
+	free(set.minfo.ea_path);
+	free(set.minfo.sp_path);
+	free(set.p.zBuffer);
 
 		// printf("*\n");
 	return (0);

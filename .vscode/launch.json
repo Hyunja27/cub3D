@@ -4,17 +4,11 @@
 	// 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
 	"version": "0.2.0",
 	"configurations": [
-		{
-			"name": "(lldb) 시작",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "프로그램 이름 입력(예: ${workspaceFolder}/a.out)",
+			"name": "gcc - 활성 파일 빌드 및 디버그",
+			"program": "${workspaceFolder}/test.out",
 			"args": [],
-			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"environment": [],
-			"console": "externalTerminal",
-			"MIMode": "lldb"
-		}
+
+			"preLaunchTask": "C/C++: gcc build active file"
 	]
 }
