@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/18 15:32:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/18 16:02:11 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //   int *dst;
 
 //  // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
-//   dst = s->img.data + (y * s->minfo.s_width + x );
+//   dst = s->img.data + (y * s->minfo.s_width + x);
 //   *(unsigned int*)dst = color;
 // }
 
@@ -147,7 +147,7 @@ void    arrange_Sprite(t_set *s)
 // 	// draw_strange_line(set, 5000, 0xffffff);
 // }
 
-void	draw_rect(t_set *set, int x, int y)
+void	draw_rect(t_set *set, int x, int y, int corl)
 {
 	int i;
 	int j;
@@ -160,7 +160,7 @@ void	draw_rect(t_set *set, int x, int y)
 		j = 0;
 		while (j < MAP_BOX_SIZE)
 		{
-			set->img.data[(x + i) * set->minfo.s_width + y + j] = 0xFFFFFF;
+			set->img.data[(x + i) * set->minfo.s_width + y + j] = corl;
 			j++;
 		}
 		i++;
@@ -179,8 +179,10 @@ void	draw_all_rect(t_set *set)
 		j = 0;
 		while (j < set->minfo.m_width)
 		{
-			if (set->map2[i][j] > 0)
-				draw_rect(set, i, j);
+			if (set->map2[i][j] == 1)
+				draw_rect(set, i, j, 0xFFFFFF);
+			else if (set->map2[i][j] == 2)
+				draw_rect(set, i, j, 0xAAFFAA);
 			j++;
 		}
 		i++;
@@ -377,17 +379,25 @@ void	carl_ray(t_set *s)
 
 			s->flr.floorX += s->flr.floorStepX;
 			s->flr.floorY += s->flr.floorStepY;
-
-			// choose texture and draw the pixel
-			s->tex.floorTexture = 6;
-			s->tex.ceilingTexture = 6;
 			// floor
-			s->tex.color = s->p.texture[s->tex.floorTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
+			if (s->minfo.f_path)
+			{
+				s->tex.floorTexture = 8;
+				s->tex.color = s->p.texture[s->tex.floorTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
+			}
+			else
+				s->tex.color = s->minfo.floor;
 			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
 
 			s->img.data[y * s->minfo.s_width + i] = s->tex.color;
 
-			s->tex.color = s->p.texture[s->tex.ceilingTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
+			if (s->minfo.c_path)
+			{
+				s->tex.ceilingTexture = 10;
+				s->tex.color = s->p.texture[s->tex.ceilingTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
+			}
+			else
+				s->tex.color = s->minfo.ceiling;
 			s->tex.color = (s->tex.color >> 1) & 8355711; // make a bit darker
 
 			s->img.data[(s->minfo.s_height - y - 1) * s->minfo.s_width + i] = s->tex.color;
@@ -697,10 +707,12 @@ void	load_tex(t_set *set)
 	load_file(set, 5, "img/mossy.xpm");
 	load_file(set, 6, "img/wood.xpm");
 	load_file(set, 7, "img/colorstone.xpm");
+	if (set->minfo.f_path)
+		load_file(set, 8, set->minfo.f_path);
+	if (set->minfo.c_path)
+		load_file(set, 10, set->minfo.c_path);
 	// // sprite texture
-	load_file(set, 8, "img/barrel.xpm");
 	load_file(set, 9, set->minfo.sp_path);
-	load_file(set, 10, "img/greenlight.xpm");
 }
 
 // 										&&&&&&&&&&&&&&&&&&&&&&
@@ -807,6 +819,8 @@ int		get_color(char *line)
 
 int		get_fc(int fd, char **line,  t_set *set)
 {
+	set->minfo.f_path = 0;
+	set->minfo.c_path = 0;
 	get_next_line(fd, line);
 	if (!check_str("F ", line, 2))
 		return (0);
@@ -816,16 +830,19 @@ int		get_fc(int fd, char **line,  t_set *set)
 			return (0);
 	}
 	else
-		set->minfo.f_path
+		set->minfo.f_path = ft_strdup(*line);
 	(*line) -= (2);
 	free(*line);
 	get_next_line(fd, line);
 	if (!check_str("C ", line, 2))
 		return (0);
-	if (!ft_isdigit(**line))
-		return (0);
-	if ((set->minfo.ceiling = get_color(*line)) < 0)
-		return (0);
+	if (ft_isdigit(**line))
+	{
+		if ((set->minfo.ceiling = get_color(*line)) < 0)
+			return (0);
+	}
+	else
+		set->minfo.c_path = ft_strdup(*line);
 	(*line) -= (2);
 	free(*line);
 	return (1);
@@ -1017,7 +1034,6 @@ int		is_map(t_set *set, int **ck_map)
 				if (is_road(set, &ck_map, i, j) == 0)
 					return (0);
 			}
-
 		}
 	}
 	if (!is_zero)
@@ -1089,12 +1105,12 @@ int		main(void)
 	j = 0;
 	
 	parse_map(&set);
-	while(i < set.minfo.num_sprite)
-	{
-		printf("\n%f / %f",set.spr.sprt[i].x,set.spr.sprt[i].y);
-		i++;
-	}
-	i = 0;
+	// while(i < set.minfo.num_sprite)
+	// {
+	// 	printf("\n%f / %f",set.spr.sprt[i].x,set.spr.sprt[i].y);
+	// 	i++;
+	// }
+	// i = 0;
 	// printf("s_width : %d\n", set.minfo.s_width);
 	// printf("s_height : %d\n", set.minfo.s_height);
 	// printf("no_path : %s\n", set.minfo.no_path);
@@ -1102,11 +1118,14 @@ int		main(void)
 	// printf("we_path : %s\n", set.minfo.we_path);
 	// printf("ea_path : %s\n", set.minfo.ea_path);
 	// printf("s_path : %s\n", set.minfo.sp_path);
-	// printf("floor : %d\n", set.minfo.floor);
-	// printf("ceiling : %d\n", set.minfo.ceiling);
+	printf("floor : %d\n", set.minfo.floor);
+	printf("ceiling : %d\n", set.minfo.ceiling);
+	printf("floor_path : %s\n", set.minfo.f_path);
+	printf("ceiling_path : %s\n", set.minfo.c_path);
+	
 	// printf("m_height : %d\n", set.minfo.m_height);
 	// printf("m_width : %d\n", set.minfo.m_width);
-	printf("num_sprite : %d\n", set.minfo.num_sprite);
+	// printf("num_sprite : %d\n", set.minfo.num_sprite);
 	for(int i = 0; i < set.minfo.m_height; i++)
 	{
 		for(int j = 0; j < set.minfo.m_width; j++)
@@ -1136,8 +1155,14 @@ int		main(void)
 	free(set.minfo.we_path);
 	free(set.minfo.ea_path);
 	free(set.minfo.sp_path);
+	if (!set.minfo.f_path)
+		free(set.minfo.f_path);
+	if (!set.minfo.c_path)
+		free(set.minfo.c_path);
 	free(set.p.zBuffer);
-
+	free(set.spr.sprt);
+	free(set.spr.spriteDistance);
+	free(set.spr.spriteOrder);
 		// printf("*\n");
 	return (0);
 }
