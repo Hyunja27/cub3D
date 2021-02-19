@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/18 15:18:05 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/19 22:35:56 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 #define Q_KEY 12
 #define F_KEY 3
 #define R_KEY 15
+#define P_KEY 35
 #define KeyPress    2
 #define KeyRelease  3
 

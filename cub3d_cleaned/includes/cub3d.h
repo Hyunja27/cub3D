@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/18 15:30:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/19 23:09:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,32 @@ typedef struct	s_minfo
 	int			floor;
 	int			ceiling;
 }				t_minfo;
+
+#pragma pack(push, 1) 
+
+typedef struct	s_bmp
+{
+	unsigned short bfType1;
+	unsigned short bfType2;         // BMP 파일 매직 넘버
+    unsigned int   bfSize;           // 파일 크기
+    unsigned short bfReserved1;      // 예약
+    unsigned short bfReserved2;      // 예약
+    unsigned int   bfOffBits; 
+	unsigned int   biSize;           // 현재 구조체의 크기
+    int            biWidth;          // 비트맵 이미지의 가로 크기
+    int            biHeight;         // 비트맵 이미지의 세로 크기
+    unsigned short biPlanes;         // 사용하는 색상판의 수
+    unsigned short biBitCount;       // 픽셀 하나를 표현하는 비트 수
+    unsigned int   biCompression;    // 압축 방식
+    unsigned int   biSizeImage;      // 비트맵 이미지의 픽셀 데이터 크기
+    int            biXPelsPerMeter;  // 그림의 가로 해상도(미터당 픽셀)
+    int				biYPelsPerMeter;  // 그림의 세로 해상도(미터당 픽셀)
+    unsigned int	biClrUsed;        // 색상 테이블에서 실제 사용되는 색상 수
+    unsigned int	biClrImportant;   // 빨강
+}				t_bmp;
+
+#pragma pack(pop)
+ 
 typedef struct	s_set
 {
 	void		*mlx_ptr;
@@ -191,7 +217,6 @@ typedef struct	s_set
 	t_tex		tex;
 	t_minfo		minfo;
 }				t_set;
-
 // int worldMap[MAP_WIDTH][MAP_HEIGHT]=
 // {
 //   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},

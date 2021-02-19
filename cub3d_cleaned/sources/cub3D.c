@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/18 22:32:34 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/19 23:31:25 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,41 @@ void parse_draw_map(t_set *s)
 	}
 }
 
+void	put_bmp_info(t_bmp *m, t_set *s)
+{
+	m->bfType1 = 'B';
+	m->bfType2 = 'M';
+	m->bfSize = (4 * (s->minfo.s_width * s->minfo.s_height)) + 54;
+	m->bfReserved1 = 0;
+	m->bfReserved2 = 0;
+	m->bfOffBits = 54;
+	m->biSize = 54;							// ?
+	m->biWidth = s->minfo.s_width;
+	m->biHeight = -s->minfo.s_height;		// ?
+	m->biPlanes = 1;
+	m->biBitCount = 32;
+	m->biCompression = 0;
+	m->biSizeImage = (4 * (s->minfo.s_width * s->minfo.s_height));
+	m->biXPelsPerMeter = s->minfo.s_width;
+	m->biYPelsPerMeter = s->minfo.s_height;
+	m->biClrUsed = 0xFFFFFF;
+	m->biClrImportant = 0;					// ?
+}
+
+t_bmp	make_bmp(t_set *s)
+{
+	t_bmp	m;
+	int		fd;
+
+	fd = open("cub3d_save.bmp", O_RDWR | O_TRUNC | O_CREAT, 0666);
+	
+	put_bmp_info(&m, s);
+	write(fd, &m, 54);
+	write(fd, s->img.data, m.biSizeImage);
+	close(fd);
+	return (m); 
+}
+
 int key_press(int keycode, t_set *set)
 {
 	// double	olddir_x;
@@ -225,6 +260,13 @@ int key_press(int keycode, t_set *set)
 		set->up = 1;
 	if (keycode == DOWN_KEY)
 		set->down = 1;
+	if (keycode == P_KEY)
+	{
+		make_bmp(set);
+		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
+		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
+		exit(0);
+	}
 
 	// ===========================
 
@@ -696,10 +738,10 @@ void load_file(t_set *set, int num, char *path)
 
 void load_tex(t_set *set)
 {
-	load_file(set, 0, "img/wall_s.xpm");
-	load_file(set, 1, "img/wall_n.xpm");
-	load_file(set, 2, "img/wall_e.xpm");
-	load_file(set, 3, "img/wall_w.xpm");
+	load_file(set, 0, set->minfo.so_path);
+	load_file(set, 1, set->minfo.no_path);
+	load_file(set, 2, set->minfo.ea_path);
+	load_file(set, 3, set->minfo.we_path);
 	load_file(set, 4, "img/bluestone.xpm");
 	load_file(set, 5, "img/mossy.xpm");
 	load_file(set, 6, "img/wood.xpm");
@@ -819,7 +861,7 @@ int get_fc(char **line, t_set *set)
 				return (0);
 		}
 		else
-			set->minfo.f_path = ft_strdup(*line);
+			set->minfo.f_path = ft_strdup(*line + 2);
 	}
 	// (*line) -= (2);
 	// free(*line);
@@ -832,7 +874,7 @@ int get_fc(char **line, t_set *set)
 				return (0);
 		}
 		else
-			set->minfo.c_path = ft_strdup(*line);
+			set->minfo.c_path = ft_strdup(*line + 2);
 	}
 	// (*line) -= (2);
 	// free(*line);
@@ -1081,8 +1123,8 @@ void parse_map(t_set *set)
 	while (flag != 255 && (get_next_line(fd, &line) > 0))
 	{
 		anchor = line;
-		printf("\n == %d == \n", flag);
-		printf("-> %s\n", line);
+		// printf("\n == %d == \n", flag);
+		// printf("-> %s\n", line);
 		if (check_str("S ", &line, 2))
 		{
 			printf("S\n");
@@ -1171,7 +1213,7 @@ int main(void)
 
 	i = 0;
 	j = 0;
-
+	
 	parse_map(&set);
 	// while(i < set.minfo.num_sprite)
 	// {

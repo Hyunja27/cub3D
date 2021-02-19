@@ -1,8 +1,9 @@
+NO ./img/wall_n.xpm
+SO ./img/wall_s.xpm
+WE ./img/wall_w.xpm
+EA ./img/wall_e.xpm
+
 R 640 480
-NO ./img/NO.xpm
-SO ./img/SO.xpm
-WE ./img/WE.xpm
-EA ./img/EA.xpm
 S ./img/2.xpm
 F 200,60,150
 C 15,100,150
