@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/19 23:09:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:37:25 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,14 +165,15 @@ typedef struct	s_minfo
 	int			c_kind;
 	int			floor;
 	int			ceiling;
+	
 }				t_minfo;
 
 #pragma pack(push, 1) 
 
 typedef struct	s_bmp
 {
-	unsigned short bfType1;
-	unsigned short bfType2;         // BMP 파일 매직 넘버
+	unsigned char bfType1;
+	unsigned char bfType2;         // BMP 파일 매직 넘버
     unsigned int   bfSize;           // 파일 크기
     unsigned short bfReserved1;      // 예약
     unsigned short bfReserved2;      // 예약

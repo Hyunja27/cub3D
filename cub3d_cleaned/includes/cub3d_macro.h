@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/19 22:35:56 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:27:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@
 #define P_KEY 35
 #define KeyPress    2
 #define KeyRelease  3
+
+# define EA_TEXT_NUM		0
+# define WE_TEXT_NUM		1
+# define SO_TEXT_NUM		2
+# define NO_TEXT_NUM		3
+# define FL_TEXT_NUM		4
+# define CE_TEXT_NUM		5
+# define SP_TEXT_NUM		6
+# define RE_NUM				7
 
 #define START_POSITION_X (WIDTH - (BOX_SIZE * 2))
 #define START_POSITION_Y (HEIGHT - (BOX_SIZE * 2))

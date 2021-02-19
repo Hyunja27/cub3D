@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/19 23:31:25 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/20 00:45:55 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	put_bmp_info(t_bmp *m, t_set *s)
 	m->bfReserved1 = 0;
 	m->bfReserved2 = 0;
 	m->bfOffBits = 54;
-	m->biSize = 54;							// ?
+	m->biSize = 40;							// ?
 	m->biWidth = s->minfo.s_width;
 	m->biHeight = -s->minfo.s_height;		// ?
 	m->biPlanes = 1;
@@ -223,8 +223,8 @@ void	put_bmp_info(t_bmp *m, t_set *s)
 	m->biSizeImage = (4 * (s->minfo.s_width * s->minfo.s_height));
 	m->biXPelsPerMeter = s->minfo.s_width;
 	m->biYPelsPerMeter = s->minfo.s_height;
-	m->biClrUsed = 0xFFFFFF;
-	m->biClrImportant = 0;					// ?
+	m->biClrUsed = 0xffffff;
+	m->biClrImportant = 0xAAAAAA;					// ?
 }
 
 t_bmp	make_bmp(t_set *s)
@@ -233,7 +233,6 @@ t_bmp	make_bmp(t_set *s)
 	int		fd;
 
 	fd = open("cub3d_save.bmp", O_RDWR | O_TRUNC | O_CREAT, 0666);
-	
 	put_bmp_info(&m, s);
 	write(fd, &m, 54);
 	write(fd, s->img.data, m.biSizeImage);
@@ -762,125 +761,6 @@ void load_tex(t_set *set)
 // 										&&&&&&&&&&&&&&&&&&&&&&
 // 										&&&&&&&&&&&&&&&&&&&&&&
 
-int check_str(char *chk, char **line, int len)
-{
-	int i;
-	int j;
-
-	i = -1;
-	j = 0;
-	while (++i < len)
-	{
-		if (chk[i] != (*line)[j])
-			return (0);
-		j++;
-	}
-	return (1);
-}
-
-int get_resolution(char **line, t_set *set)
-{
-	if (!check_str("R ", line, 2))
-		return (0);
-	if ((set->minfo.s_width = ft_atoi(*line + 2)) < 0)
-		return (0);
-	(*line) += ft_ilencal(set->minfo.s_width) + 2;
-	// if (!check_str(" ", line, 1))
-	// 	return (0);
-	(*line)++;
-	printf("\n\n\n\n!!%s", *line);
-	if ((set->minfo.s_height = ft_atoi(*line)) < 0)
-		return (0);
-	// (*line) -= (2 + ft_ilencal(set->minfo.s_width) + 1);
-	// free(*line);
-	return (1);
-}
-
-int get_path(char **line, t_set *set)
-{
-	if (check_str("NO ", line, 3))
-		set->minfo.no_path = ft_strdup(*line + 3);
-	// (*line) -= 3;
-	// free(*line);
-	// get_next_line(fd, line);
-	else if (check_str("SO ", line, 3))
-		set->minfo.so_path = ft_strdup(*line + 3);
-	// (*line) -= 3;
-	// free(*line);
-	// get_next_line(fd, line);
-	else if (check_str("WE ", line, 3))
-		set->minfo.we_path = ft_strdup(*line + 3);
-	// (*line) -= 3;
-	// free(*line);
-	// get_next_line(fd, line);
-	else if (check_str("EA ", line, 3))
-		set->minfo.ea_path = ft_strdup(*line + 3);
-	// (*line) -= 3;
-	// free(*line);
-	// get_next_line(fd, line);
-	// free(*line);
-	// get_next_line(fd, line);
-	else if (check_str("S ", line, 2))
-		set->minfo.sp_path = ft_strdup(*line + 2);
-	// (*line) -= 2;
-	// free(*line);
-	return (1);
-}
-
-int get_color(char *line)
-{
-	int r;
-	int g;
-	int b;
-
-	r = ft_atoi(line);
-	while (*line != ',' && *line)
-	{
-		line++;
-		if (!(*line))
-			return (-1);
-	}
-	g = ft_atoi(++line);
-	while (*line != ',' && *line)
-	{
-		line++;
-		if (!(*line))
-			return (0);
-	}
-	b = ft_atoi(++line);
-	return ((r * 256 * 256) + (g * 256) + b);
-}
-
-int get_fc(char **line, t_set *set)
-{
-	if (check_str("F ", line, 2))
-	{
-		if (ft_isdigit((*line)[2]))
-		{
-			if ((set->minfo.floor = get_color(*line)) < 0)
-				return (0);
-		}
-		else
-			set->minfo.f_path = ft_strdup(*line + 2);
-	}
-	// (*line) -= (2);
-	// free(*line);
-	// get_next_line(fd, line);
-	else if (check_str("C ", line, 2))
-	{
-		if (ft_isdigit((*line)[2]))
-		{
-			if ((set->minfo.ceiling = get_color(*line)) < 0)
-				return (0);
-		}
-		else
-			set->minfo.c_path = ft_strdup(*line + 2);
-	}
-	// (*line) -= (2);
-	// free(*line);
-	return (1);
-}
-
 // map 읽어서 저장
 
 void set_pos(t_set *set, char pos)
@@ -944,6 +824,14 @@ void get_map_size(t_set *set, int fd, int fd_2, char **line)
 
 	set->minfo.m_height = 0;
 	set->minfo.m_width = 0;
+	
+	temp_size = ft_strlen(*line);
+	if (set->minfo.m_width < temp_size)
+		set->minfo.m_width = temp_size;
+	set->minfo.m_height++;
+	write(fd_2, *line, temp_size);
+	write(fd_2, "\n", 1);
+	free(*line);
 	while ((get_next_line(fd, line)) > 0)
 	{
 		temp_size = ft_strlen(*line);
@@ -1093,100 +981,235 @@ int check_map(t_set *set)
 	return (rt);
 }
 
-// void	parse_map(t_set *set)
-// {
-// 	char	*line;
-// 	int		fd = open("test_map.cub", O_RDONLY);
+// // void	parse_map(t_set *set)
+// // {
+// // 	char	*line;
+// // 	int		fd = open("test_map.cub", O_RDONLY);
 
-// 	if (!get_resolution(fd, &line, set))
-// 		printf("Error1\n");
-// 	if (!get_path(fd, &line, set))
-// 		printf("Error2\n");
-// 	// texture로 주어지는 상황 2개 모두 고려할 것인가?
-// 	if (!get_fc(fd, &line, set))
-// 		printf("Error3\n");
+// // 	if (!get_resolution(fd, &line, set))
+// // 		printf("Error1\n");
+// // 	if (!get_path(fd, &line, set))
+// // 		printf("Error2\n");
+// // 	// texture로 주어지는 상황 2개 모두 고려할 것인가?
+// // 	if (!get_fc(fd, &line, set))
+// // 		printf("Error3\n");
+// // 	get_map(fd, &line, set);
+// // 	if (!check_map(set))
+// // 		printf("Error4\n");
+// // }
+
+// void parse_map(t_set *set)
+// {
+// 	char *line;
+// 	char *anchor;
+// 	unsigned char flag;
+// 	int fd = open("test_map.cub", O_RDONLY);
+
+// 	set->minfo.f_path = 0;
+// 	set->minfo.c_path = 0;
+// 	flag = 0;
+// 	while (flag != 255 && (get_next_line(fd, &line) > 0))
+// 	{
+// 		anchor = line;
+// 		// printf("\n == %d == \n", flag);
+// 		// printf("-> %s\n", line);
+// 		if (check_str("S ", &line, 2))
+// 		{
+// 			printf("S\n");
+// 			get_path(&anchor, set);
+// 			flag |= 1 << 2;
+// 		}
+// 		else if (check_str("R ", &line, 2))
+// 		{
+// 			printf("R\n");
+// 			get_resolution(&anchor, set);
+// 			flag |= 1 << 7;
+// 		}
+// 		else if (check_str("NO ", &line, 3))
+// 		{
+// 			printf("NO\n");
+// 			get_path(&anchor, set);
+// 			flag |= 1 << 6;
+// 		}
+// 		else if (check_str("SO ", &line, 3))
+// 		{
+// 			printf("SO\n");
+// 			get_path(&anchor, set);
+// 			flag |= 1 << 5;
+// 		}
+// 		else if (check_str("WE ", &line, 3))
+// 		{
+// 			printf("WE\n");
+// 			get_path(&anchor, set);
+// 			flag |= 1 << 4;
+// 		}
+// 		else if (check_str("EA ", &line, 3))
+// 		{
+// 			printf("EA\n");
+// 			get_path(&anchor, set);
+// 			flag |= 1 << 3;
+// 		}
+// 		else if (check_str("F ", &line, 2))
+// 		{
+// 			printf("F\n");
+// 			get_fc(&anchor, set);
+// 			flag |= 1 << 1;
+// 		}
+		
+// 		else if (check_str("C ", &line, 2))
+// 		{
+// 			printf("C\n");
+// 			get_fc(&anchor, set);
+// 			flag |= 1;
+// 		}
+// 		else if (ft_strlen(line) == 0)
+// 			free(line);
+// 		else
+// 		{
+// 			printf("\nmap parsing error!\n");
+// 			printf("-> %s\n", line);
+// 			// exit(0);
+// 		}
+// 	}
 // 	get_map(fd, &line, set);
 // 	if (!check_map(set))
 // 		printf("Error4\n");
 // }
 
-void parse_map(t_set *set)
-{
-	char *line;
-	char *anchor;
-	unsigned char flag;
-	int fd = open("test_map.cub", O_RDONLY);
 
-	set->minfo.f_path = 0;
-	set->minfo.c_path = 0;
-	flag = 0;
-	while (flag != 255 && (get_next_line(fd, &line) > 0))
+int		get_color(char *line)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = ft_atoi(line);
+	while (*line != ',' && *line)
 	{
-		anchor = line;
-		// printf("\n == %d == \n", flag);
-		// printf("-> %s\n", line);
-		if (check_str("S ", &line, 2))
+		line++;
+		if (!(*line))
+			return (-1);
+	}
+	g = ft_atoi(++line);
+	while (*line != ',' && *line)
+	{
+		line++;
+		if (!(*line))
+			return (0);
+	}
+	b = ft_atoi(++line);
+	return ((r * 256 * 256) + (g * 256) + b);
+}
+
+int		flag_check(int start, int kind, unsigned char *flag, char *line)
+{
+	if (((*flag) >> kind & 1) ==  1)
+		return (-1);
+	while (line[start] == ' ')
+		start++;
+	(*flag) |= 1 << kind;
+	return (start);
+}
+
+int		get_fc(t_set *set, int kind, char *line)
+{
+	int	temp;
+
+	if (ft_isdigit(*line))
+	{
+		(kind == FL_TEXT_NUM) ? (set->minfo.f_kind = 0) : (set->minfo.c_kind = 0);
+		(kind == FL_TEXT_NUM) ? (set->minfo.floor = get_color(line)) : (set->minfo.ceiling = get_color(line));
+		temp = (kind == FL_TEXT_NUM) ? set->minfo.floor : set->minfo.ceiling;
+		if (temp < 0)
+			return (0);
+	}
+	else if (*line == '.')
+	{
+		(kind == FL_TEXT_NUM) ? (set->minfo.f_kind = 1) : (set->minfo.c_kind = 1);
+		(kind == FL_TEXT_NUM) ? (set->minfo.f_path = ft_strdup(line)) : (set->minfo.c_path = ft_strdup(line));
+	}
+	return (1);
+}
+
+int		error_msg(char *kind)
+{
+	printf("Error\n %s 중복 입력\n", kind);
+	return (0);
+}
+
+void	map_parse(t_set *set, char *map_name)
+{
+	char			*line;
+	int				fd = open(map_name, O_RDONLY);
+	unsigned char	flag;
+	int				i;
+	int				rt;
+
+	flag = 0;
+	while (flag != 255 && (rt = get_next_line(fd, &line)) > 0)
+	{
+		if (ft_strnstr(line, "EA ", 3))
 		{
-			printf("S\n");
-			get_path(&anchor, set);
-			flag |= 1 << 2;
+			i = flag_check(3, EA_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("EA")) : 0;
+			set->minfo.ea_path = ft_strdup(line + i);
 		}
-		else if (check_str("R ", &line, 2))
+		if (ft_strnstr(line, "WE ", 3))
 		{
-			printf("R\n");
-			get_resolution(&anchor, set);
-			flag |= 1 << 7;
+			i = flag_check(3, WE_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("WE")) : 0;
+			set->minfo.we_path = ft_strdup(line + i);
 		}
-		else if (check_str("NO ", &line, 3))
+		if (ft_strnstr(line, "SO ", 3))
 		{
-			printf("NO\n");
-			get_path(&anchor, set);
-			flag |= 1 << 6;
+			i = flag_check(3, SO_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("SO")) : 0;
+			set->minfo.so_path = ft_strdup(line + i);
 		}
-		else if (check_str("SO ", &line, 3))
+		if (ft_strnstr(line, "NO ", 3))
 		{
-			printf("SO\n");
-			get_path(&anchor, set);
-			flag |= 1 << 5;
+			i = flag_check(3, NO_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("NO")) : 0;
+			set->minfo.no_path = ft_strdup(line + i);
 		}
-		else if (check_str("WE ", &line, 3))
+		if (ft_strnstr(line, "F ", 2))
 		{
-			printf("WE\n");
-			get_path(&anchor, set);
-			flag |= 1 << 4;
+			i = flag_check(2, FL_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("FL")) : 0;
+			get_fc(set, FL_TEXT_NUM, line + i);
 		}
-		else if (check_str("EA ", &line, 3))
+		if (ft_strnstr(line, "C ", 2))
 		{
-			printf("EA\n");
-			get_path(&anchor, set);
-			flag |= 1 << 3;
+			i = flag_check(2, CE_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("CE")) : 0;
+			get_fc(set, CE_TEXT_NUM, line + i);
 		}
-		else if (check_str("F ", &line, 2))
+		if (ft_strnstr(line, "S ", 2))
 		{
-			printf("F\n");
-			get_fc(&anchor, set);
-			flag |= 1 << 1;
+			i = flag_check(2, SP_TEXT_NUM, &flag, line);
+			i < 0 ? exit(error_msg("SP")) : 0;
+			set->minfo.sp_path = ft_strdup(line + i);
 		}
-		
-		else if (check_str("C ", &line, 2))
+		if (ft_strnstr(line, "R ", 2))
 		{
-			printf("C\n");
-			get_fc(&anchor, set);
-			flag |= 1;
-		}
-		else if (ft_strlen(line) == 0)
-			free(line);
-		else
-		{
-			printf("\nmap parsing error!\n");
-			printf("-> %s\n", line);
-			// exit(0);
+			i = flag_check(2, RE_NUM, &flag, line);
+			i < 0 ? exit(error_msg("R")) : 0;
+			if ((set->minfo.s_width = ft_atoi(line + i)) < 0)
+				return ;
+			i += ft_ilencal(set->minfo.s_width);
+			if ((set->minfo.s_height = ft_atoi(line + i)) < 0)
+				return ;
 		}
 	}
+	if (rt <= 0)
+		return ;
+	while (line[0] != ' ' && !ft_isdigit(line[0]))
+		get_next_line(fd, &line);
 	get_map(fd, &line, set);
 	if (!check_map(set))
-		printf("Error4\n");
+		printf("Map Error\n");
 }
+
 
 int main(void)
 {
@@ -1214,24 +1237,24 @@ int main(void)
 	i = 0;
 	j = 0;
 	
-	parse_map(&set);
+	map_parse(&set, "test_map.cub");
 	// while(i < set.minfo.num_sprite)
 	// {
 	// 	printf("\n%f / %f",set.spr.sprt[i].x,set.spr.sprt[i].y);
 	// 	i++;
 	// }
 	// i = 0;
-	printf("s_width : %d\n", set.minfo.s_width);
-	printf("s_height : %d\n", set.minfo.s_height);
-	printf("no_path : %s\n", set.minfo.no_path);
-	printf("so_path : %s\n", set.minfo.so_path);
-	printf("we_path : %s\n", set.minfo.we_path);
-	printf("ea_path : %s\n", set.minfo.ea_path);
-	printf("s_path : %s\n", set.minfo.sp_path);
-	printf("floor : %d\n", set.minfo.floor);
-	printf("ceiling : %d\n", set.minfo.ceiling);
-	printf("floor_path : %s\n", set.minfo.f_path);
-	printf("ceiling_path : %s\n", set.minfo.c_path);
+	// printf("s_width : %d\n", set.minfo.s_width);
+	// printf("s_height : %d\n", set.minfo.s_height);
+	// printf("no_path : %s\n", set.minfo.no_path);
+	// printf("so_path : %s\n", set.minfo.so_path);
+	// printf("we_path : %s\n", set.minfo.we_path);
+	// printf("ea_path : %s\n", set.minfo.ea_path);
+	// printf("s_path : %s\n", set.minfo.sp_path);
+	// printf("floor : %d\n", set.minfo.floor);
+	// printf("ceiling : %d\n", set.minfo.ceiling);
+	// printf("floor_path : %s\n", set.minfo.f_path);
+	// printf("ceiling_path : %s\n", set.minfo.c_path);
 
 	// printf("m_height : %d\n", set.minfo.m_height);
 	// printf("m_width : %d\n", set.minfo.m_width);
