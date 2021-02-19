@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/20 00:45:55 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/20 01:16:38 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,8 +223,8 @@ void	put_bmp_info(t_bmp *m, t_set *s)
 	m->biSizeImage = (4 * (s->minfo.s_width * s->minfo.s_height));
 	m->biXPelsPerMeter = s->minfo.s_width;
 	m->biYPelsPerMeter = s->minfo.s_height;
-	m->biClrUsed = 0xffffff;
-	m->biClrImportant = 0xAAAAAA;					// ?
+	m->biClrUsed = 0;
+	m->biClrImportant = 0;					// ?
 }
 
 t_bmp	make_bmp(t_set *s)
@@ -981,22 +981,22 @@ int check_map(t_set *set)
 	return (rt);
 }
 
-// // void	parse_map(t_set *set)
-// // {
-// // 	char	*line;
-// // 	int		fd = open("test_map.cub", O_RDONLY);
+// void	parse_map(t_set *set)
+// {
+// 	char	*line;
+// 	int		fd = open("test_map.cub", O_RDONLY);
 
-// // 	if (!get_resolution(fd, &line, set))
-// // 		printf("Error1\n");
-// // 	if (!get_path(fd, &line, set))
-// // 		printf("Error2\n");
-// // 	// texture로 주어지는 상황 2개 모두 고려할 것인가?
-// // 	if (!get_fc(fd, &line, set))
-// // 		printf("Error3\n");
-// // 	get_map(fd, &line, set);
-// // 	if (!check_map(set))
-// // 		printf("Error4\n");
-// // }
+// 	if (!get_resolution(fd, &line, set))
+// 		printf("Error1\n");
+// 	if (!get_path(fd, &line, set))
+// 		printf("Error2\n");
+// 	// texture로 주어지는 상황 2개 모두 고려할 것인가?
+// 	if (!get_fc(fd, &line, set))
+// 		printf("Error3\n");
+// 	get_map(fd, &line, set);
+// 	if (!check_map(set))
+// 		printf("Error4\n");
+// }
 
 // void parse_map(t_set *set)
 // {
@@ -1105,7 +1105,7 @@ int		flag_check(int start, int kind, unsigned char *flag, char *line)
 {
 	if (((*flag) >> kind & 1) ==  1)
 		return (-1);
-	while (line[start] == ' ')
+	while (line[start] == ' ' || line[start] == '	')
 		start++;
 	(*flag) |= 1 << kind;
 	return (start);
