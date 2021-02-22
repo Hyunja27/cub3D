@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/23 00:29:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/23 01:18:26 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	sprite_cast_insert_2(t_set *s, int i);
 
 void	carl_ray(t_set *s);
 void	carl_fc(t_set *s);
+
 #endif

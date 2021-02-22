@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:53:53 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 23:56:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/23 01:25:47 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	load_file(t_set *set, int num, char *path)
 
 	img_tmp.img_ptr = mlx_xpm_file_to_image(set->mlx_ptr, path, \
 	&img_tmp.img_width, &img_tmp.img_height);
+	set->img.img_height = img_tmp.img_height;
+	set->img.img_width = img_tmp.img_width;
 	img_tmp.data = (int *)mlx_get_data_addr(img_tmp.img_ptr, \
 	&img_tmp.bpp, &img_tmp.size_l, &img_tmp.endian);
 	x = 0;
