@@ -19,6 +19,11 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		make_bmp.c \
 		sprite_arrange.c \
 		key_input.c \
+		screen_control.c \
+		map_parsing.c \
+		map_parsing_tools_1.c \
+		map_parsing_tools_2.c \
+		map_parsing_checker.c \
 		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit
