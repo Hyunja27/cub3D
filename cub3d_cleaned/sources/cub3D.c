@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/20 01:16:38 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/22 17:40:58 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -745,9 +745,9 @@ void load_tex(t_set *set)
 	load_file(set, 5, "img/mossy.xpm");
 	load_file(set, 6, "img/wood.xpm");
 	load_file(set, 7, "img/colorstone.xpm");
-	if (set->minfo.f_path)
+	if (set->minfo.f_kind)
 		load_file(set, 8, set->minfo.f_path);
-	if (set->minfo.c_path)
+	if (set->minfo.c_kind)
 		load_file(set, 10, set->minfo.c_path);
 	// // sprite texture
 	load_file(set, 9, set->minfo.sp_path);
