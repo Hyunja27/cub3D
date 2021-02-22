@@ -38,16 +38,6 @@ $(NAME) :
 	@make clean
 	@echo "${MINT}making Done."
 
-t1 : 
-	@echo "${PURPLE}[${RED} Makefile${PURPLE} :starting.. ]"
-	@(make -C $(LIBFT_DIR))
-	@echo "${PURPLE}->making libft.a , and add src.o.."
-	@echo "${PURPLE}->resting.. drinking some coffee..."
-	@(cp $(LIBFT_DIR)/$(LIBFT) .)
-	$(CC) $(GCC_FLAG) -L $(LIBFT_DIR) -l ft -I $(INC_DIR) -I $(LIBFT_DIR)/$(INC_DIR) -L $(MLX_DIR) -lmlx $(MLX_FLAG) $(SRC) -o cub3D
-	@make clean
-	@echo "${MINT}making Done."
-
 clean :
 	@echo "${PURPLE}[${RED} cleaning ${PURPLE} : erase objects file.]"
 	@(make -C $(LIBFT_DIR) clean)
@@ -66,7 +56,7 @@ fclean : clean
 test : 
 	@(make fclean)
 	@(make)
-	@(./cub3D)
-	@(rm cub3D)
+	@(./cub3D test_map.cub --aq)
+	# @(rm cub3D)
 	@(rm tmp_map)
 	

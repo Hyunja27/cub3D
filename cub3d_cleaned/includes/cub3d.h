@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 18:18:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/22 20:34:23 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct	s_set
 	char*		E_tex;
 	char*		SPR_tex;
 	char*		map_path;
+	int		save_flag;
 	int			F_corl;
 	int			S_corl;
 	t_img		img;

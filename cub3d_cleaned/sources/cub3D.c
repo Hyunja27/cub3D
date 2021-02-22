@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 18:30:44 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/22 20:39:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -472,12 +472,17 @@ int main_loop(t_set *set)
 	clean_screen(set);
 	carl_ray(set);
 	sprite_cast(set);
-
 	if (set->map1 == 1)
 		parse_draw_map(set);
 	key_action(set);
-
 	mlx_put_image_to_window(set->mlx_ptr, set->win_ptr, set->img.img_ptr, 0, 0);
+	if (set->save_flag)
+	{
+		make_bmp(set);
+		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
+		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
+		exit(0);
+	}
 	return (0);
 }
 
@@ -884,19 +889,22 @@ int main(int ac, char *av[])
 	int j;
 	t_set set;
 
-	if (ac > 2 || ac == 0)
+	if (ac > 3 || ac == 1)
 	{
-		error_msg("Wrong Input!")
+		error_msg("Wrong Input!");
 		return (1);
 	}
-	if (ac == 1)
-		set.map_path = av[0];
-	else if (ac == 2)
+	if (ac == 2)
+		set.map_path = av[1];
+	else if (ac == 3)
 	{
-		set.map_path = av[0];
-		if (av[1] != "--save")
+		set.map_path = av[1];
+		if (!ft_strnstr(av[2], "--save", 6))
 			return (0);
+		else
+			set.save_flag = 1;
 	}
+	printf("map_path : %s\n", set.map_path);
 	
 	set.p.rotspeed = 0.02;
 	set.p.movespeed = 0.06;
@@ -913,6 +921,7 @@ int main(int ac, char *av[])
 	j = 0;
 	
 	map_parse(&set, set.map_path);
+	
 	i = 0;
 	if (!(set.p.zBuffer = malloc(sizeof(double) * set.minfo.s_width)))
 		return (-1);
@@ -921,14 +930,7 @@ int main(int ac, char *av[])
 	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);
 	mlx_hook(set.win_ptr, KeyRelease, 0, key_release, &set);
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
-	mlx_loop(set.mlx_ptr);
-	if (av[1] == "--save")
-	{
-		make_bmp(set);
-		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
-		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
-		exit(0);
-	}
+	mlx_loop(set.mlx_ptr);	
 
 	
 	while (i < set.minfo.m_height)
