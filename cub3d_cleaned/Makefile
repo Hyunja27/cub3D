@@ -27,6 +27,8 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		make_texture.c \
 		main_loop.c \
 		make_sprite.c \
+		ray_caster.c \
+		floor_ceiling_caster.c \
 		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit

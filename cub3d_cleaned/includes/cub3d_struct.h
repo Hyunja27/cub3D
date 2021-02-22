@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/23 00:06:24 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/23 00:17:15 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ typedef struct s_spr_cast
 	double	x;
 	double	y;
 	int		texnum;
-	double  spriteX; 
-	double  spriteY;
+	double  sp_X; 
+	double  sp_Y;
 	double  invDet;
-	double  transformX;
-	double  transformY;
+	double  tr_X;
+	double  tr_Y;
 	int		spriteScreenX;
 	int     uDiv;
     int     vDiv;
