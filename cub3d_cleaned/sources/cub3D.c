@@ -6,215 +6,96 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 20:39:52 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/22 22:21:54 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void arrange_Sprite(t_set *s)
-{
-	int tmp;
-	double dis_tmp;
-	double max = 0;
-	for (int i = 0; i < s->minfo.num_sprite - 1; i++)
-	{
-		max = s->spr.spriteDistance[i];
-		for (int j = i + 1; j < s->minfo.num_sprite; j++)
-		{
-			if (max <= s->spr.spriteDistance[j])
-			{
-				max = s->spr.spriteDistance[j];
-				tmp = s->spr.spriteOrder[i];
-				s->spr.spriteOrder[i] = s->spr.spriteOrder[j];
-				s->spr.spriteOrder[j] = tmp;
-				dis_tmp = s->spr.spriteDistance[i];
-				s->spr.spriteDistance[i] = s->spr.spriteDistance[j];
-				s->spr.spriteDistance[j] = dis_tmp;
-			}
-		}
-	}
-}
+// int key_press(int keycode, t_set *set)
+// {
+// 	if (keycode == ESC_KEY)
+// 	{
+// 		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
+// 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
+// 		exit(0);
+// 	}
+// 	if (keycode == LEFT_KEY)
+// 		set->left = 1;
+// 	if (keycode == RIGHT_KEY)
+// 		set->right = 1;
+// 	if (keycode == UP_KEY)
+// 		set->up = 1;
+// 	if (keycode == DOWN_KEY)
+// 		set->down = 1;
+// 	if (keycode == P_KEY)
+// 	{
+// 		make_bmp(set);
+// 		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
+// 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
+// 		exit(0);
+// 	}
+// 	return (0);
+// }
 
-void draw_rect(t_set *set, int x, int y, int corl)
-{
-	int i;
-	int j;
+// int key_release(int keycode, t_set *set)
+// {
+// 	if (keycode == LEFT_KEY)
+// 		set->left = 0;
+// 	if (keycode == RIGHT_KEY)
+// 		set->right = 0;
+// 	if (keycode == UP_KEY)
+// 		set->up = 0;
+// 	if (keycode == DOWN_KEY)
+// 		set->down = 0;
+// 	if (keycode == M_KEY)
+// 	{
+// 		if (set->map1 == 0)
+// 			set->map1 = 1;
+// 		else
+// 			set->map1 = 0;
+// 	}
+// 	return (0);
+// }
 
-	x *= MAP_BOX_SIZE;
-	y *= MAP_BOX_SIZE;
-	i = 0;
-	while (i < MAP_BOX_SIZE)
-	{
-		j = 0;
-		while (j < MAP_BOX_SIZE)
-		{
-			set->img.data[(x + i) * set->minfo.s_width + y + j] = corl;
-			j++;
-		}
-		i++;
-	}
-}
+// void key_action(t_set *s)
+// {
+// 	double olddir_x;
+// 	double oldplane_x;
 
-void draw_all_rect(t_set *set)
-{
-
-	int i;
-	int j;
-
-	i = 0;
-	while (i < set->minfo.m_height)
-	{
-		j = 0;
-		while (j < set->minfo.m_width)
-		{
-			if (set->map2[i][j] == 1)
-				draw_rect(set, i, j, 0xFFFFFF);
-			else if (set->map2[i][j] == 2)
-				draw_rect(set, i, j, 0xAAFFAA);
-			j++;
-		}
-		i++;
-	}
-}
-
-void parse_draw_map(t_set *s)
-{
-	int i;
-	int j;
-	int a;
-	int b;
-
-	draw_all_rect(s);
-	i = s->p.pos_X * MAP_BOX_SIZE;
-	j = s->p.pos_Y * MAP_BOX_SIZE;
-	a = -1;
-	while (++a < 2)
-	{
-		b = -1;
-		for (b = 0; b < 3; b++)
-			s->img.data[(i + a) * s->minfo.s_width + (j + b)] = 0xff0000;
-	}
-}
-
-void	put_bmp_info(t_bmp *m, t_set *s)
-{
-	m->bfType1 = 'B';
-	m->bfType2 = 'M';
-	m->bfSize = (4 * (s->minfo.s_width * s->minfo.s_height)) + 54;
-	m->bfReserved1 = 0;
-	m->bfReserved2 = 0;
-	m->bfOffBits = 54;
-	m->biSize = 40;							// ?
-	m->biWidth = s->minfo.s_width;
-	m->biHeight = -s->minfo.s_height;		// ?
-	m->biPlanes = 1;
-	m->biBitCount = 32;
-	m->biCompression = 0;
-	m->biSizeImage = (4 * (s->minfo.s_width * s->minfo.s_height));
-	m->biXPelsPerMeter = s->minfo.s_width;
-	m->biYPelsPerMeter = s->minfo.s_height;
-	m->biClrUsed = 0;
-	m->biClrImportant = 0;					// ?
-}
-
-t_bmp	make_bmp(t_set *s)
-{
-	t_bmp	m;
-	int		fd;
-
-	fd = open("cub3d_save.bmp", O_RDWR | O_TRUNC | O_CREAT, 0666);
-	put_bmp_info(&m, s);
-	write(fd, &m, 54);
-	write(fd, s->img.data, m.biSizeImage);
-	close(fd);
-	return (m); 
-}
-
-int key_press(int keycode, t_set *set)
-{
-	if (keycode == ESC_KEY)
-	{
-		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
-		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
-		exit(0);
-	}
-	if (keycode == LEFT_KEY)
-		set->left = 1;
-	if (keycode == RIGHT_KEY)
-		set->right = 1;
-	if (keycode == UP_KEY)
-		set->up = 1;
-	if (keycode == DOWN_KEY)
-		set->down = 1;
-	if (keycode == P_KEY)
-	{
-		make_bmp(set);
-		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
-		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
-		exit(0);
-	}
-	return (0);
-}
-
-int key_release(int keycode, t_set *set)
-{
-	if (keycode == LEFT_KEY)
-		set->left = 0;
-	if (keycode == RIGHT_KEY)
-		set->right = 0;
-	if (keycode == UP_KEY)
-		set->up = 0;
-	if (keycode == DOWN_KEY)
-		set->down = 0;
-	if (keycode == M_KEY)
-	{
-		if (set->map1 == 0)
-			set->map1 = 1;
-		else
-			set->map1 = 0;
-	}
-	return (0);
-}
-
-void key_action(t_set *s)
-{
-	double olddir_x;
-	double oldplane_x;
-
-	if (s->up == 1)
-	{
-		if (!s->map2[(int)(s->p.pos_X + s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
-			s->p.pos_X += s->p.dir_X * s->p.movespeed;
-		if (!s->map2[(int)s->p.pos_X][(int)(s->p.pos_Y + s->p.dir_Y * s->p.movespeed)])
-			s->p.pos_Y += s->p.dir_Y * s->p.movespeed;
-	}
-	if (s->down == 1)
-	{
-		if (!s->map2[(int)(s->p.pos_X - s->p.dir_X * s->p.movespeed)][(int)s->p.pos_Y])
-			s->p.pos_X -= s->p.dir_X * s->p.movespeed;
-		if (!s->map2[(int)s->p.pos_X][(int)(s->p.pos_Y - s->p.dir_Y * s->p.movespeed)])
-			s->p.pos_Y -= s->p.dir_Y * s->p.movespeed;
-	}
-	if (s->left == 1)
-	{
-		olddir_x = s->p.dir_X;
-		s->p.dir_X = s->p.dir_X * cos(s->p.rotspeed) - s->p.dir_Y * sin(s->p.rotspeed);
-		s->p.dir_Y = olddir_x * sin(s->p.rotspeed) + s->p.dir_Y * cos(s->p.rotspeed);
-		oldplane_x = s->p.plane_X;
-		s->p.plane_X = s->p.plane_X * cos(s->p.rotspeed) - s->p.plane_Y * sin(s->p.rotspeed);
-		s->p.plane_Y = oldplane_x * sin(s->p.rotspeed) + s->p.plane_Y * cos(s->p.rotspeed);
-	}
-	if (s->right == 1)
-	{
-		olddir_x = s->p.dir_X;
-		s->p.dir_X = s->p.dir_X * cos(-s->p.rotspeed) - s->p.dir_Y * sin(-s->p.rotspeed);
-		s->p.dir_Y = olddir_x * sin(-s->p.rotspeed) + s->p.dir_Y * cos(-s->p.rotspeed);
-		oldplane_x = s->p.plane_X;
-		s->p.plane_X = s->p.plane_X * cos(-s->p.rotspeed) - s->p.plane_Y * sin(-s->p.rotspeed);
-		s->p.plane_Y = oldplane_x * sin(-s->p.rotspeed) + s->p.plane_Y * cos(-s->p.rotspeed);
-	}
-}
+// 	if (s->up == 1)
+// 	{
+// 		if (!s->map2[(int)(s->p.posX + s->p.dirX * s->p.movespeed)][(int)s->p.posY])
+// 			s->p.posX += s->p.dirX * s->p.movespeed;
+// 		if (!s->map2[(int)s->p.posX][(int)(s->p.posY + s->p.dirY * s->p.movespeed)])
+// 			s->p.posY += s->p.dirY * s->p.movespeed;
+// 	}
+// 	if (s->down == 1)
+// 	{
+// 		if (!s->map2[(int)(s->p.posX - s->p.dirX * s->p.movespeed)][(int)s->p.posY])
+// 			s->p.posX -= s->p.dirX * s->p.movespeed;
+// 		if (!s->map2[(int)s->p.posX][(int)(s->p.posY - s->p.dirY * s->p.movespeed)])
+// 			s->p.posY -= s->p.dirY * s->p.movespeed;
+// 	}
+// 	if (s->left == 1)
+// 	{
+// 		olddir_x = s->p.dirX;
+// 		s->p.dirX = s->p.dirX * cos(s->p.rotspeed) - s->p.dirY * sin(s->p.rotspeed);
+// 		s->p.dirY = olddir_x * sin(s->p.rotspeed) + s->p.dirY * cos(s->p.rotspeed);
+// 		oldplane_x = s->p.planeX;
+// 		s->p.planeX = s->p.planeX * cos(s->p.rotspeed) - s->p.planeY * sin(s->p.rotspeed);
+// 		s->p.planeY = oldplane_x * sin(s->p.rotspeed) + s->p.planeY * cos(s->p.rotspeed);
+// 	}
+// 	if (s->right == 1)
+// 	{
+// 		olddir_x = s->p.dirX;
+// 		s->p.dirX = s->p.dirX * cos(-s->p.rotspeed) - s->p.dirY * sin(-s->p.rotspeed);
+// 		s->p.dirY = olddir_x * sin(-s->p.rotspeed) + s->p.dirY * cos(-s->p.rotspeed);
+// 		oldplane_x = s->p.planeX;
+// 		s->p.planeX = s->p.planeX * cos(-s->p.rotspeed) - s->p.planeY * sin(-s->p.rotspeed);
+// 		s->p.planeY = oldplane_x * sin(-s->p.rotspeed) + s->p.planeY * cos(-s->p.rotspeed);
+// 	}
+// }
 
 void make_window(t_set *s)
 {
@@ -237,17 +118,17 @@ void carl_ray(t_set *s)
 
 	while (y < s->minfo.s_height)
 	{
-		s->flr.rayDirX0 = s->p.dir_X - s->p.plane_X;
-		s->flr.rayDirY0 = s->p.dir_Y - s->p.plane_Y;
-		s->flr.rayDirX1 = s->p.dir_X + s->p.plane_X;
-		s->flr.rayDirY1 = s->p.dir_Y + s->p.plane_Y;
+		s->flr.rayDirX0 = s->p.dirX - s->p.planeX;
+		s->flr.rayDirY0 = s->p.dirY - s->p.planeY;
+		s->flr.rayDirX1 = s->p.dirX + s->p.planeX;
+		s->flr.rayDirY1 = s->p.dirY + s->p.planeY;
 		s->flr.center = y - s->minfo.s_height / 2;
 		s->flr.posZ = 0.5 * s->minfo.s_height;
 		s->flr.rowDistance = s->flr.posZ / s->flr.center;
 		s->flr.floorStepX = s->flr.rowDistance * (s->flr.rayDirX1 - s->flr.rayDirX0) / s->minfo.s_width;
 		s->flr.floorStepY = s->flr.rowDistance * (s->flr.rayDirY1 - s->flr.rayDirY0) / s->minfo.s_width;
-		s->flr.floorX = s->p.pos_X + s->flr.rowDistance * s->flr.rayDirX0;
-		s->flr.floorY = s->p.pos_Y + s->flr.rowDistance * s->flr.rayDirY0;
+		s->flr.floorX = s->p.posX + s->flr.rowDistance * s->flr.rayDirX0;
+		s->flr.floorY = s->p.posY + s->flr.rowDistance * s->flr.rayDirY0;
 
 		while (i < s->minfo.s_width)
 		{
@@ -286,59 +167,59 @@ void carl_ray(t_set *s)
 	{
 		s->p.hit = 0;
 
-		s->p.camera_X = 2 * x / w - 1;
-		s->p.raydir_X = s->p.dir_X + s->p.plane_X * s->p.camera_X;
-		s->p.raydir_Y = s->p.dir_Y + s->p.plane_Y * s->p.camera_X;
+		s->p.cameraX = 2 * x / w - 1;
+		s->p.raydirX = s->p.dirX + s->p.planeX * s->p.cameraX;
+		s->p.raydirY = s->p.dirY + s->p.planeY * s->p.cameraX;
 
-		s->p.position_X = (int)s->p.pos_X;
-		s->p.position_Y = (int)s->p.pos_Y;
+		s->p.positionX = (int)s->p.posX;
+		s->p.positionY = (int)s->p.posY;
 
-		s->p.deltadist_X = fabs(1 / s->p.raydir_X);
-		s->p.deltadist_Y = fabs(1 / s->p.raydir_Y);
+		s->p.deltadistX = fabs(1 / s->p.raydirX);
+		s->p.deltadistY = fabs(1 / s->p.raydirY);
 
-		if (s->p.raydir_X < 0)
+		if (s->p.raydirX < 0)
 		{
-			s->p.step_X = -1;
-			s->p.side_X = (s->p.pos_X - s->p.position_X) * s->p.deltadist_X;
+			s->p.stepX = -1;
+			s->p.sideX = (s->p.posX - s->p.positionX) * s->p.deltadistX;
 		}
 		else
 		{
-			s->p.step_X = 1;
-			s->p.side_X = (s->p.position_X + 1.0 - s->p.pos_X) * s->p.deltadist_X;
+			s->p.stepX = 1;
+			s->p.sideX = (s->p.positionX + 1.0 - s->p.posX) * s->p.deltadistX;
 		}
-		if (s->p.raydir_Y < 0)
+		if (s->p.raydirY < 0)
 		{
-			s->p.step_Y = -1;
-			s->p.side_Y = (s->p.pos_Y - s->p.position_Y) * s->p.deltadist_Y;
+			s->p.stepY = -1;
+			s->p.sideY = (s->p.posY - s->p.positionY) * s->p.deltadistY;
 		}
 		else
 		{
-			s->p.step_Y = 1;
-			s->p.side_Y = (s->p.position_Y + 1.0 - s->p.pos_Y) * s->p.deltadist_Y;
+			s->p.stepY = 1;
+			s->p.sideY = (s->p.positionY + 1.0 - s->p.posY) * s->p.deltadistY;
 		}
 
 		while (s->p.hit == 0)
 		{
-			if (s->p.side_X < s->p.side_Y)
+			if (s->p.sideX < s->p.sideY)
 			{
-				s->p.side_X += s->p.deltadist_X;
-				s->p.position_X += s->p.step_X;
+				s->p.sideX += s->p.deltadistX;
+				s->p.positionX += s->p.stepX;
 				s->p.hit_side = 0;
 			}
 			else
 			{
-				s->p.side_Y += s->p.deltadist_Y;
-				s->p.position_Y += s->p.step_Y;
+				s->p.sideY += s->p.deltadistY;
+				s->p.positionY += s->p.stepY;
 				s->p.hit_side = 1;
 			}
-			if (s->map2[s->p.position_X][s->p.position_Y] == 1)
+			if (s->map2[s->p.positionX][s->p.positionY] == 1)
 				s->p.hit = 1;
 		}
 
 		if (s->p.hit_side == 0)
-			s->p.perpwalldist = (s->p.position_X - s->p.pos_X + (1 - s->p.step_X) / 2) / s->p.raydir_X;
+			s->p.perpwalldist = (s->p.positionX - s->p.posX + (1 - s->p.stepX) / 2) / s->p.raydirX;
 		else
-			s->p.perpwalldist = (s->p.position_Y - s->p.pos_Y + (1 - s->p.step_Y) / 2) / s->p.raydir_Y;
+			s->p.perpwalldist = (s->p.positionY - s->p.posY + (1 - s->p.stepY) / 2) / s->p.raydirY;
 
 		s->cr.line_screenHeight = (int)(s->minfo.s_height / s->p.perpwalldist);
 		s->cr.draw_start = -s->cr.line_screenHeight / 2 + s->minfo.s_height / 2;
@@ -348,15 +229,15 @@ void carl_ray(t_set *s)
 		if (s->cr.draw_end >= s->minfo.s_height)
 			s->cr.draw_end = s->minfo.s_height - 1;
 		if (s->p.hit_side == 0)
-			s->cr.wallX = s->p.pos_Y + s->p.perpwalldist * s->p.raydir_Y;
+			s->cr.wallX = s->p.posY + s->p.perpwalldist * s->p.raydirY;
 		else
-			s->cr.wallX = s->p.pos_X + s->p.perpwalldist * s->p.raydir_X;
+			s->cr.wallX = s->p.posX + s->p.perpwalldist * s->p.raydirX;
 		s->cr.wallX -= floor(s->cr.wallX);
 
 		s->tex.texX = (int)(s->cr.wallX * (double)TEX_WIDTH);
-		if (s->p.hit_side == 0 && s->p.raydir_X > 0)
+		if (s->p.hit_side == 0 && s->p.raydirX > 0)
 			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
-		if (s->p.hit_side == 1 && s->p.raydir_Y < 0)
+		if (s->p.hit_side == 1 && s->p.raydirY < 0)
 			s->tex.texX = TEX_WIDTH - s->tex.texX - 1;
 
 		s->p.step = 1.0 * TEX_HEIGHT / s->cr.line_screenHeight;
@@ -364,14 +245,14 @@ void carl_ray(t_set *s)
 
 		if (s->p.hit_side == 1)
 		{
-			if (s->p.raydir_Y > 0)
+			if (s->p.raydirY > 0)
 				s->tex.texture_kind = 2;
 			else
 				s->tex.texture_kind = 3;
 		}
 		else if (s->p.hit_side == 0)
 		{
-			if (s->p.raydir_X > 0)
+			if (s->p.raydirX > 0)
 				s->tex.texture_kind = 0;
 			else
 				s->tex.texture_kind = 1;
@@ -405,18 +286,18 @@ void sprite_cast(t_set *s)
 	while (i < s->minfo.num_sprite)
 	{
 		s->spr.spriteOrder[i] = i;
-		s->spr.spriteDistance[i] = ((s->p.pos_X - s->spr.sprt[i].x) * (s->p.pos_X - s->spr.sprt[i].x) + (s->p.pos_Y - s->spr.sprt[i].y) * (s->p.pos_Y - s->spr.sprt[i].y));
+		s->spr.spriteDistance[i] = ((s->p.posX - s->spr.sprt[i].x) * (s->p.posX - s->spr.sprt[i].x) + (s->p.posY - s->spr.sprt[i].y) * (s->p.posY - s->spr.sprt[i].y));
 		i++;
 	}
 	i = 0;
-	arrange_Sprite(s);
+	arrange_sprite(s);
 	while (i < s->minfo.num_sprite)
 	{
-		s->spr.spriteX = s->spr.sprt[s->spr.spriteOrder[i]].x - s->p.pos_X;
-		s->spr.spriteY = s->spr.sprt[s->spr.spriteOrder[i]].y - s->p.pos_Y;
-		s->spr.invDet = 1.0 / (s->p.plane_X * s->p.dir_Y - s->p.dir_X * s->p.plane_Y);
-		s->spr.transformX = s->spr.invDet * (s->p.dir_Y * s->spr.spriteX - s->p.dir_X * s->spr.spriteY);
-		s->spr.transformY = s->spr.invDet * (-s->p.plane_Y * s->spr.spriteX + s->p.plane_X * s->spr.spriteY);
+		s->spr.spriteX = s->spr.sprt[s->spr.spriteOrder[i]].x - s->p.posX;
+		s->spr.spriteY = s->spr.sprt[s->spr.spriteOrder[i]].y - s->p.posY;
+		s->spr.invDet = 1.0 / (s->p.planeX * s->p.dirY - s->p.dirX * s->p.planeY);
+		s->spr.transformX = s->spr.invDet * (s->p.dirY * s->spr.spriteX - s->p.dirX * s->spr.spriteY);
+		s->spr.transformY = s->spr.invDet * (-s->p.planeY * s->spr.spriteX + s->p.planeX * s->spr.spriteY);
 		s->spr.spriteScreenX = (int)((s->minfo.s_width / 2) * (1 + s->spr.transformX / s->spr.transformY));
 		s->spr.uDiv = 1;
 		s->spr.vDiv = 1;
@@ -536,31 +417,31 @@ void set_pos(t_set *set, char pos)
 {
 	if (pos == 'E')
 	{
-		set->p.dir_X = 0;
-		set->p.dir_Y = 1;
-		set->p.plane_X = 0.66;
-		set->p.plane_Y = 0;
+		set->p.dirX = 0;
+		set->p.dirY = 1;
+		set->p.planeX = 0.66;
+		set->p.planeY = 0;
 	}
 	if (pos == 'W')
 	{
-		set->p.dir_X = 0;
-		set->p.dir_Y = -1;
-		set->p.plane_X = -0.66;
-		set->p.plane_Y = 0;
+		set->p.dirX = 0;
+		set->p.dirY = -1;
+		set->p.planeX = -0.66;
+		set->p.planeY = 0;
 	}
 	if (pos == 'S')
 	{
-		set->p.dir_X = 1;
-		set->p.dir_Y = 0;
-		set->p.plane_X = 0;
-		set->p.plane_Y = -0.66;
+		set->p.dirX = 1;
+		set->p.dirY = 0;
+		set->p.planeX = 0;
+		set->p.planeY = -0.66;
 	}
 	if (pos == 'N')
 	{
-		set->p.dir_X = -1;
-		set->p.dir_Y = 0;
-		set->p.plane_X = 0;
-		set->p.plane_Y = 0.66;
+		set->p.dirX = -1;
+		set->p.dirY = 0;
+		set->p.planeX = 0;
+		set->p.planeY = 0.66;
 	}
 }
 
@@ -577,8 +458,8 @@ void change_map(t_set *set, int **map, char *temp_map, int i)
 		if (temp_map[j] == 'E' || temp_map[j] == 'W' || temp_map[j] == 'S' || temp_map[j] == 'N')
 		{
 			set_pos(set, temp_map[j]);
-			set->p.pos_X = i;
-			set->p.pos_Y = j;
+			set->p.posX = i;
+			set->p.posY = j;
 			temp_map[j] = '0';
 		}
 		(*map)[j] = temp_map[j] == ' ' ? -1 : temp_map[j] - '0';
@@ -906,7 +787,7 @@ int main(int ac, char *av[])
 	}
 	printf("map_path : %s\n", set.map_path);
 	
-	set.p.rotspeed = 0.02;
+	set.p.rspd = 0.02;
 	set.p.movespeed = 0.06;
 
 	set.up = 0;

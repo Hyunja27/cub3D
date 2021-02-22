@@ -13,7 +13,13 @@ RM = rm
 RMFLAGS = -f
 AR = ar crs
 
-SRC =  $(addprefix $(SRC_DIR)/, cub3D.c)
+SRC =  $(addprefix $(SRC_DIR)/, \
+		cub3D.c \
+		make_2d_map.c \
+		make_bmp.c \
+		sprite_arrange.c \
+		key_input.c \
+		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit
 
@@ -56,7 +62,7 @@ fclean : clean
 test : 
 	@(make fclean)
 	@(make)
-	@(./cub3D test_map.cub --aq)
+	@(./cub3D test_map.cub)
 	# @(rm cub3D)
 	@(rm tmp_map)
 	
