@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 17:47:24 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/22 18:05:39 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,88 +35,6 @@ void arrange_Sprite(t_set *s)
 		}
 	}
 }
-
-// int		move(t_set *s)
-// {
-// 	int i;
-// 	int j;
-// 	int a;
-// 	// int k;
-// 	// int map2d_pos_X;
-// 	// int map2d_pos_Y;
-// 	// for(int a = 0; a < screenHeight * screenWidth; a++)
-// 	// 	set->img.data[a] = 0;
-
-// 	// map2d_pos_X = s->p.pos_X * MAP_BOX_SIZE;
-// 	// map2d_pos_Y = s->p.pos_Y * MAP_BOX_SIZE;
-// 	// for (i = (int)map2d_pos_X, k = 4; i < map2d_pos_X + 2; i++, k -= 2)
-// 	// 	{
-// 	// 		for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-// 	// 		my_mlx_pixel_put(s, i, j, 0x0000FF00);
-// 	// 	}
-// 	// for (i = map2d_pos_X + 2, k = 0; i < map2d_pos_X + 4; i++, k += 2)
-// 	// 	{
-// 	// 		for (j = (map2d_pos_Y) + k; j <=  (map2d_pos_Y) + 4; j++)
-// 	// 		my_mlx_pixel_put(s, i, j, 0x0000FF00);
-// 	// 	}
-// 	// draw_square(s, s->p.pos_X, 0x0000FF00);
-
-// 	i = s->p.pos_X * MAP_BOX_SIZE;
-// 	j = s->p.pos_Y * MAP_BOX_SIZE;
-// 	printf("%d %d\n", i, j);
-// 	a = -1;
-// 	while (++a < 2)
-// 	{
-// 		for(int b = 0; b < 3; b++)
-// 			s->img.data[(j + a) * s->minfo.s_width + (i + b)] = 0xff0000;
-// 	}
-
-// 	return (0);
-// }
-
-// void	draw_cross_line(t_img set, int start, int color)
-// {
-// 	int		i = 0;
-
-// 	while ((((start + i) % s->minfo.s_width) != 0))
-// 		set.data[start + i++] = color;
-// 	i = 0;
-// 	while ((((start - i) % s->minfo.s_width) != 0))
-// 		set.data[start - i++] = color;
-// 	i = 0;
-// 	while (((i * s->minfo.s_width) <= s->minfo.s_width * s->minfo.s_height) && (((start + (i * s->minfo.s_width)) % s->minfo.s_width) != 0))
-// 		set.data[start + (i++ * s->minfo.s_width)] = color;
-// 	i = 0;
-// 	while (((start - (i * s->minfo.s_width)) >= 0) && (((start + (i * s->minfo.s_width)) % s->minfo.s_width) != 0))
-// 		set.data[start - (i++ * s->minfo.s_width)] = color;
-// }
-
-// void	parse_draw_line(t_img set, int s->map2[24][24],int color)
-// {
-// 	int i;
-// 	int j;
-// 	int point;
-
-// 	i = 0;
-// 	j = 0;
-// 	point = 0;
-// 	while (i < m->height)
-// 	{
-// 		while (j < s->m_width)
-// 		{
-// 			if (s->map2[i][j] == 1)
-// 			{
-// 				point = (i * (s->minfo.s_width * MAP_BOX_SIZE)) + (j * MAP_BOX_SIZE);
-// 				// if (point > BOX_screenWidth)
-// 				// 	draw_cross_line(set, point, color);
-// 			}
-// 			j++;
-// 		}
-// 		j = 0;
-// 		i++;
-// 	}
-// 	// draw_strange_line(set, 5000, 0xffffff);
-// }
 
 void draw_rect(t_set *set, int x, int y, int corl)
 {
@@ -215,9 +133,6 @@ t_bmp	make_bmp(t_set *s)
 
 int key_press(int keycode, t_set *set)
 {
-	// double	olddir_x;
-	// double	oldplane_x;
-
 	if (keycode == ESC_KEY)
 	{
 		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
@@ -239,42 +154,6 @@ int key_press(int keycode, t_set *set)
 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
 		exit(0);
 	}
-
-	// ===========================
-
-	// 해당 부분을 메인 함수 루프 바디에서 실행해볼 것, 키 릴리즈와 프레스는 플래그만 바꿔주도록.
-	// if (set->up == 1)
-	// {
-	// 	if (!s->map2[(int)(point.pos_X + point.dir_X * point.movespeed)][(int)point.pos_Y])
-	// 		point.pos_X += point.dir_X * point.movespeed;
-	// 	if (!s->map2[(int)point.pos_X][(int)(point.pos_Y + point.dir_Y * point.movespeed)])
-	// 		point.pos_Y += point.dir_Y * point.movespeed;
-	// }
-	// if (set->down == 1)
-	// {
-	// 	if (!s->map2[(int)(point.pos_X - point.dir_X * point.movespeed)][(int)point.pos_Y])
-	// 		point.pos_X -= point.dir_X * point.movespeed;
-	// 	if (!s->map2[(int)point.pos_X][(int)(point.pos_Y - point.dir_Y * point.movespeed)])
-	// 		point.pos_Y -= point.dir_Y * point.movespeed;
-	// }
-	// if (set->right == 1)
-	// {
-	// 	olddir_x = point.dir_X;
-	// 	point.dir_X = point.dir_X * cos(-point.rotspeed) - point.dir_Y * sin(-point.rotspeed);
-	// 	point.dir_Y = olddir_x * sin(-point.rotspeed) + point.dir_Y * cos(-point.rotspeed);
-	// 	oldplane_x = point.plane_X;
-	// 	point.plane_X = point.plane_X * cos(-point.rotspeed) - point.plane_Y * sin(-point.rotspeed);
-	// 	point.plane_Y = oldplane_x * sin(-point.rotspeed) + point.plane_Y * cos(-point.rotspeed);
-	// }
-	// if (set->left == 1)
-	// {
-	// 	olddir_x = point.dir_X;
-	// 	point.dir_X = point.dir_X * cos(point.rotspeed) - point.dir_Y * sin(point.rotspeed);
-	// 	point.dir_Y = olddir_x * sin(point.rotspeed) + point.dir_Y * cos(point.rotspeed);
-	// 	oldplane_x = point.plane_X;
-	// 	point.plane_X = point.plane_X * cos(point.rotspeed) - point.plane_Y * sin(point.rotspeed);
-	// 	point.plane_Y = oldplane_x * sin(point.rotspeed) + point.plane_Y * cos(point.rotspeed);
-	// }
 	return (0);
 }
 
@@ -358,24 +237,13 @@ void carl_ray(t_set *s)
 
 	while (y < s->minfo.s_height)
 	{
-		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
 		s->flr.rayDirX0 = s->p.dir_X - s->p.plane_X;
 		s->flr.rayDirY0 = s->p.dir_Y - s->p.plane_Y;
 		s->flr.rayDirX1 = s->p.dir_X + s->p.plane_X;
 		s->flr.rayDirY1 = s->p.dir_Y + s->p.plane_Y;
-
-		// Current y position compared to the center of the screen (the horizon)
 		s->flr.center = y - s->minfo.s_height / 2;
-
-		// Vertical position of the camera.
 		s->flr.posZ = 0.5 * s->minfo.s_height;
-
-		// Horizontal distance from the camera to the floor for the current row.
-		// 0.5 is the z position exactly in the middle between floor and ceiling.
 		s->flr.rowDistance = s->flr.posZ / s->flr.center;
-
-		// calculate the real world step vector we have to add for each x (parallel to camera plane)
-		// adding step by step avoids multiplications with a weight in the inner loop
 		s->flr.floorStepX = s->flr.rowDistance * (s->flr.rayDirX1 - s->flr.rayDirX0) / s->minfo.s_width;
 		s->flr.floorStepY = s->flr.rowDistance * (s->flr.rayDirY1 - s->flr.rayDirY0) / s->minfo.s_width;
 

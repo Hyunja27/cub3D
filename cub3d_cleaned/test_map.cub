@@ -10,7 +10,7 @@ SO ./img/wall_s.xpm
 WE  ./img/wall_w.xpm
 EA ./img/wall_e.xpm
 
-R 640 480
+R 1280 760
 S ./img/2.xpm
 F 0,0,0
 C 0,0,0
