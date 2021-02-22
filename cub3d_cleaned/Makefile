@@ -24,6 +24,9 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		map_parsing_tools_1.c \
 		map_parsing_tools_2.c \
 		map_parsing_checker.c \
+		make_texture.c \
+		main_loop.c \
+		make_sprite.c \
 		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit

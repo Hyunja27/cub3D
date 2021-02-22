@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 23:51:54 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/23 00:09:18 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
+void	carl_ray(t_set *s);
 
 void	draw_rect(t_set *set, int x, int y, int corl);
 void	draw_all_rect(t_set *set);
@@ -56,5 +58,13 @@ void	get_map_size(t_set *set, int fd, int fd_2, char **line);
 void	dir_setter(t_set *s, int x, int y);
 void	set_pos(t_set *set, char pos);
 int		get_map(int fd, char **line, t_set *set);
+
+void	load_file(t_set *set, int num, char *path);
+void	load_tex(t_set *set);
+
+int		main_loop(t_set *set);
+
+void	sprite_cast_end(t_set *s, int x, int y);
+void	sprite_cast(t_set *s);
 
 #endif

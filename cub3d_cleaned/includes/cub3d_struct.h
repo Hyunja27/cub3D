@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 22:16:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/23 00:06:24 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ typedef struct s_spr_cast
     int     vDiv;
     double  vMove;
     int     vMoveScreen;
-	int     spritescreenHeight;
+	int     sp_sc_H;
 	int     drawStartY;
 	int     drawEndY;
-	int     spritescreenWidth;
+	int     sp_sc_W;
 	int     drawStartX;
 	int     drawEndX;
 	int 	texX;
