@@ -6,38 +6,11 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 17:40:58 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/22 17:47:24 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void  my_mlx_pixel_put(t_set *s, int x, int y, int color)
-// {
-//   int *dst;
-
-//  // dst = data->data + (y * data->size_l + x * (data->bpp / 8));
-//   dst = s->img.data + (y * s->minfo.s_width + x);
-//   *(unsigned int*)dst = color;
-// }
-
-// void	draw_square(t_set *s, int start, int color)
-// {
-// 	int		i = 0;
-// 	int		j = 0;
-
-// 	while (j < MAP_BOX_SIZE)
-// 	{
-// 		i = 0;
-// 		while (i < MAP_BOX_SIZE)
-// 		{
-// 			s->img.data[start + i] = color;
-// 			i++;
-// 		}
-// 		start += s->minfo.s_width;
-// 		j++;
-// 	}
-// }
 
 void arrange_Sprite(t_set *s)
 {
@@ -419,7 +392,7 @@ void carl_ray(t_set *s)
 			s->flr.floorX += s->flr.floorStepX;
 			s->flr.floorY += s->flr.floorStepY;
 			// floor
-			if (s->minfo.f_path)
+			if (s->minfo.f_kind)
 			{
 				s->tex.floorTexture = 8;
 				s->tex.color = s->p.texture[s->tex.floorTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
@@ -430,7 +403,7 @@ void carl_ray(t_set *s)
 
 			s->img.data[y * s->minfo.s_width + i] = s->tex.color;
 
-			if (s->minfo.c_path)
+			if (s->minfo.c_kind)
 			{
 				s->tex.ceilingTexture = 10;
 				s->tex.color = s->p.texture[s->tex.ceilingTexture][TEX_WIDTH * s->flr.ty + s->flr.tx];
