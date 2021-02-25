@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 23:23:23 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 23:01:35 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		get_fc(t_set *set, int kind, char *line)
 
 int		error_msg(char *kind)
 {
-	printf("Error\n %s 중복 입력\n", kind);
+	printf("Error\n %s is double entered!! \n", kind);
 	return (0);
 }
 

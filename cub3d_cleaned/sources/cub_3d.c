@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 20:45:15 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 23:35:06 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@ int		main(int ac, char *av[])
 	t_set	set;
 
 	if (init_basic(&set, ac, av))
-		return (0);
-	if (map_parse(&set, set.map_path))
 	{
+		printf("\n\nWell.. you give me 3 args, But last argument is Not \
+		'--save'.. what are you want..?\n\n\n");
 		return (1);
 	}
+	if (map_parse(&set, set.map_path))
+		return (1);
 	if (!check_map(&set))
-		printf("Map Error\n");
+	{
+		printf("\n\nI Got Map data.. but it's not a nice map.. it has error! check out tmp_map file!\n\n\n");
+		return (0);
+	}
 	if (!(set.p.zBuffer = malloc(sizeof(double) * set.minfo.s_width)))
 		return (-1);
 	make_window(&set);

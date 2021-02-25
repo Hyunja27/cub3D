@@ -1,19 +1,12 @@
 NO ./img/wall_n.xpm
-
-
-
-
 SO ./img/wall_s.xpm
-
-
-
-WE  ./img/wall_w.xpm
+WE ./img/wall_w.xpm
 EA ./img/wall_e.xpm
 
-R 1280 760
-pppppS ./img/2.xpm
-F ./img/wall_e.xpm
-C 255,255,255
+R 960 740
+S ./img/2.xpm
+F ./img/mossy.xpm
+C 200,200,210
 
 1111111111111111111111111111111111111
 1110000000000000000000000000000000001

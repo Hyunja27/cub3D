@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 20:44:35 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 23:22:16 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	dir_setter(t_set *s, int x, int y);
 void	set_pos(t_set *set, char pos);
 int		get_map(int fd, char **line, t_set *set);
 
-void	load_file(t_set *set, int num, char *path);
+int		load_file(t_set *set, int num, char *path);
 void	load_tex(t_set *set);
 
 int		main_loop(t_set *set);

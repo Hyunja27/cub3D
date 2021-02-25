@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 20:45:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 22:43:13 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@ int		map_parse(t_set *set, char *map_name)
 	int				rt;
 
 	fd = open(map_name, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("\n\nI can't find map file! where is it..? is it right name?\n\n");
+		return (1);
+	}
 	flag = 0;
 	while (flag != 255 && (rt = get_next_line(fd, &line)) > 0)
 	{
@@ -88,7 +93,10 @@ int		map_parse(t_set *set, char *map_name)
 		}
 	}
 	if (rt <= 0)
+	{
+		printf("\n\nMap file is exist, But it's Data is Not appropriate! Sorry!\n\n");
 		return (1);
+	}
 	while (line[0] != ' ' && !ft_isdigit(line[0]))
 		get_next_line(fd, &line);
 	get_map(fd, &line, set);

@@ -75,6 +75,5 @@ test :
 	@(make fclean)
 	@(make)
 	@(./cub3D test_map.cub)
-	# @(rm cub3D)
 	@(rm tmp_map)
 	
