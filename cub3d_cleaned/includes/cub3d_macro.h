@@ -6,33 +6,17 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/20 00:27:17 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 20:22:19 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_MACRO_H
 # define CUB3D_MACRO_H
 
-// #define BOX_SIZE 40
-
-// #define MAP_WIDTH 24
-// #define MAP_HEIGHT 24
 #define MAP_BOX_SIZE 7
-
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64
-
-// #define SCREEN_WIDTH 1280
-// #define SCREEN_HEIGHT 960
-
 #define TEX_NUM 11
-// #define SPRITE_NUM 29
-
-// #define COLS 24
-// // #define ROWS 24
-// #define BOX_WIDTH (MAP_BOX_SIZE * COLS)
-// #define BOX_HEIGHT (MAP_BOX_SIZE * ROWS)
-
 #define ESC_KEY 53
 #define UP_KEY 13
 #define DOWN_KEY 1

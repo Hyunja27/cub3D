@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 23:52:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 20:45:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	map_fcsr_check(t_set *set, char *line, unsigned char *flag, int i)
 	}
 }
 
-void	map_parse(t_set *set, char *map_name)
+int		map_parse(t_set *set, char *map_name)
 {
 	char			*line;
 	int				fd;
@@ -88,9 +88,10 @@ void	map_parse(t_set *set, char *map_name)
 		}
 	}
 	if (rt <= 0)
-		return ;
+		return (1);
 	while (line[0] != ' ' && !ft_isdigit(line[0]))
 		get_next_line(fd, &line);
 	get_map(fd, &line, set);
 	close(fd);
+	return (0);
 }

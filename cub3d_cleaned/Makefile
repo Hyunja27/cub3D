@@ -14,7 +14,7 @@ RMFLAGS = -f
 AR = ar crs
 
 SRC =  $(addprefix $(SRC_DIR)/, \
-		cub3D.c \
+		cub_3d.c \
 		make_2d_map.c \
 		make_bmp.c \
 		sprite_arrange.c \
@@ -29,6 +29,8 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		make_sprite.c \
 		ray_caster.c \
 		floor_ceiling_caster.c \
+		free_memory.c \
+		init_basic.c \
 		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit

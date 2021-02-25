@@ -10,7 +10,7 @@
 			"request": "launch",
 			// 디버깅할 테스트 프로그램 자체의 절대경로를 기술
 			"program": "${workspaceFolder}/cub3d_cleaned/cub3D",
-			"args": [],
+			"args": ["test_map.cub"],
 			// 디버깅이 시작될 때, 스타팅 포인트에서 멈출지, 말지를 정하는 부분
 			"stopAtEntry": true,
 			// 명령어가 입력되는 부분의 위치, 꼭 프로그램의 위치일 필요는 없다

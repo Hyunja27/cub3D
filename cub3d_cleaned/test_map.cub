@@ -11,7 +11,7 @@ WE  ./img/wall_w.xpm
 EA ./img/wall_e.xpm
 
 R 1280 760
-S ./img/2.xpm
+pppppS ./img/2.xpm
 F ./img/wall_e.xpm
 C 255,255,255
 

@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_loop.c                                        :+:      :+:    :+:   */
+/*   init_basic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/22 23:58:09 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 20:40:27 by spark            ###   ########.fr       */
+/*   Created: 2021/02/25 20:30:11 by spark             #+#    #+#             */
+/*   Updated: 2021/02/25 20:39:59 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		main_loop(t_set *set)
+int	init_basic(t_set *set, int ac, char *av[])
 {
-	clean_screen(set);
-	carl_ray(set);
-	sprite_cast(set);
-	if (set->map1 == 1)
-		parse_draw_map(set);
-	key_action(set);
-	mlx_put_image_to_window(set->mlx_ptr, set->win_ptr, set->img.img_ptr, 0, 0);
-	if (set->save_flag)
+	set->p.rspd = 0.02;
+	set->p.movespeed = 0.06;
+	set->up = 0;
+	set->left = 0;
+	set->right = 0;
+	set->down = 0;
+	set->p.hit = 0;
+	set->mlx_ptr = mlx_init();
+	if (ac > 3 || ac == 1)
 	{
-		make_bmp(set);
-		printf("\n\nbmp file is made by your command! enjoy it! :)\n\n\n");
-		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
-		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
-		exit(0);
+		error_msg("Wrong Input!");
+		return (1);
+	}
+	if (ac == 2)
+		set->map_path = av[1];
+	else if (ac == 3)
+	{
+		set->map_path = av[1];
+		if (!ft_strnstr(av[2], "--save", 6))
+			return (1);
+		else
+			set->save_flag = 1;
 	}
 	return (0);
 }

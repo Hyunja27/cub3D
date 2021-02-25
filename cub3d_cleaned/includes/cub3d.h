@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/23 01:18:26 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 20:44:35 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	clean_screen(t_set *s);
 
 void	map_side_check(t_set *set, char *line, unsigned char *flag, int i);
 void	map_fcsr_check(t_set *set, char *line, unsigned char *flag, int i);
-void	map_parse(t_set *set, char *map_name);
+int		map_parse(t_set *set, char *map_name);
 
 int		get_color(char *line);
 int		get_fc(t_set *set, int kind, char *line);
@@ -71,5 +71,9 @@ void	sprite_cast_insert_2(t_set *s, int i);
 
 void	carl_ray(t_set *s);
 void	carl_fc(t_set *s);
+
+void	free_memory(t_set *set);
+
+int	init_basic(t_set *set, int ac, char *av[]);
 
 #endif
