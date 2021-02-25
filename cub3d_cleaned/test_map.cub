@@ -1,5 +1,5 @@
 NO ./img/wall_n.xpm
-SO ./img1/wall_s.xpm
+SO ./img/wall_s.xpm
 WE ./img/wall_w.xpm
 EA ./img/wall_e.xpm
 

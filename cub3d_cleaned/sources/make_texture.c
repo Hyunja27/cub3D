@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:53:53 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 23:51:04 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/25 23:56:29 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ void	load_tex(t_set *set)
 {
 	if (load_file(set, 0, set->minfo.so_path))
 	{
-		printf("!!!!");
+		printf("\n-> SOUTH texture path is Not right!\n");
 		exit(0);
 	}
 	if (load_file(set, 1, set->minfo.no_path))
 	{
-		printf("!!!!");
+		printf("\n-> NORTH texture path is Not right!\n");
 		exit(0);
 	}
 	if (load_file(set, 2, set->minfo.ea_path))
 	{
-		printf("!!!!");
+		printf("\n-> EAST texture path is Not right!\n");
 		exit(0);
 	}
 	if (load_file(set, 3, set->minfo.we_path))
 	{
-		printf("!!!!");
-		exit (0);
+		printf("\n-> WEST texture path is Not right!\n");
+		exit(0);
 	}
 	if (set->minfo.f_kind)
 		load_file(set, 8, set->minfo.f_path);
