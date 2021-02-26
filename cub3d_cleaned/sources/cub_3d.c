@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 23:35:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 15:45:02 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int ac, char *av[])
 		return (1);
 	if (!check_map(&set))
 	{
-		printf("\n\nI Got Map data.. but it's not a nice map.. it has error! check out tmp_map file!\n\n\n");
+		printf("\n\nI Got Map data, but it has Map Error! check tmp_map\n\n\n");
 		return (0);
 	}
 	if (!(set.p.zBuffer = malloc(sizeof(double) * set.minfo.s_width)))
