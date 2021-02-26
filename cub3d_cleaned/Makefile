@@ -31,6 +31,7 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		floor_ceiling_caster.c \
 		free_memory.c \
 		init_basic.c \
+		max_screen.c \
 		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit
@@ -52,13 +53,15 @@ $(NAME) :
 	@echo "${PURPLE}->making libft.a , and add src.o.."
 	@echo "${PURPLE}->resting.. drinking some coffee..."
 	@(cp $(LIBFT_DIR)/$(LIBFT) .)
-	$(CC) $(GCC_FLAG) -L $(LIBFT_DIR) -l ft -I $(INC_DIR) -I $(LIBFT_DIR)/$(INC_DIR) -L $(MLX_DIR) -lmlx $(MLX_FLAG) $(SRC) -o cub3D
+	@(cp ./mlx_beta/libmlxbeta.dylib .)
+	$(CC) $(GCC_FLAG) -L $(LIBFT_DIR) -l ft -I $(INC_DIR) -I $(LIBFT_DIR)/$(INC_DIR) -L $(MLX_DIR) -lmlx -L ./mlx_beta -lmlxbeta $(MLX_FLAG) $(SRC) -o cub3D
 	@make clean
 	@echo "${MINT}making Done."
 
 clean :
 	@echo "${PURPLE}[${RED} cleaning ${PURPLE} : erase objects file.]"
 	@(make -C $(LIBFT_DIR) clean)
+	@($(RM) $(RMFLAGS) tmp_map)
 	@echo "${PURPLE}->kill every objects, include libft objects.."
 	@echo "${PURPLE}->clearing dead bodys..."
 	@echo "${MINT}cleaning Done."
@@ -69,6 +72,7 @@ fclean : clean
 	@($(RM) $(RMFLAGS) $(LIBFT_DIR)/$(LIBFT))
 	@($(RM) $(RMFLAGS) $(NAME))
 	@($(RM) $(RMFLAGS) $(LIBFT))
+	@($(RM) $(RMFLAGS) libmlxbeta.dylib)
 	@echo "${MINT}fcleaning Done."
 
 test : 

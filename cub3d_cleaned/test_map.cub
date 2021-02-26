@@ -3,7 +3,7 @@ SO ./img/wall_s.xpm
 WE ./img/wall_w.xpm
 EA ./img/wall_e.xpm
 
-R 960 740
+R 999999 999999
 S ./img/2.xpm
 F ./img/mossy.xpm
 C 200,200,210

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 11:06:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 17:07:57 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,12 @@ void	map_fcsr_check(t_set *set, char *line, unsigned char *flag, int i)
 		if ((set->minfo.s_height = ft_atoi(line + i)) < 0)
 			return ;
 	}
+	set->minfo.s_height = (set->minfo.s_height <= 480) ? 480 : \
+	set->minfo.s_height;
+	set->minfo.s_width = (set->minfo.s_width <= 740) ? 740 : set->minfo.s_width;
 }
 
-void		map_parse_flagwhile(t_set *set, char **line, int fd, int *rt)
+void	map_parse_flagwhile(t_set *set, char **line, int fd, int *rt)
 {
 	int				i;
 	unsigned char	flag;
@@ -76,6 +79,7 @@ void		map_parse_flagwhile(t_set *set, char **line, int fd, int *rt)
 	{
 		map_side_check(set, *line, &flag, i);
 		map_fcsr_check(set, *line, &flag, i);
+		get_max_screen(set);
 		if (ft_strnstr(*line, "S ", 2))
 		{
 			i = flag_check(2, SP_TEXT_NUM, &flag, *line);
@@ -89,33 +93,21 @@ int		map_parse(t_set *set, char *map_name)
 {
 	char			*line;
 	int				fd;
-	//unsigned char	flag;
-	//int				i;
 	int				rt;
 
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("\n\nI can't find map file! where is it..? is it right name?\n\n");
+		printf("\n\nI can't find map file! where is \
+		it..? is it right name?\n\n");
 		return (1);
 	}
-	// flag = 0;
 	line = 0;
 	map_parse_flagwhile(set, &line, fd, &rt);
-	// while (flag != 255 && (rt = get_next_line(fd, &line)) > 0)
-	// {
-	// 	map_side_check(set, line, &flag, i);
-	// 	map_fcsr_check(set, line, &flag, i);
-	// 	if (ft_strnstr(line, "S ", 2))
-	// 	{
-	// 		i = flag_check(2, SP_TEXT_NUM, &flag, line);
-	// 		i < 0 ? exit(error_msg("SP")) : 0;
-	// 		set->minfo.sp_path = ft_strdup(line + i);
-	// 	}
-	// }
 	if (rt <= 0)
 	{
-		printf("\n\nMap file is exist, But it's Data is Not appropriate! Sorry!\n\n");
+		printf("\n\nMap file is exist, But it's Data is \
+		Not appropriate! Sorry!\n\n");
 		return (1);
 	}
 	while (line[0] != ' ' && !ft_isdigit(line[0]))
