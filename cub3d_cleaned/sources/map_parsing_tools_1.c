@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 23:01:35 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 10:50:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int		get_fc(t_set *set, int kind, char *line)
 
 int		error_msg(char *kind)
 {
-	printf("Error\n %s is double entered!! \n", kind);
+	printf("\n\nOh... I found something to fix!\n \
+	-> %s information is double entered!! \n\n", kind);
 	return (0);
 }
 
@@ -105,7 +106,8 @@ void	change_map(t_set *set, int **map, char *temp_map, int i)
 	j = -1;
 	while (temp_map[++j] != 0)
 	{
-		if (temp_map[j] == 'E' || temp_map[j] == 'W' || temp_map[j] == 'S' || temp_map[j] == 'N')
+		if (temp_map[j] == 'E' || temp_map[j] == 'W' || \
+		temp_map[j] == 'S' || temp_map[j] == 'N')
 		{
 			set_pos(set, temp_map[j]);
 			set->p.posX = i;
