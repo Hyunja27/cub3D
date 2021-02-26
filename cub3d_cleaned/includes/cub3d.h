@@ -6,20 +6,20 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 17:14:20 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 19:20:50 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include "cub3d_macro.h"
-#include "cub3d_struct.h"
-#include "mlx.h"
-#include "libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+# include "cub3d_macro.h"
+# include "cub3d_struct.h"
+# include "mlx.h"
+# include "libft.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <math.h>
 
 void	carl_ray(t_set *s);
 

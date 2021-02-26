@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 16:39:35 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 19:31:00 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int		main(int ac, char *av[])
 		return (-1);
 	make_window(&set);
 	load_tex(&set);
-	mlx_hook(set.win_ptr, KeyPress, 0, key_press, &set);
-	mlx_hook(set.win_ptr, KeyRelease, 0, key_release, &set);
+	mlx_hook(set.win_ptr, KEYPRESS, 0, key_press, &set);
+	mlx_hook(set.win_ptr, KEYRELEASE, 0, key_release, &set);
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
 	mlx_loop(set.mlx_ptr);
 	free_memory(&set);

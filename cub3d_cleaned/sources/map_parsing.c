@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 17:07:57 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 19:34:08 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ int		map_parse(t_set *set, char *map_name)
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("\n\nI can't find map file! where is \
-		it..? is it right name?\n\n");
+		printf("\n\nI can't find map file! where is it..? is it right name?\n");
 		return (1);
 	}
 	line = 0;
