@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 16:43:12 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 23:00:49 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		get_map(int fd, char **line, t_set *set)
 	}
 	free(temp_map);
 	close(fd_2);
+	set->minfo.num_sprite += 5;
 	set->spr.sprt = (t_sprite *)malloc(sizeof(t_sprite) *\
 	set->minfo.num_sprite);
 	return (1);

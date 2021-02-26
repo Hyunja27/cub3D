@@ -6,13 +6,13 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/02/23 00:24:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 23:12:25 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sprite_cast_end(t_set *s, int x, int y)
+void	sprite_cast_end(t_set *s, int x, int y, int i)
 {
 	int w;
 
@@ -30,7 +30,7 @@ void	sprite_cast_end(t_set *s, int x, int y)
 				s->spr.d = (y - s->spr.vMoveScreen) * 256 - \
 				s->minfo.s_height * 128 + s->spr.sp_sc_H * 128;
 				s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.sp_sc_H) / 256;
-				s->spr.spr_color = s->p.texture[9][s->spr.texY * \
+				s->spr.spr_color = s->p.texture[s->spr.sprt[s->spr.spriteOrder[i]].texnum][s->spr.texY * \
 				TEX_WIDTH + s->spr.texX];
 				if ((s->spr.spr_color & 0x00FFFFFF) != 0)
 					s->img.data[y * s->minfo.s_width + x] = s->spr.spr_color;
@@ -104,6 +104,6 @@ void	sprite_cast(t_set *s)
 		sprite_cast_insert_1(s, i);
 		sprite_cast_insert_2(s, i);
 		x = s->spr.drawStartX;
-		sprite_cast_end(s, x, y);
+		sprite_cast_end(s, x, y, i);
 	}
 }

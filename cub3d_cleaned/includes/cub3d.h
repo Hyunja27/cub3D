@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 19:20:50 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 23:13:55 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	load_tex(t_set *set);
 
 int		main_loop(t_set *set);
 
-void	sprite_cast_end(t_set *s, int x, int y);
+void	sprite_cast_end(t_set *s, int x, int y, int i);
 void	sprite_cast(t_set *s);
 void	sprite_cast_insert_1(t_set *s, int i);
 void	sprite_cast_insert_2(t_set *s, int i);

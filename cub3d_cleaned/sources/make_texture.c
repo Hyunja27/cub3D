@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:53:53 by spark             #+#    #+#             */
-/*   Updated: 2021/02/25 23:56:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 22:20:05 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,6 @@ void	load_tex(t_set *set)
 	if (set->minfo.c_kind)
 		load_file(set, 10, set->minfo.c_path);
 	load_file(set, 9, set->minfo.sp_path);
+	load_file(set, 4, "img/barrel.xpm");
+	load_file(set, 5, "img/pillar.xpm");
 }

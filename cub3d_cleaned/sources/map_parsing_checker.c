@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 23:22:15 by spark            ###   ########.fr       */
+/*   Updated: 2021/02/26 23:21:39 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,38 @@ int		check_map(t_set *set)
 	while (++i < set->minfo.m_height + 2)
 		ck_map[i] = (int *)malloc(sizeof(int) * (set->minfo.m_width + 2));
 	init_ck_map(set, &ck_map);
+	
+
+	
+	set->spr.sprt[0].y = set->minfo.m_width / 3;
+	set->spr.sprt[0].x = set->minfo.m_height / 3;
+	set->map2[(int)set->spr.sprt[0].x][(int)set->spr.sprt[0].y] = 2;
+	set->spr.sprt[0].texnum = 4;
+	
+	set->spr.sprt[1].y = set->minfo.m_width / 3 + 1;
+	set->spr.sprt[1].x = set->minfo.m_height / 3 + 1;
+	set->map2[(int)set->spr.sprt[1].x][(int)set->spr.sprt[1].y] = 2;
+	set->spr.sprt[1].texnum = 4;
+
+	set->spr.sprt[2].y = set->minfo.m_width / 2 + 2;
+	set->spr.sprt[2].x = set->minfo.m_height / 2 + 2;
+	set->map2[(int)set->spr.sprt[2].x][(int)set->spr.sprt[2].y] = 2;
+	set->spr.sprt[2].texnum = 4;
+
+	set->spr.sprt[3].y = set->minfo.m_width / 2 + 3;
+	set->spr.sprt[3].x = set->minfo.m_height / 2 + 3;
+	set->map2[(int)set->spr.sprt[3].x][(int)set->spr.sprt[3].y] = 2;
+	set->spr.sprt[3].texnum = 4;
+
+	set->spr.sprt[4].y = set->minfo.m_width / 2 + 4;
+	set->spr.sprt[4].x = set->minfo.m_height / 2 + 4;
+	set->map2[(int)set->spr.sprt[4].x][(int)set->spr.sprt[4].y] = 2;
+	set->spr.sprt[4].texnum = 4;
+	
+	i = -1;
+	while (i++ < set->minfo.num_sprite)
+		printf("\n->> %d [%f][%f]\n", i, set->spr.sprt[i].x, set->spr.sprt[i].y);
+	
 	rt = is_map(set, ck_map);
 	i = 0;
 	while (i < set->minfo.m_height + 2)
