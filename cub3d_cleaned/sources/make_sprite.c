@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 23:12:25 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 17:13:35 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	sprite_cast_end(t_set *s, int x, int y, int i)
 				s->spr.spr_color = s->p.texture[s->spr.sprt[s->spr.spriteOrder[i]].texnum][s->spr.texY * \
 				TEX_WIDTH + s->spr.texX];
 				if ((s->spr.spr_color & 0x00FFFFFF) != 0)
-					s->img.data[y * s->minfo.s_width + x] = s->spr.spr_color;
+					s->img.data[y * s->minfo.s_width + (x + s->time)] = s->spr.spr_color;
 				y++;
-			}
+			}		
 		}
 		x++;
 	}

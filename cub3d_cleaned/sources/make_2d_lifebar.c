@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 20:58:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 15:55:50 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 16:27:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,6 @@ void	draw_life(t_set *set)
 
 void	parse_draw_lifebar(t_set *s)
 {
-	int i;
-	int j;
-	// int a;
-	// int b;
-
 	draw_all_rect_lifebar(s);
 	draw_life(s);
-	i = s->p.posX * MAP_BOX_SIZE;
-	j = s->p.posY * MAP_BOX_SIZE;
-	// a = -1;
-	// while (++a < 2)
-	// {
-	// 	b = 0;
-	// 	while (b < 3)
-	// 	{
-	// 		s->img.data[(i + a) * s->minfo.s_width + (j + b)] = 0xff0000;
-	// 		b++;
-	// 	}
-	// }
 }

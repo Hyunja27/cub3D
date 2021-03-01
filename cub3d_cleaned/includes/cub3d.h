@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 15:45:26 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 17:13:47 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ void	parse_draw_lifebar(t_set *s);
 void	draw_all_rect_lifebar(t_set *set);
 void	draw_life(t_set *set);
 
+void	time_move(t_set *s);
 
 #endif

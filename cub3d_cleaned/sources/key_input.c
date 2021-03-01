@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 16:13:14 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 16:25:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int			key_press(int keycode, t_set *set)
 	{
 		system("killall afplay");
 		sound_effect(2);
-		system("killall afplay");
 		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
 		exit(0);
@@ -127,7 +126,7 @@ void		key_action(t_set *s)
 	}
 	if (s->collision)
 	{
-		s->life -= 0.15;
+		s->life -= 1.15;
 		s->collision = 0;
 		sound_effect(3);
 	}
