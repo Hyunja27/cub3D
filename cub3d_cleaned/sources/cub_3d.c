@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 19:31:00 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 14:34:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		main(int ac, char *av[])
 	}
 	if (!(set.p.zBuffer = malloc(sizeof(double) * set.minfo.s_width)))
 		return (-1);
+	sound_bgm();
+	sound_effect(1);
 	make_window(&set);
 	load_tex(&set);
 	mlx_hook(set.win_ptr, KEYPRESS, 0, key_press, &set);

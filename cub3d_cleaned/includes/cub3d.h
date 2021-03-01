@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 23:13:55 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 14:35:09 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,8 @@ void	free_memory(t_set *set);
 int		init_basic(t_set *set, int ac, char *av[]);
 
 void	get_max_screen(t_set *s);
+
+void	sound_bgm(void);
+void	sound_effect(int i);
 
 #endif
