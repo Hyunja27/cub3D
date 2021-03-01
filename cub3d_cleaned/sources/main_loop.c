@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:58:09 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 14:17:33 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 15:20:41 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		main_loop(t_set *set)
 	clean_screen(set);
 	carl_ray(set);
 	sprite_cast(set);
+	parse_draw_lifebar(set);
 	if (set->map1 == 1)
 		parse_draw_map(set);
 	key_action(set);

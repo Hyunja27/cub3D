@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 14:42:33 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 16:13:14 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,39 @@ void		key_action(t_set *s)
 		if (!s->map2[(int)(s->p.posX + s->p.dirX * s->p.movespeed)]\
 		[(int)s->p.posY])
 			s->p.posX += s->p.dirX * s->p.movespeed;
+		else
+			s->collision = 1;
 		if (!s->map2[(int)s->p.posX]\
 		[(int)(s->p.posY + s->p.dirY * s->p.movespeed)])
 			s->p.posY += s->p.dirY * s->p.movespeed;
+		else
+		{
+			s->collision = 1;
+			s->p.posY -= s->p.dirY;
+		}
+			
 	}
 	if (s->down == 1)
 	{
 		if (!s->map2[(int)(s->p.posX - s->p.dirX * s->p.movespeed)]\
 		[(int)s->p.posY])
 			s->p.posX -= s->p.dirX * s->p.movespeed;
+		else
+			s->collision = 1;
 		if (!s->map2[(int)s->p.posX]\
 		[(int)(s->p.posY - s->p.dirY * s->p.movespeed)])
 			s->p.posY -= s->p.dirY * s->p.movespeed;
+		else
+		{
+			s->collision = 1;
+			s->p.posY -= s->p.dirY;
+		}
+	}
+	if (s->collision)
+	{
+		s->life -= 0.15;
+		s->collision = 0;
+		sound_effect(3);
 	}
 	key_action_2(s);
 }

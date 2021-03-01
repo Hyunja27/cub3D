@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 13:58:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 14:40:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 16:00:31 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,6 @@ void	sound_effect(int i)
 		system("afplay sounds/intro.wav &");
 	if (i == 2)
 		system("afplay sounds/flute_end.wav");
+	if (i == 3)
+		system("afplay sounds/hit.wav &");
 }

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 14:35:09 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 15:45:26 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,11 @@ void	get_max_screen(t_set *s);
 
 void	sound_bgm(void);
 void	sound_effect(int i);
+
+void	draw_lifebar(t_set *set, int x, int y, int corl);
+void	parse_draw_lifebar(t_set *s);
+void	draw_all_rect_lifebar(t_set *set);
+void	draw_life(t_set *set);
+
 
 #endif

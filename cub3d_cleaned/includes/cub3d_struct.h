@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 19:31:54 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 15:54:05 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,8 @@ typedef struct	s_set
 	int		save_flag;
 	int			F_corl;
 	int			S_corl;
+	double		life;
+	int			collision;
 	t_img		img;
 	t_point		p;
 	t_spr_cast	spr;

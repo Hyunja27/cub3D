@@ -16,6 +16,7 @@ AR = ar crs
 SRC =  $(addprefix $(SRC_DIR)/, \
 		cub_3d.c \
 		make_2d_map.c \
+		make_2d_lifebar.c \
 		make_bmp.c \
 		sprite_arrange.c \
 		key_input.c \
