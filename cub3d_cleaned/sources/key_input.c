@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 18:04:28 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 18:27:45 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,17 @@ void		key_action(t_set *s)
 		[(int)s->p.posY])
 			s->p.posX += s->p.dirX * s->p.movespeed;
 		else
+		{
 			s->collision = 1;
+			s->p.posX -= s->p.dirX / 2;
+		}
 		if (!s->map2[(int)s->p.posX]\
 		[(int)(s->p.posY + s->p.dirY * s->p.movespeed)])
 			s->p.posY += s->p.dirY * s->p.movespeed;
 		else
 		{
 			s->collision = 1;
-			s->p.posY -= s->p.dirY;
+			s->p.posY -= s->p.dirY / 2;
 		}
 			
 	}
@@ -114,14 +117,17 @@ void		key_action(t_set *s)
 		[(int)s->p.posY])
 			s->p.posX -= s->p.dirX * s->p.movespeed;
 		else
+		{
 			s->collision = 1;
+			s->p.posX -= s->p.dirX / 2;
+		}
 		if (!s->map2[(int)s->p.posX]\
 		[(int)(s->p.posY - s->p.dirY * s->p.movespeed)])
 			s->p.posY -= s->p.dirY * s->p.movespeed;
 		else
 		{
 			s->collision = 1;
-			s->p.posY += s->p.dirY;
+			s->p.posY += s->p.dirY / 2;
 		}
 	}
 	if (s->collision)
