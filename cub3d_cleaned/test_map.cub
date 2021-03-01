@@ -1,7 +1,7 @@
 NO ./img/wall_n.xpm
 SO ./img/wall_s.xpm
 WE ./img/wall_w.xpm
-EA ./img/wall_e.xpm
+EA ./img/pack_2_resize.xpm
 
 R 960 740
 S ./img/2.xpm

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 17:12:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 18:02:47 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ typedef struct	s_set
 	double		life;
 	int			time;
 	int			collision;
+	int			next_stage;
 	t_img		img;
 	t_point		p;
 	t_spr_cast	spr;

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:58:09 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 17:15:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 18:02:56 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		main_loop(t_set *set)
 	if (set->life <= 0)
 	{
 		printf("\nWoo...So bad control...try to nice move! :(\n\n");
+		set->next_stage = 10;
 		key_press(ESC_KEY, set);
 	}
 	if (set->map1 == 1)

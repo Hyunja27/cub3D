@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 16:25:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/01 18:04:28 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,12 @@ void		key_action(t_set *s)
 		else
 		{
 			s->collision = 1;
-			s->p.posY -= s->p.dirY;
+			s->p.posY += s->p.dirY;
 		}
 	}
 	if (s->collision)
 	{
-		s->life -= 1.15;
+		s->life -= 0.5;
 		s->collision = 0;
 		sound_effect(3);
 	}
