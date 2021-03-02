@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:30:11 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 17:06:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 17:16:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	init_basic(t_set *set, int ac, char *av[])
 	set->mlx_ptr = mlx_init();
 	set->life = 50;
 	set->collision = 0;
+	set->jump = 0;
+	set->updown = 0;
+	
 	if (ac > 3 || ac == 1)
 	{
 		error_msg("Wrong Input!");

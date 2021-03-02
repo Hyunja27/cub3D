@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 18:02:47 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 17:12:03 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,13 @@ typedef struct	s_set
 	int			left;
 	int			right;
 	int			down;
+	int			updown;
+	int			jump;
+	int			up_arrow;
+	int			left_arrow;
+	int			right_arrow;
+	int			down_arrow;
+	int			space;
 	int			map1;
 	int**		map2;
 	char*		S_tex;

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 18:27:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 17:20:00 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ int			key_press(int keycode, t_set *set)
 		set->up = 1;
 	if (keycode == DOWN_KEY)
 		set->down = 1;
+	if (keycode == SPACE_KEY)
+		set->space = 1;
+	if (keycode == LEFT_ARROW)
+		set->left_arrow = 1;
+	if (keycode == RIGHT_ARROW)
+		set->right_arrow = 1;
+	if (keycode == UP_ARROW)
+		set->up_arrow = 1;
+	if (keycode == DOWN_ARROW)
+		set->down_arrow = 1;
 	if (keycode == P_KEY)
 	{
 		make_bmp(set);
@@ -50,6 +60,19 @@ int			key_release(int keycode, t_set *set)
 		set->up = 0;
 	if (keycode == DOWN_KEY)
 		set->down = 0;
+	if (keycode == SPACE_KEY)
+	{
+		set->space = 0;
+		set->jump = 0;
+	}
+	if (keycode == LEFT_ARROW)
+		set->left_arrow = 0;
+	if (keycode == RIGHT_ARROW)
+		set->right_arrow = 0;
+	if (keycode == UP_ARROW)
+		set->up_arrow = 0;
+	if (keycode == DOWN_ARROW)
+		set->down_arrow = 0;
 	if (keycode == M_KEY)
 	{
 		if (set->map1 == 0)
@@ -87,6 +110,19 @@ void		key_action_2(t_set *s)
 		s->p.planeY = oldplane_x * sin(-s->p.rspd) + \
 		s->p.planeY * cos(-s->p.rspd);
 	}
+	if (s->up_arrow == 1)
+	{
+		s->updown -= 4;
+	}
+	if (s->down_arrow == 1)
+	{
+		s->updown += 4;
+	}
+	if (s->space == 1)
+	{
+		s->jump = 150;
+	}
+	
 }
 
 void		key_action(t_set *s)

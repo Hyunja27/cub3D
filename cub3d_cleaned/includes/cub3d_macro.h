@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 19:35:00 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 15:23:21 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # define LEFT_KEY 0
 # define RIGHT_KEY 2
 # define SPACE_KEY 49
+# define UP_ARROW 126
+# define DOWN_ARROW 125
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
 # define M_KEY 46
 # define C_KEY 8
 # define E_KEY 14
