@@ -6,19 +6,13 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 22:55:55 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 23:20:36 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	adjustment(t_set *s)
-// {
-// 	s->flr.center = y - s->minfo.s_height / 2;
-// 	s->flr.posZ = 0.5 * s->minfo.s_height;
-// }
-
-void	fc_insert(t_set *s, int y, int	re_y)
+void	fc_insert(t_set *s, int y, int re_y)
 {
 	s->flr.rayDirX0 = s->p.dirX - s->p.planeX;
 	s->flr.rayDirY0 = s->p.dirY - s->p.planeY;
@@ -36,16 +30,13 @@ void	fc_insert(t_set *s, int y, int	re_y)
 	s->flr.floorY = s->p.posY + s->flr.rowDistance * s->flr.rayDirY0;
 }
 
-void	fc_kind(t_set *s, int y, int i)
+void	fc_kind(t_set *s, int y, int i, int	re_y)
 {
-	int	re_y;
-	
-	re_y = s->minfo.s_height / 2 - (s->updown * 2);
 	if (re_y < 1)
 		re_y = 0;
 	if (re_y > s->minfo.s_height - 2)
 		re_y = s->minfo.s_height - 1;
-	if (re_y < y)
+	if (re_y <= y)
 	{
 		if (s->minfo.f_kind)
 		{
@@ -56,9 +47,6 @@ void	fc_kind(t_set *s, int y, int i)
 		}
 		else
 			s->tex.color = s->minfo.floor;
-	// 	s->img.data[(s->minfo.s_height - y - 1) * \
-	// s->minfo.s_width + i] = s->tex.color;
-		
 		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
 	}
 	else
@@ -72,12 +60,7 @@ void	fc_kind(t_set *s, int y, int i)
 		}
 		else
 			s->tex.color = s->minfo.ceiling;
-		// s->img.data[(y) * s->minfo.s_width + i] = s->tex.color;
-		// s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
-		
 		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
-		
-		// s->img.data[(s->minfo.s_height - y - 1) * s->minfo.s_width + i] = s->tex.color;
 	}
 }
 
@@ -86,12 +69,12 @@ void	carl_fc(t_set *s)
 	int x;
 	int y;
 	int i;
+	int	re_y;
 
 	x = 0;
 	y = 0;
 	i = 0;
-	int	re_y;
-	
+
 	re_y = s->minfo.s_height / 2 - (s->updown * 2);
 	while (y < s->minfo.s_height)
 	{
@@ -100,7 +83,6 @@ void	carl_fc(t_set *s)
 			s->updown = s->minfo.s_height / 2;
 		if (-s->updown > (s->minfo.s_height / 2))
 			s->updown = -s->minfo.s_height / 2;
-
 		while (i < s->minfo.s_width)
 		{
 			s->flr.tx = (int)(s->img.img_width * \
@@ -109,7 +91,7 @@ void	carl_fc(t_set *s)
 			(s->flr.floorY - (int)(s->flr.floorY))) & (s->img.img_height - 1);
 			s->flr.floorX += s->flr.floorStepX;
 			s->flr.floorY += s->flr.floorStepY;
-			fc_kind(s, y, i);
+			fc_kind(s, y, i, re_y);
 			i++;
 		}
 		y++;

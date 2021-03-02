@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 20:58:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 17:52:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 23:03:32 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	draw_lifebar(t_set *set, int x, int y, int corl)
 		j = 0;
 		while (j < MAP_BOX_SIZE)
 		{
-			set->img.data[(x + set->minfo.s_height - 80 + i) * set->minfo.s_width + y + 20 + j] = corl;
+			set->img.data[(x + set->minfo.s_height - 80 + i) * \
+			set->minfo.s_width + y + 20 + j] = corl;
 			j++;
 		}
 		i++;
@@ -66,11 +67,9 @@ void	draw_life(t_set *set)
 		j = 1;
 			while (j < (int)set->life)
 			{
-				draw_lifebar(set, i, j, 0xFF0000);
+				draw_lifebar(set, i, j, 0xDF0000);
 				j++;
 			}
-		// draw_lifebar(set, i, 0, 0xFFFFFF);
-		// draw_lifebar(set, i, 50, 0xFFFFFF);
 		i++;
 	}
 }

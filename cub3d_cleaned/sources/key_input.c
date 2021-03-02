@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 22:29:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 23:19:44 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,23 @@ void		key_action_2(t_set *s)
 void		key_action(t_set *s)
 {
 	if (s->right == 1)
-	{	
+	{
 		s->olddir_x = s->p.dirX * cos(M_PI_2) - s->p.dirY * sin(M_PI_2);
 		s->olddir_y = s->p.dirX * sin(M_PI_2) + s->p.dirY * cos(M_PI_2);
 		if (!s->map2[(int)(s->p.posX - s->olddir_x * s->p.movespeed)][(int)s->p.posY])
 			s->p.posX -= s->olddir_x * s->p.movespeed;
+		else
+		{
+			s->collision = 1;
+			s->p.posX += s->olddir_x / 2;
+		}
 		if (!s->map2[(int)s->p.posX][(int)(s->p.posY - s->olddir_y * s->p.movespeed)])
 			s->p.posY -= s->olddir_y * s->p.movespeed;
+		else
+		{
+			s->collision = 1;
+			s->p.posX += s->olddir_x / 2;
+		}
 	}
 	if (s->left == 1)
 	{
@@ -139,10 +149,19 @@ void		key_action(t_set *s)
 		s->olddir_y = s->p.dirX * sin(M_PI_2) + s->p.dirY * cos(M_PI_2);
 		if (!s->map2[(int)(s->p.posX + s->olddir_x * s->p.movespeed)][(int)s->p.posY])
 			s->p.posX += s->olddir_x * s->p.movespeed;
+		else
+		{
+			s->collision = 1;
+			s->p.posX -= s->olddir_x / 2;
+		}
 		if (!s->map2[(int)s->p.posX][(int)(s->p.posY + s->olddir_y * s->p.movespeed)])
 			s->p.posY += s->olddir_y * s->p.movespeed;
+		else
+		{
+			s->collision = 1;
+			s->p.posY -= s->olddir_y / 2;
+		}
 	}
-	
 	if (s->up == 1)
 	{
 		if (!s->map2[(int)(s->p.posX + s->p.dirX * s->p.movespeed)]\
@@ -183,7 +202,7 @@ void		key_action(t_set *s)
 	}
 	if (s->collision)
 	{
-		s->life -= 0.5;
+		s->life -= 5.5;
 		s->collision = 0;
 		sound_effect(3);
 	}

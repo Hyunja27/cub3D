@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:58:09 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 21:34:14 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 23:02:59 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int		main_loop(t_set *set)
 		set->jump = (set->jump < 0) ? 0 : set->jump;
 	}
 	else
-		set->jump_end = 0;
-			
+		set->jump_end = 0;	
 	printf("\n-> %d\n", set->jump);
 	carl_ray(set);
 	sprite_cast(set);
