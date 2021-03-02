@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 16:37:45 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 17:38:49 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,8 @@ void	carl_ray(t_set *s)
 			s->p.texture_pos += s->p.step;
 			s->tex.color = s->p.texture[s->tex.texture_kind]\
 			[TEX_HEIGHT * s->tex.texY + s->tex.texX];
-			s->img.data[(i - (s->updown * 2)) * s->minfo.s_width + x] = s->tex.color;
+			s->img.data[((i - (s->updown * 2) + s->jump) * s->minfo.s_width + x)] = s->tex.color;
+			// printf("\n?? -> %d", ((i - (s->updown * 2)) * s->minfo.s_width + x));
 		}
 		s->p.zBuffer[x] = s->p.perpwalldist;
 	}

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:20:37 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 17:38:36 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	fc_insert(t_set *s, int y, int	re_y)
 	(s->flr.rayDirY1 - s->flr.rayDirY0) / s->minfo.s_width;
 	s->flr.floorX = s->p.posX + s->flr.rowDistance * s->flr.rayDirX0;
 	s->flr.floorY = s->p.posY + s->flr.rowDistance * s->flr.rayDirY0;
-	printf("\npos_z -> %f", s->flr.posZ);
 }
 
 void	fc_kind(t_set *s, int y, int i)
@@ -59,7 +58,7 @@ void	fc_kind(t_set *s, int y, int i)
 			s->tex.color = s->minfo.floor;
 	// 	s->img.data[(s->minfo.s_height - y - 1) * \
 	// s->minfo.s_width + i] = s->tex.color;
-		s->img.data[(y) * s->minfo.s_width + i] = s->tex.color;
+		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
 	}
 	else
 	{
@@ -72,7 +71,7 @@ void	fc_kind(t_set *s, int y, int i)
 		}
 		else
 			s->tex.color = s->minfo.ceiling;
-		s->img.data[(y) * s->minfo.s_width + i] = s->tex.color;
+		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
 		// s->img.data[(s->minfo.s_height - y - 1) * s->minfo.s_width + i] = s->tex.color;
 	}
 }

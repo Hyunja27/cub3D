@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:20:00 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 17:51:56 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			key_release(int keycode, t_set *set)
 	if (keycode == SPACE_KEY)
 	{
 		set->space = 0;
-		set->jump = 0;
+		//set->jump = 0;
 	}
 	if (keycode == LEFT_ARROW)
 		set->left_arrow = 0;
@@ -120,7 +120,7 @@ void		key_action_2(t_set *s)
 	}
 	if (s->space == 1)
 	{
-		s->jump = 150;
+		s->jump = 1;
 	}
 	
 }
