@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:30:41 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 00:13:20 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sprite_cast_end(t_set *s, int x, int y, int i)
 				if ((s->spr.spr_color & 0x00FFFFFF) != 0)
 					s->img.data[tmp] = s->spr.spr_color;
 				y++;
-			}		
+			}
 		}
 		x++;
 	}

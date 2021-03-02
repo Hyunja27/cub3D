@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 22:24:07 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 23:56:06 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	carl_fc(t_set *s);
 
 void	free_memory(t_set *set);
 
+void	init_basic_2(t_set *set);
 int		init_basic(t_set *set, int ac, char *av[]);
 
 void	get_max_screen(t_set *s);

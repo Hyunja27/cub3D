@@ -19,7 +19,8 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		make_2d_lifebar.c \
 		make_bmp.c \
 		sprite_arrange.c \
-		key_input.c \
+		key_input_1.c \
+		key_input_2.c \
 		screen_control.c \
 		map_parsing.c \
 		map_parsing_tools_1.c \

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:20:36 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 00:15:49 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@ void	fc_insert(t_set *s, int y, int re_y)
 	s->flr.floorY = s->p.posY + s->flr.rowDistance * s->flr.rayDirY0;
 }
 
-void	fc_kind(t_set *s, int y, int i, int	re_y)
+void	texture_input(t_set *s, int *tex, int texnum)
+{
+	*tex = texnum;
+	s->tex.color = s->p.texture[*tex]\
+	[s->img.img_width * s->flr.ty + s->flr.tx];
+	s->tex.color = (s->tex.color >> 1) & 8355711;
+}
+
+void	fc_kind(t_set *s, int y, int i, int re_y)
 {
 	if (re_y < 1)
 		re_y = 0;
@@ -39,12 +47,7 @@ void	fc_kind(t_set *s, int y, int i, int	re_y)
 	if (re_y <= y)
 	{
 		if (s->minfo.f_kind)
-		{
-			s->tex.floorTexture = 8;
-			s->tex.color = s->p.texture[s->tex.floorTexture]\
-			[s->img.img_width * s->flr.ty + s->flr.tx];
-			s->tex.color = (s->tex.color >> 1) & 8355711;
-		}
+			texture_input(s, &s->tex.floorTexture, 8);
 		else
 			s->tex.color = s->minfo.floor;
 		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
@@ -52,12 +55,7 @@ void	fc_kind(t_set *s, int y, int i, int	re_y)
 	else
 	{
 		if (s->minfo.c_kind)
-		{
-			s->tex.ceilingTexture = 10;
-			s->tex.color = s->p.texture[s->tex.ceilingTexture]\
-			[s->img.img_width * s->flr.ty + s->flr.tx];
-			s->tex.color = (s->tex.color >> 1) & 8355711;
-		}
+			texture_input(s, &s->tex.ceilingTexture, 10);
 		else
 			s->tex.color = s->minfo.ceiling;
 		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
@@ -74,7 +72,6 @@ void	carl_fc(t_set *s)
 	x = 0;
 	y = 0;
 	i = 0;
-
 	re_y = s->minfo.s_height / 2 - (s->updown * 2);
 	while (y < s->minfo.s_height)
 	{

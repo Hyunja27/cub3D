@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:30:00 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 23:32:27 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ void	carl_ray(t_set *s)
 			tmp = ((i - (s->updown * 2) + s->jump) * s->minfo.s_width + x);
 			tmp = tmp < 0 ? 0 : tmp;
 			s->img.data[tmp] = s->tex.color;
-			// printf("\n?? -> %d", ((i - (s->updown * 2)) * s->minfo.s_width + x));
 		}
 		s->p.zBuffer[x] = s->p.perpwalldist;
 	}

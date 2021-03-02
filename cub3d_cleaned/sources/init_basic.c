@@ -6,13 +6,13 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:30:11 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:02:42 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 00:16:09 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	init_basic(t_set *set, int ac, char *av[])
+void	init_basic_2(t_set *set)
 {
 	set->p.rspd = 0.02;
 	set->p.movespeed = 0.06;
@@ -27,6 +27,11 @@ int	init_basic(t_set *set, int ac, char *av[])
 	set->jump = 0;
 	set->jump_end = 0;
 	set->updown = 0;
+}
+
+int		init_basic(t_set *set, int ac, char *av[])
+{
+	init_basic_2(set);
 	if (ac > 3 || ac == 1)
 	{
 		error_msg("Wrong Input!");
