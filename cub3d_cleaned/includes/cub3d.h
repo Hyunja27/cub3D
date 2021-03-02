@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/01 17:13:47 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 22:24:07 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
+# define _USE_MATH_DEFINES
 
 void	carl_ray(t_set *s);
 

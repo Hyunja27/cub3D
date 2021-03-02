@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:51:56 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 22:29:32 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int			key_press(int keycode, t_set *set)
 
 int			key_release(int keycode, t_set *set)
 {
-	if (keycode == LEFT_KEY)
-		set->left = 0;
-	if (keycode == RIGHT_KEY)
-		set->right = 0;
+	if (keycode == LEFT_ARROW)
+		set->left_arrow = 0;
+	if (keycode == RIGHT_ARROW)
+		set->right_arrow = 0;
 	if (keycode == UP_KEY)
 		set->up = 0;
 	if (keycode == DOWN_KEY)
@@ -63,12 +63,12 @@ int			key_release(int keycode, t_set *set)
 	if (keycode == SPACE_KEY)
 	{
 		set->space = 0;
-		//set->jump = 0;
+		// set->jump = 0;
 	}
-	if (keycode == LEFT_ARROW)
-		set->left_arrow = 0;
-	if (keycode == RIGHT_ARROW)
-		set->right_arrow = 0;
+	if (keycode == LEFT_KEY)
+		set->left = 0;
+	if (keycode == RIGHT_KEY)
+		set->right = 0;
 	if (keycode == UP_ARROW)
 		set->up_arrow = 0;
 	if (keycode == DOWN_ARROW)
@@ -85,29 +85,26 @@ int			key_release(int keycode, t_set *set)
 
 void		key_action_2(t_set *s)
 {
-	double olddir_x;
-	double oldplane_x;
-
-	if (s->left == 1)
+	if (s->left_arrow == 1)
 	{
-		olddir_x = s->p.dirX;
+		s->olddir_x = s->p.dirX;
 		s->p.dirX = s->p.dirX * cos(s->p.rspd) - s->p.dirY * sin(s->p.rspd);
-		s->p.dirY = olddir_x * sin(s->p.rspd) + s->p.dirY * cos(s->p.rspd);
-		oldplane_x = s->p.planeX;
+		s->p.dirY = s->olddir_x * sin(s->p.rspd) + s->p.dirY * cos(s->p.rspd);
+		s->oldplane_x = s->p.planeX;
 		s->p.planeX = s->p.planeX * cos(s->p.rspd) - \
 		s->p.planeY * sin(s->p.rspd);
-		s->p.planeY = oldplane_x * sin(s->p.rspd) + \
+		s->p.planeY = s->oldplane_x * sin(s->p.rspd) + \
 		s->p.planeY * cos(s->p.rspd);
 	}
-	if (s->right == 1)
+	if (s->right_arrow == 1)
 	{
-		olddir_x = s->p.dirX;
+		s->olddir_x = s->p.dirX;
 		s->p.dirX = s->p.dirX * cos(-s->p.rspd) - s->p.dirY * sin(-s->p.rspd);
-		s->p.dirY = olddir_x * sin(-s->p.rspd) + s->p.dirY * cos(-s->p.rspd);
-		oldplane_x = s->p.planeX;
+		s->p.dirY = s->olddir_x * sin(-s->p.rspd) + s->p.dirY * cos(-s->p.rspd);
+		s->oldplane_x = s->p.planeX;
 		s->p.planeX = s->p.planeX * cos(-s->p.rspd) - \
 		s->p.planeY * sin(-s->p.rspd);
-		s->p.planeY = oldplane_x * sin(-s->p.rspd) + \
+		s->p.planeY = s->oldplane_x * sin(-s->p.rspd) + \
 		s->p.planeY * cos(-s->p.rspd);
 	}
 	if (s->up_arrow == 1)
@@ -127,6 +124,25 @@ void		key_action_2(t_set *s)
 
 void		key_action(t_set *s)
 {
+	if (s->right == 1)
+	{	
+		s->olddir_x = s->p.dirX * cos(M_PI_2) - s->p.dirY * sin(M_PI_2);
+		s->olddir_y = s->p.dirX * sin(M_PI_2) + s->p.dirY * cos(M_PI_2);
+		if (!s->map2[(int)(s->p.posX - s->olddir_x * s->p.movespeed)][(int)s->p.posY])
+			s->p.posX -= s->olddir_x * s->p.movespeed;
+		if (!s->map2[(int)s->p.posX][(int)(s->p.posY - s->olddir_y * s->p.movespeed)])
+			s->p.posY -= s->olddir_y * s->p.movespeed;
+	}
+	if (s->left == 1)
+	{
+		s->olddir_x = s->p.dirX * cos(M_PI_2) - s->p.dirY * sin(M_PI_2);
+		s->olddir_y = s->p.dirX * sin(M_PI_2) + s->p.dirY * cos(M_PI_2);
+		if (!s->map2[(int)(s->p.posX + s->olddir_x * s->p.movespeed)][(int)s->p.posY])
+			s->p.posX += s->olddir_x * s->p.movespeed;
+		if (!s->map2[(int)s->p.posX][(int)(s->p.posY + s->olddir_y * s->p.movespeed)])
+			s->p.posY += s->olddir_y * s->p.movespeed;
+	}
+	
 	if (s->up == 1)
 	{
 		if (!s->map2[(int)(s->p.posX + s->p.dirX * s->p.movespeed)]\
@@ -145,7 +161,6 @@ void		key_action(t_set *s)
 			s->collision = 1;
 			s->p.posY -= s->p.dirY / 2;
 		}
-			
 	}
 	if (s->down == 1)
 	{

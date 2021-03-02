@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:58:09 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:53:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 21:34:14 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,19 @@
 int		main_loop(t_set *set)
 {
 	clean_screen(set);
-	if (set->jump > 0 && set->jump != 17)
-		set->jump += 2;
-	else if (set->jump == 17)
-		set->jump = 0;
+	if (set->jump > 0 && set->jump < 70 && set->jump_end == 0)
+		set->jump += 7;
+	else if (set->jump != 0 && set->jump > 70)
+		set->jump_end = 1;
+	if (set->jump_end == 1 && set->jump > 0)
+	{
+		set->jump -= 7;
+		set->jump = (set->jump < 0) ? 0 : set->jump;
+	}
+	else
+		set->jump_end = 0;
+			
+	printf("\n-> %d\n", set->jump);
 	carl_ray(set);
 	sprite_cast(set);
 	parse_draw_lifebar(set);

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:12:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 22:29:03 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ typedef struct	s_set
 	int			right_arrow;
 	int			down_arrow;
 	int			space;
+	int			jump_end;
 	int			map1;
 	int**		map2;
 	char*		S_tex;
@@ -216,6 +217,9 @@ typedef struct	s_set
 	int			time;
 	int			collision;
 	int			next_stage;
+	double		olddir_x;
+	double		olddir_y;
+	double		oldplane_x;		
 	t_img		img;
 	t_point		p;
 	t_spr_cast	spr;

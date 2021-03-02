@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 23:27:26 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 22:05:57 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,34 @@ int		check_map(t_set *set)
 	
 
 	
-	set->spr.sprt[0].y = (int)(set->minfo.m_width / 3);
-	set->spr.sprt[0].x = (int)(set->minfo.m_height / 3);
+	set->spr.sprt[0].y = (int)(set->minfo.m_width / 3) + 0.5;
+	set->spr.sprt[0].x = (int)(set->minfo.m_height / 3) + 0.5;
 	set->map2[(int)set->spr.sprt[0].x][(int)set->spr.sprt[0].y] = 3;
 	set->spr.sprt[0].texnum = 4;
 	
-	set->spr.sprt[1].y = (int)(set->minfo.m_width / 3 + 1);
-	set->spr.sprt[1].x = (int)(set->minfo.m_height / 3 + 1);
+	set->spr.sprt[1].y = (int)(set->minfo.m_width / 3 + 1) + 0.5;
+	set->spr.sprt[1].x = (int)(set->minfo.m_height / 3 + 1) + 0.5;
 	set->map2[(int)set->spr.sprt[1].x][(int)set->spr.sprt[1].y] = 3;
 	set->spr.sprt[1].texnum = 4;
 
-	set->spr.sprt[2].y = (int)(set->minfo.m_width / 2 + 2);
-	set->spr.sprt[2].x = (int)(set->minfo.m_height / 2 + 2);
+	set->spr.sprt[2].y = (int)(set->minfo.m_width / 2 + 2) + 0.5;
+	set->spr.sprt[2].x = (int)(set->minfo.m_height / 2 + 2) + 0.5;
 	set->map2[(int)set->spr.sprt[2].x][(int)set->spr.sprt[2].y] = 3;
 	set->spr.sprt[2].texnum = 4;
 
-	set->spr.sprt[3].y = (int)(set->minfo.m_width / 2 + 3);
-	set->spr.sprt[3].x = (int)(set->minfo.m_height / 2 + 3);
+	set->spr.sprt[3].y = (int)(set->minfo.m_width / 2 + 3) + 0.5;
+	set->spr.sprt[3].x = (int)(set->minfo.m_height / 2 + 3) + 0.5;
 	set->map2[(int)set->spr.sprt[3].x][(int)set->spr.sprt[3].y] = 3;
 	set->spr.sprt[3].texnum = 4;
 
-	set->spr.sprt[4].y = (int)(set->minfo.m_width / 2 + 4);
-	set->spr.sprt[4].x = (int)(set->minfo.m_height / 2 + 4);
+	set->spr.sprt[4].y = (int)(set->minfo.m_width / 2 + 4) + 0.5;
+	set->spr.sprt[4].x = (int)(set->minfo.m_height / 2 + 4) + 0.5;
 	set->map2[(int)set->spr.sprt[4].x][(int)set->spr.sprt[4].y] = 3;
 	set->spr.sprt[4].texnum = 4;
 
 	i = -1;
-	while (++i < set->minfo.num_sprite)
-		printf("\n->> %d [%f][%f]\n", i, set->spr.sprt[i].x, set->spr.sprt[i].y);
+	// while (++i < set->minfo.num_sprite)
+	// 	printf("\n->> %d [%f][%f]\n", i, set->spr.sprt[i].x, set->spr.sprt[i].y);
 
 	rt = is_map(set, ck_map);
 	i = 0;

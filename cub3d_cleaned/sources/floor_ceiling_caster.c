@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:38:36 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 22:55:55 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	fc_kind(t_set *s, int y, int i)
 			s->tex.color = s->minfo.floor;
 	// 	s->img.data[(s->minfo.s_height - y - 1) * \
 	// s->minfo.s_width + i] = s->tex.color;
+		
 		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
 	}
 	else
@@ -71,7 +72,11 @@ void	fc_kind(t_set *s, int y, int i)
 		}
 		else
 			s->tex.color = s->minfo.ceiling;
+		// s->img.data[(y) * s->minfo.s_width + i] = s->tex.color;
+		// s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
+		
 		s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
+		
 		// s->img.data[(s->minfo.s_height - y - 1) * s->minfo.s_width + i] = s->tex.color;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:30:11 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 17:35:08 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/02 21:14:45 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	init_basic(t_set *set, int ac, char *av[])
 	set->life = 50;
 	set->collision = 0;
 	set->jump = 0;
+	set->jump_end = 0;
 	set->updown = 0;
 	
 	if (ac > 3 || ac == 1)
