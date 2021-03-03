@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:03:14 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:32:04 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	hit_check(t_set *s)
 			s->p.hit_side = 1;
 		}
 		if (s->map2[s->p.positionX][s->p.positionY] == 1 || \
-		(s->map2[s->p.positionX][s->p.positionY] == 9 && s->door != 32))
+		(s->p.positionX == s->p.hid_x && s->p.positionY == s->p.hid_y && s->door != 32))
 		{
 			s->p.hit = 1;
-			if (s->map2[s->p.positionX][s->p.positionY] == 9)
+			if (s->p.positionX == s->p.hid_x && s->p.positionY == s->p.hid_y)
 				s->p.secret = 1;
 		}
 	}

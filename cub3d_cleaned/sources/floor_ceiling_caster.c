@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:13:39 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:35:30 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	fc_kind(t_set *s, int y, int i, int re_y)
 		else
 			s->tex.color = s->minfo.ceiling;
 	}
-	s->tex.color = make_darker(s->tex.color,  (s->minfo.s_height / 5) - abs(y - re_y));
+	s->tex.color = make_darker(s->tex.color, \
+	(s->minfo.s_height / 5) - abs(y - re_y));
 	s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
 }
 

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 19:15:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:30:32 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct s_point
 	int		positionX;
 	int		positionY;
 
+	int		hid_x;
+	int		hid_y;
+	
 	double sideX;
 	double sideY;
 

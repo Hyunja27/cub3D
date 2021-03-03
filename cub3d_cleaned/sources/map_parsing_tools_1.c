@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 18:58:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:33:18 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,11 @@ void	init_ck_map(t_set *set, int ***ck_map)
 					set->spr.sprt[a].texnum = 9;
 					a++;
 				}
-				// else if (set->map2[i - 1][j - 1] == 9)
-				// {
-				// 	set->spr.sprt[a].x = i - 1 + 0.5;
-				// 	set->spr.sprt[a].y = j - 1 + 0.5;
-				// 	set->spr.sprt[a].texnum = 7;
-				// 	a++;
-				// }
+				else if (set->map2[i - 1][j - 1] == 9)
+				{
+					set->p.hid_x = i - 1;
+					set->p.hid_y = j - 1;
+				}
 				(*ck_map)[i][j] = set->map2[i - 1][j - 1];
 			}
 			j++;
