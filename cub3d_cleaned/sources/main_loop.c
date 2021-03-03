@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:58:09 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:50:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 17:21:16 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		main_loop(t_set *set)
 {
-	clean_screen(set);
+	// clean_screen(set);
 	if (set->jump > 0 && set->jump < 70 && set->jump_end == 0)
 		set->jump += 7;
 	else if (set->jump != 0 && set->jump > 70)
