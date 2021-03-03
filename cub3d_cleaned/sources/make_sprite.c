@@ -6,11 +6,23 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:04:31 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 23:39:37 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	sprite_cast_end_2(t_set *s, int y, int i)
+{
+	s->spr.d = (y - s->spr.vMoveScreen) * 256 - \
+	s->minfo.s_height * 128 + s->spr.sp_sc_H * 128;
+	s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.sp_sc_H) / 256;
+	s->spr.spr_color = s->p.texture\
+	[s->spr.sprt[s->spr.spriteOrder[i]].texnum]\
+	[s->spr.texY * TEX_WIDTH + s->spr.texX];
+	s->spr.spr_color = make_darker(s->spr.spr_color, \
+	s->spr.spriteDistance[i] * 3);
+}
 
 void	sprite_cast_end(t_set *s, int x, int y, int i)
 {
@@ -28,13 +40,9 @@ void	sprite_cast_end(t_set *s, int x, int y, int i)
 			y = s->spr.drawStartY;
 			while (y < s->spr.drawEndY)
 			{
-				s->spr.d = (y - s->spr.vMoveScreen) * 256 - \
-				s->minfo.s_height * 128 + s->spr.sp_sc_H * 128;
-				s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.sp_sc_H) / 256;
-				s->spr.spr_color = s->p.texture[s->spr.sprt[s->spr.spriteOrder[i]].texnum][s->spr.texY * \
-				TEX_WIDTH + s->spr.texX];
-				s->spr.spr_color = make_darker(s->spr.spr_color, s->spr.spriteDistance[i]);
-				tmp = (y - (s->updown * 2) + s->jump) * s->minfo.s_width + (x + s->time);
+				sprite_cast_end_2(s, y, i);
+				tmp = (y - (s->updown * 2) + s->jump) * s->minfo.s_width + \
+				(x + s->time);
 				tmp = tmp < 0 ? 0 : tmp;
 				if ((s->spr.spr_color & 0x00FFFFFF) != 0)
 					s->img.data[tmp] = s->spr.spr_color;

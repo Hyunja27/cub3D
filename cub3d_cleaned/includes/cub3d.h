@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:40:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:43:11 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ t_bmp	make_bmp(t_set *s);
 
 void	arrange_sprite(t_set *s);
 int		key_press(int keycode, t_set *set);
+
 int		key_release(int keycode, t_set *set);
+int		key_release_2(int keycode, t_set *set);
+
 void	key_action_2(t_set *s);
 void	key_action(t_set *s);
 
@@ -92,5 +95,7 @@ void	time_move(t_set *s);
 void	secret_check(t_set *s);
 int		make_darker(int color, int size);
 void	updown_protect(t_set *s);
+void	collision_damage(t_set *s, double *pos, double m);
+void	jump_door(t_set *s);
 
 #endif

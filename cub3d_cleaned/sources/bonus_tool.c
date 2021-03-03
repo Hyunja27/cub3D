@@ -6,17 +6,42 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 19:55:00 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 21:24:10 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 23:39:48 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	jump_door(t_set *s)
+{
+	if (s->jump > 0 && s->jump < 70 && s->jump_end == 0)
+		s->jump += 7;
+	else if (s->jump != 0 && s->jump > 70)
+		s->jump_end = 1;
+	if (s->jump_end == 1 && s->jump > 0)
+	{
+		s->jump -= 7;
+		s->jump = (s->jump < 0) ? 0 : s->jump;
+	}
+	else
+		s->jump_end = 0;
+	if (s->q_action == 1 && s->door < 32)
+		s->door += 4;
+	if (s->q_action == 0 && s->door > 0)
+		s->door -= 4;
+}
+
+void	collision_damage(t_set *s, double *pos, double m)
+{
+	s->collision = 1;
+	*pos = *pos + m;
+}
+
 void	secret_check(t_set *s)
 {
 	int		tmp;
 
-	tmp = (TEX_HEIGHT) * (s->tex.texY) + s->tex.texX - (s->door * 2);
+	tmp = (TEX_HEIGHT) * (s->tex.texY - (s->door * 2)) + s->tex.texX;
 	s->tex.color = s->p.texture[s->tex.texture_kind][tmp];
 	if (s->door == 28)
 		s->map2[s->p.hid_x][s->p.hid_y] = 0;

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 21:08:15 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:19:02 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,7 @@ void	carl_ray(t_set *s)
 			s->tex.texY = (int)s->p.texture_pos & (TEX_HEIGHT - 1);
 			s->p.texture_pos += s->p.step;
 			if (s->tex.texture_kind == 7)
-			{
 				secret_check(s);
-			// 	s->tex.color = s->p.texture[s->tex.texture_kind]\
-			// [(TEX_HEIGHT) * (s->tex.texY - (s->updown * 2)) + s->tex.texX];
-			//(TEX_HEIGHT) * s->tex.texY + s->tex.texX + (s->updown * 2)
-			}
 			else
 				s->tex.color = s->p.texture[s->tex.texture_kind]\
 			[TEX_HEIGHT * s->tex.texY + s->tex.texX];

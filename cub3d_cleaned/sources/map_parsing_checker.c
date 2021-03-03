@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:58:59 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:20:05 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,14 @@ int		check_map(t_set *set)
 	while (++i < set->minfo.m_height + 2)
 		ck_map[i] = (int *)malloc(sizeof(int) * (set->minfo.m_width + 2));
 	init_ck_map(set, &ck_map);
-	
 
-	
 	set->spr.sprt[0].y = (int)(set->minfo.m_width / 2) + 0.5;
-	set->spr.sprt[0].x = (int)(set->minfo.m_height / 3) + 0.5;
+	set->spr.sprt[0].x = (int)(set->minfo.m_height / 2) + 0.5;
 	set->map2[(int)set->spr.sprt[0].x][(int)set->spr.sprt[0].y] = 3;
 	set->spr.sprt[0].texnum = 5;
 	
 	set->spr.sprt[1].y = (int)(set->minfo.m_width / 3) + 0.5;
-	set->spr.sprt[1].x = (int)(set->minfo.m_height / 8) + 0.5;
+	set->spr.sprt[1].x = (int)(set->minfo.m_height / 6) + 0.5;
 	set->map2[(int)set->spr.sprt[1].x][(int)set->spr.sprt[1].y] = 3;
 	set->spr.sprt[1].texnum = 4;
 

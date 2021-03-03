@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:53:53 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:59:34 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 23:23:24 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ int		load_file(t_set *set, int num, char *path)
 	set->img.img_width = img_tmp.img_width;
 	img_tmp.data = (int *)mlx_get_data_addr(img_tmp.img_ptr, \
 	&img_tmp.bpp, &img_tmp.size_l, &img_tmp.endian);
-	x = 0;
-	y = 0;
-	while (y < img_tmp.img_height)
+	y = -1;
+	while (++y < img_tmp.img_height)
 	{
 		x = 0;
 		while (x < img_tmp.img_width)
@@ -37,10 +36,17 @@ int		load_file(t_set *set, int num, char *path)
 			img_tmp.data[img_tmp.img_width * y + x];
 			x++;
 		}
-		y++;
 	}
 	mlx_destroy_image(set->mlx_ptr, img_tmp.img_ptr);
 	return (0);
+}
+
+void	load_tex_2(t_set *set)
+{
+	load_file(set, 9, set->minfo.sp_path);
+	load_file(set, 4, "img/barrel.xpm");
+	load_file(set, 5, "img/pillar.xpm");
+	load_file(set, 7, "img/wall_n.xpm");
 }
 
 void	load_tex(t_set *set)
@@ -69,8 +75,5 @@ void	load_tex(t_set *set)
 		load_file(set, 8, set->minfo.f_path);
 	if (set->minfo.c_kind)
 		load_file(set, 10, set->minfo.c_path);
-	load_file(set, 9, set->minfo.sp_path);
-	load_file(set, 4, "img/barrel.xpm");
-	load_file(set, 5, "img/pillar.xpm");
-	load_file(set, 7, "img/wall_n.xpm");
+	load_tex_2(set);
 }

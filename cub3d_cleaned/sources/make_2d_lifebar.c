@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 20:58:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 23:03:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 23:11:07 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	draw_life(t_set *set)
 	while (i < 7)
 	{
 		j = 1;
-			while (j < (int)set->life)
-			{
-				draw_lifebar(set, i, j, 0xDF0000);
-				j++;
-			}
+		while (j < (int)set->life)
+		{
+			draw_lifebar(set, i, j, 0xDF0000);
+			j++;
+		}
 		i++;
 	}
 }

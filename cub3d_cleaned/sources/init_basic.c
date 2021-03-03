@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:30:11 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 19:15:56 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:39:59 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_basic_2(t_set *set)
 {
-	set->p.rspd = 0.02;
+	set->p.rspd = 0.03;
 	set->p.movespeed = 0.06;
 	set->up = 0;
 	set->left = 0;

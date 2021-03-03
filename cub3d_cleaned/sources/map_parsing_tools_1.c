@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:33:18 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 23:40:11 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,32 @@ int		get_fc(t_set *set, int kind, char *line)
 
 	if (ft_isdigit(*line))
 	{
-		(kind == FL_TEXT_NUM) ? (set->minfo.f_kind = 0) : (set->minfo.c_kind = 0);
-		(kind == FL_TEXT_NUM) ? (set->minfo.floor = get_color(line)) : (set->minfo.ceiling = get_color(line));
+		if (kind == FL_TEXT_NUM)
+		{
+			(set->minfo.f_kind = 0);
+			(set->minfo.floor = get_color(line));
+		}
+		else
+		{
+			(set->minfo.c_kind = 0);
+			(set->minfo.ceiling = get_color(line));
+		}
 		temp = (kind == FL_TEXT_NUM) ? set->minfo.floor : set->minfo.ceiling;
 		if (temp < 0)
 			return (0);
 	}
 	else if (*line == '.')
 	{
-		(kind == FL_TEXT_NUM) ? (set->minfo.f_kind = 1) : (set->minfo.c_kind = 1);
-		(kind == FL_TEXT_NUM) ? (set->minfo.f_path = ft_strdup(line)) : (set->minfo.c_path = ft_strdup(line));
+		if (kind == FL_TEXT_NUM)
+		{
+			(set->minfo.f_kind = 1);
+			(set->minfo.f_path = ft_strdup(line));
+		}
+		else
+		{
+			(set->minfo.c_kind = 1);
+			(set->minfo.c_path = ft_strdup(line));
+		}
 	}
 	return (1);
 }
