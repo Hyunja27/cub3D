@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 19:55:00 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:35:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 21:24:10 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@ void	secret_check(t_set *s)
 {
 	int		tmp;
 
-	tmp = (TEX_HEIGHT) * (s->tex.texY - (s->door * 2)) + s->tex.texX;
+	tmp = (TEX_HEIGHT) * (s->tex.texY) + s->tex.texX - (s->door * 2);
 	s->tex.color = s->p.texture[s->tex.texture_kind][tmp];
-	if (s->door == 31)
+	if (s->door == 28)
 		s->map2[s->p.hid_x][s->p.hid_y] = 0;
 	else
 		s->map2[s->p.hid_x][s->p.hid_y] = 9;
+}
+
+void	updown_protect(t_set *s)
+{
+	if (s->updown > s->minfo.s_height / 2)
+		s->updown = s->minfo.s_height / 2;
+	if (-s->updown > (s->minfo.s_height / 2))
+		s->updown = -s->minfo.s_height / 2;
 }
 
 int		make_darker(int color, int size)

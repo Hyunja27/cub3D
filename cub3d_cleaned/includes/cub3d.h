@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 19:56:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:40:29 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ void	draw_life(t_set *set);
 void	time_move(t_set *s);
 void	secret_check(t_set *s);
 int		make_darker(int color, int size);
+void	updown_protect(t_set *s);
 
 #endif

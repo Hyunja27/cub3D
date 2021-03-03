@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:35:30 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:41:06 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,17 @@ void	fc_kind(t_set *s, int y, int i, int re_y)
 
 void	carl_fc(t_set *s)
 {
-	int x;
 	int y;
 	int i;
 	int	re_y;
 
-	x = 0;
 	y = 0;
 	i = 0;
 	re_y = s->minfo.s_height / 2 - (s->updown * 2);
 	while (y < s->minfo.s_height)
 	{
 		fc_insert(s, y, re_y);
-		if (s->updown > s->minfo.s_height / 2)
-			s->updown = s->minfo.s_height / 2;
-		if (-s->updown > (s->minfo.s_height / 2))
-			s->updown = -s->minfo.s_height / 2;
+		updown_protect(s);
 		while (i < s->minfo.s_width)
 		{
 			s->flr.tx = (int)(s->img.img_width * \
