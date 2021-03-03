@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 19:51:48 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:03:14 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,23 +123,6 @@ void	side_check(t_set *s)
 	}
 }
 
-void	secret_check(t_set *s)
-{
-	int		tmp;
-
-	tmp = (TEX_HEIGHT) * (s->tex.texY - (s->door * 2)) + s->tex.texX;
-	// tmp = (tmp < 0) ? 0 : tmp;
-	// tmp = (tmp >= s->minfo.s_height) ?  s->minfo.s_height : tmp;
-	
-	s->tex.color = s->p.texture[s->tex.texture_kind][tmp];
-	
-	if (s->door == 31)
-		s->map2[4][21] = 0;
-	else 
-		s->map2[4][21] = 9;
-
-}
-
 void	carl_ray(t_set *s)
 {
 	int		x;
@@ -172,6 +155,7 @@ void	carl_ray(t_set *s)
 			else
 				s->tex.color = s->p.texture[s->tex.texture_kind]\
 			[TEX_HEIGHT * s->tex.texY + s->tex.texX];
+			s->tex.color = make_darker(s->tex.color, s->minfo.s_height / 2 - s->cr.line_screenHeight * 2);
 			tmp = ((i - (s->updown * 2) + s->jump) * s->minfo.s_width + x);
 			tmp = tmp < 0 ? 0 : tmp;
 			s->img.data[tmp] = s->tex.color;

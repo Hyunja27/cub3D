@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 00:13:20 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 20:04:31 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	sprite_cast_end(t_set *s, int x, int y, int i)
 				s->spr.texY = ((s->spr.d * TEX_HEIGHT) / s->spr.sp_sc_H) / 256;
 				s->spr.spr_color = s->p.texture[s->spr.sprt[s->spr.spriteOrder[i]].texnum][s->spr.texY * \
 				TEX_WIDTH + s->spr.texX];
+				s->spr.spr_color = make_darker(s->spr.spr_color, s->spr.spriteDistance[i]);
 				tmp = (y - (s->updown * 2) + s->jump) * s->minfo.s_width + (x + s->time);
 				tmp = tmp < 0 ? 0 : tmp;
 				if ((s->spr.spr_color & 0x00FFFFFF) != 0)

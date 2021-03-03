@@ -36,6 +36,7 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		max_screen.c \
 		sound.c \
 		animate.c \
+		bonus_tool.c \
 		)
 
 MLX_FLAG = -framework OpenGL -framework Appkit
