@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 00:18:09 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:23:36 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int			key_press(int keycode, t_set *set)
 		set->up_arrow = 1;
 	if (keycode == DOWN_ARROW)
 		set->down_arrow = 1;
+	// if (keycode == Q_KEY)
+	// 	set->q_action = 1;
 	if (keycode == P_KEY)
 	{
 		make_bmp(set);
@@ -70,6 +72,13 @@ int			key_release(int keycode, t_set *set)
 		set->up_arrow = 0;
 	if (keycode == DOWN_ARROW)
 		set->down_arrow = 0;
+	if (keycode == Q_KEY)
+	{
+		if (set->q_action == 0)
+			set->q_action = 1;
+		else
+			set->q_action = 0;
+	}
 	if (keycode == M_KEY)
 	{
 		if (set->map1 == 0)

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 18:06:57 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 18:58:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,13 @@ void	init_ck_map(t_set *set, int ***ck_map)
 					set->spr.sprt[a].texnum = 9;
 					a++;
 				}
-				else if (set->map2[i - 1][j - 1] == 9)
-				{
-					set->spr.sprt[a].x = i - 1;
-					set->spr.sprt[a].y = j - 1;
-					set->spr.sprt[a].texnum = 7;
-					a++;
-				}
+				// else if (set->map2[i - 1][j - 1] == 9)
+				// {
+				// 	set->spr.sprt[a].x = i - 1 + 0.5;
+				// 	set->spr.sprt[a].y = j - 1 + 0.5;
+				// 	set->spr.sprt[a].texnum = 7;
+				// 	a++;
+				// }
 				(*ck_map)[i][j] = set->map2[i - 1][j - 1];
 			}
 			j++;
@@ -123,7 +123,7 @@ void	change_map(t_set *set, int **map, char *temp_map, int i)
 			temp_map[j] = '0';
 		}
 		(*map)[j] = temp_map[j] == ' ' ? -1 : temp_map[j] - '0';
-		if ((*map)[j] == 2)
+		if ((*map)[j] == 2 || (*map)[j] == 9)
 			set->minfo.num_sprite++;
 	}
 }

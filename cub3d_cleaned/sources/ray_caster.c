@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 17:55:50 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:51:48 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,13 @@ void	hit_check(t_set *s)
 			s->p.positionY += s->p.stepY;
 			s->p.hit_side = 1;
 		}
-		if (s->map2[s->p.positionX][s->p.positionY] == 1)
+		if (s->map2[s->p.positionX][s->p.positionY] == 1 || \
+		(s->map2[s->p.positionX][s->p.positionY] == 9 && s->door != 32))
+		{
 			s->p.hit = 1;
+			if (s->map2[s->p.positionX][s->p.positionY] == 9)
+				s->p.secret = 1;
+		}
 	}
 	if (s->p.hit_side == 0)
 		s->p.perpwalldist = (s->p.positionX - s->p.posX + \
@@ -97,7 +102,12 @@ void	side_check(t_set *s)
 	step_check(s);
 	hit_check(s);
 	ray_insert(s);
-	if (s->p.hit_side == 1)
+	if (s->p.secret == 1)
+	{
+		s->tex.texture_kind = 7;
+		s->p.secret = 0;
+	}
+	else if (s->p.hit_side == 1)
 	{
 		if (s->p.raydirY > 0)
 			s->tex.texture_kind = 2;
@@ -111,6 +121,23 @@ void	side_check(t_set *s)
 		else
 			s->tex.texture_kind = 1;
 	}
+}
+
+void	secret_check(t_set *s)
+{
+	int		tmp;
+
+	tmp = (TEX_HEIGHT) * (s->tex.texY - (s->door * 2)) + s->tex.texX;
+	// tmp = (tmp < 0) ? 0 : tmp;
+	// tmp = (tmp >= s->minfo.s_height) ?  s->minfo.s_height : tmp;
+	
+	s->tex.color = s->p.texture[s->tex.texture_kind][tmp];
+	
+	if (s->door == 31)
+		s->map2[4][21] = 0;
+	else 
+		s->map2[4][21] = 9;
+
 }
 
 void	carl_ray(t_set *s)
@@ -135,7 +162,15 @@ void	carl_ray(t_set *s)
 		{
 			s->tex.texY = (int)s->p.texture_pos & (TEX_HEIGHT - 1);
 			s->p.texture_pos += s->p.step;
-			s->tex.color = s->p.texture[s->tex.texture_kind]\
+			if (s->tex.texture_kind == 7)
+			{
+				secret_check(s);
+			// 	s->tex.color = s->p.texture[s->tex.texture_kind]\
+			// [(TEX_HEIGHT) * (s->tex.texY - (s->updown * 2)) + s->tex.texX];
+			//(TEX_HEIGHT) * s->tex.texY + s->tex.texX + (s->updown * 2)
+			}
+			else
+				s->tex.color = s->p.texture[s->tex.texture_kind]\
 			[TEX_HEIGHT * s->tex.texY + s->tex.texX];
 			tmp = ((i - (s->updown * 2) + s->jump) * s->minfo.s_width + x);
 			tmp = tmp < 0 ? 0 : tmp;

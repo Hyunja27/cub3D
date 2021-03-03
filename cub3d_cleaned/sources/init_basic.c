@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:30:11 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 00:16:09 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:15:56 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	init_basic_2(t_set *set)
 	set->jump = 0;
 	set->jump_end = 0;
 	set->updown = 0;
+	set->p.secret = 0;
+	set->door = 0;
+	set->door_end = 0;
 }
 
 int		init_basic(t_set *set, int ac, char *av[])

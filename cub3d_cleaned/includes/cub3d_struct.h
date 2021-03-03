@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 22:29:03 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:15:29 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_point
 	double movespeed;
 
 	double *zBuffer;
+	int		secret;
 }				t_point;
 
 typedef struct s_sprite
@@ -196,6 +197,9 @@ typedef struct	s_set
 	int			down;
 	int			updown;
 	int			jump;
+	int			q_action;
+	int			door;
+	int			door_end;
 	int			up_arrow;
 	int			left_arrow;
 	int			right_arrow;
