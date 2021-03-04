@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 22:19:02 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 16:49:20 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,15 @@ void	hit_check(t_set *s)
 			s->p.hit_side = 1;
 		}
 		if (s->map2[s->p.positionX][s->p.positionY] == 1 || \
-		(s->p.positionX == s->p.hid_x && s->p.positionY == s->p.hid_y && s->door != 32))
+		(s->p.positionX == s->p.hid_x && s->p.positionY == \
+		s->p.hid_y && s->door != 32))
 		{
 			s->p.hit = 1;
 			if (s->p.positionX == s->p.hid_x && s->p.positionY == s->p.hid_y)
 				s->p.secret = 1;
 		}
 	}
-	if (s->p.hit_side == 0)
-		s->p.perpwalldist = (s->p.positionX - s->p.posX + \
-		(1 - s->p.stepX) / 2) / s->p.raydirX;
-	else
-		s->p.perpwalldist = (s->p.positionY - s->p.posY + \
-		(1 - s->p.stepY) / 2) / s->p.raydirY;
+	hit_check_2(s);
 }
 
 void	ray_insert(t_set *s)
@@ -142,19 +138,7 @@ void	carl_ray(t_set *s)
 		side_check(s);
 		i = s->cr.draw_start - 1;
 		while (++i < s->cr.draw_end)
-		{
-			s->tex.texY = (int)s->p.texture_pos & (TEX_HEIGHT - 1);
-			s->p.texture_pos += s->p.step;
-			if (s->tex.texture_kind == 7)
-				secret_check(s);
-			else
-				s->tex.color = s->p.texture[s->tex.texture_kind]\
-			[TEX_HEIGHT * s->tex.texY + s->tex.texX];
-			s->tex.color = make_darker(s->tex.color, s->minfo.s_height / 2 - s->cr.line_screenHeight * 2);
-			tmp = ((i - (s->updown * 2) + s->jump) * s->minfo.s_width + x);
-			tmp = tmp < 0 ? 0 : tmp;
-			s->img.data[tmp] = s->tex.color;
-		}
+			carl_ray_2(s, &tmp, i, x);
 		s->p.zBuffer[x] = s->p.perpwalldist;
 	}
 }

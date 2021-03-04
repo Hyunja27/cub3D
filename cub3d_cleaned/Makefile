@@ -25,11 +25,13 @@ SRC =  $(addprefix $(SRC_DIR)/, \
 		map_parsing.c \
 		map_parsing_tools_1.c \
 		map_parsing_tools_2.c \
+		map_parsing_tools_3.c \
 		map_parsing_checker.c \
 		make_texture.c \
 		main_loop.c \
 		make_sprite.c \
 		ray_caster.c \
+		ray_caster_tools.c \
 		floor_ceiling_caster.c \
 		free_memory.c \
 		init_basic.c \

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 23:40:11 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 16:25:34 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,7 @@ int		get_fc(t_set *set, int kind, char *line)
 			return (0);
 	}
 	else if (*line == '.')
-	{
-		if (kind == FL_TEXT_NUM)
-		{
-			(set->minfo.f_kind = 1);
-			(set->minfo.f_path = ft_strdup(line));
-		}
-		else
-		{
-			(set->minfo.c_kind = 1);
-			(set->minfo.c_path = ft_strdup(line));
-		}
-	}
+		get_fc_2(set, kind, line);
 	return (1);
 }
 
@@ -92,24 +81,14 @@ void	init_ck_map(t_set *set, int ***ck_map)
 		j = 0;
 		while (j < (set->minfo.m_width + 2))
 		{
-			if (i == 0 || j == 0 || i == set->minfo.m_height + 1 || j == set->minfo.m_width + 1)
+			if (i == 0 || j == 0 || i == set->minfo.m_height + 1\
+			|| j == set->minfo.m_width + 1)
 			{
 				(*ck_map)[i][j] = -1;
 			}
 			else
 			{
-				if (set->map2[i - 1][j - 1] == 2)
-				{
-					set->spr.sprt[a].x = i - 1 + 0.5;
-					set->spr.sprt[a].y = j - 1 + 0.5;
-					set->spr.sprt[a].texnum = 9;
-					a++;
-				}
-				else if (set->map2[i - 1][j - 1] == 9)
-				{
-					set->p.hid_x = i - 1;
-					set->p.hid_y = j - 1;
-				}
+				init_ck_map_2(set, i, j, &a);
 				(*ck_map)[i][j] = set->map2[i - 1][j - 1];
 			}
 			j++;

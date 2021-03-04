@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 22:20:05 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 16:29:40 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,8 @@ int		check_map(t_set *set)
 	while (++i < set->minfo.m_height + 2)
 		ck_map[i] = (int *)malloc(sizeof(int) * (set->minfo.m_width + 2));
 	init_ck_map(set, &ck_map);
-
-	set->spr.sprt[0].y = (int)(set->minfo.m_width / 2) + 0.5;
-	set->spr.sprt[0].x = (int)(set->minfo.m_height / 2) + 0.5;
-	set->map2[(int)set->spr.sprt[0].x][(int)set->spr.sprt[0].y] = 3;
-	set->spr.sprt[0].texnum = 5;
-	
-	set->spr.sprt[1].y = (int)(set->minfo.m_width / 3) + 0.5;
-	set->spr.sprt[1].x = (int)(set->minfo.m_height / 6) + 0.5;
-	set->map2[(int)set->spr.sprt[1].x][(int)set->spr.sprt[1].y] = 3;
-	set->spr.sprt[1].texnum = 4;
-
-	set->spr.sprt[2].y = (int)(set->minfo.m_width / 5) + 0.5;
-	set->spr.sprt[2].x = (int)(set->minfo.m_height / 2) + 0.5;
-	set->map2[(int)set->spr.sprt[2].x][(int)set->spr.sprt[2].y] = 3;
-	set->spr.sprt[2].texnum = 5;
-
-	set->spr.sprt[3].y = (int)(set->minfo.m_width / 7) + 0.5;
-	set->spr.sprt[3].x = (int)(set->minfo.m_height / 3) + 0.5;
-	set->map2[(int)set->spr.sprt[3].x][(int)set->spr.sprt[3].y] = 3;
-	set->spr.sprt[3].texnum = 4;
-
-	set->spr.sprt[4].y = (int)(set->minfo.m_width / 5) + 0.5;
-	set->spr.sprt[4].x = (int)(set->minfo.m_height / 2) + 0.5;
-	set->map2[(int)set->spr.sprt[4].x][(int)set->spr.sprt[4].y] = 3;
-	set->spr.sprt[4].texnum = 5;
-
+	check_map_2(set);
 	i = -1;
-	// while (++i < set->minfo.num_sprite)
-	// 	printf("\n->> %d [%f][%f]\n", i, set->spr.sprt[i].x, set->spr.sprt[i].y);
-
 	rt = is_map(set, ck_map);
 	i = 0;
 	while (i < set->minfo.m_height + 2)
