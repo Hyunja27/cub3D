@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 16:25:34 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 22:42:46 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int		get_color(char *line)
 	{
 		line++;
 		if (!(*line))
-			return (0);
+			return (-1);
 	}
 	b = ft_atoi(++line);
+	if (!(*line))
+		return (-1);
 	return ((r * 256 * 256) + (g * 256) + b);
 }
 
