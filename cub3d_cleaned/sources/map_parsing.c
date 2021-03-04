@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 18:39:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:48:34 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,16 @@ void	map_parse_flagwhile(t_set *set, char **line, int fd, int *rt)
 			i < 0 ? exit(error_msg("SP")) : 0;
 			set->minfo.sp_path = ft_strdup(*line + i);
 		}
+		if (*line)
+			free(*line);
 	}
+}
+
+int		map_parse_2(void)
+{
+	printf("\n\nMap file is exist, But it's Data\
+		is Not appropriate! Sorry!\n\n");
+	return (1);
 }
 
 int		map_parse(t_set *set, char *map_name)
@@ -103,15 +112,14 @@ int		map_parse(t_set *set, char *map_name)
 	}
 	line = 0;
 	map_parse_flagwhile(set, &line, fd, &rt);
-	free(line);
 	if (rt <= 0)
-	{
-		printf("\n\nMap file is exist, But it's Data is \
-		Not appropriate! Sorry!\n\n");
-		return (1);
-	}
+		return (map_parse_2());
 	while (line[0] != ' ' && !ft_isdigit(line[0]))
+	{
 		get_next_line(fd, &line);
+		if (line[0] != ' ' && !ft_isdigit(line[0]))
+			free(line);
+	}
 	get_map(fd, &line, set);
 	close(fd);
 	free(line);

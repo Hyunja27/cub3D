@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 18:15:22 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:09:23 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	get_map_size(t_set *set, int fd, int fd_2, char **line)
 		set->minfo.m_height++;
 		write(fd_2, *line, temp_size);
 		write(fd_2, "\n", 1);
-		free(*line);
+		if (*line)
+			free(*line);
 	}
 }

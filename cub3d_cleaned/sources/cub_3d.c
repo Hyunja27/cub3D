@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 17:29:38 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:27:01 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int		main(int ac, char *av[])
 
 	if (init_basic(&set, ac, av))
 	{
-		printf("\n\nWell.. you give me 3 args, But last argument is Not \
-		'--save'.. what are you want..?\n\n\n");
+		printf("\n\nWell.. I got 3 args, but 3rd is no '--save' !!\n\n");
 		return (1);
 	}
 	if (map_parse(&set, set.map_path))
@@ -39,8 +38,6 @@ int		main(int ac, char *av[])
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
 	mlx_loop(set.mlx_ptr);
 	free_memory(&set);
-	// while (1)
-	// 	;
 	return (0);
 }
 

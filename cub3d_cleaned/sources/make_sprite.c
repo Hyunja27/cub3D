@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 18:18:25 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:46:41 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	sprite_cast_end(t_set *s, int x, int y, int i)
 			while (y < s->spr.drawEndY)
 			{
 				sprite_cast_end_2(s, y, i);
-				tmp = (y - (s->updown * 2) + s->jump) * s->minfo.s_width + \
-				(x + s->time);
+				tmp = ((y + s->time) - (s->updown * 2) + s->jump) \
+				* s->minfo.s_width + (x);
 				tmp = tmp < 0 ? 0 : tmp;
 				if ((s->spr.spr_color & 0x00FFFFFF) != 0)
 					s->img.data[tmp] = s->spr.spr_color;
@@ -94,11 +94,9 @@ void	sprite_cast_insert_2(t_set *s, int i)
 void	sprite_cast(t_set *s)
 {
 	int i;
-	int x;
 	int y;
 
 	i = -1;
-	x = 0;
 	y = 0;
 	s->spr.spriteOrder = (int *)malloc(sizeof(int) * s->minfo.num_sprite);
 	s->spr.spriteDistance = (int *)malloc(sizeof(int) * s->minfo.num_sprite);
@@ -115,8 +113,7 @@ void	sprite_cast(t_set *s)
 	{
 		sprite_cast_insert_1(s, i);
 		sprite_cast_insert_2(s, i);
-		x = s->spr.drawStartX;
-		sprite_cast_end(s, x, y, i);
+		sprite_cast_end(s, s->spr.drawStartX, y, i);
 	}
 	free(s->spr.spriteDistance);
 	free(s->spr.spriteOrder);

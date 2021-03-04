@@ -7,7 +7,7 @@ MLX_DIR = ./mlx
 INC_DIR = ./includes
 SRC_DIR = ./sources
 
-CC = gcc
+CC = gcc -g
 GCC_FLAG = -Wall -Wextra -Werror
 RM = rm
 RMFLAGS = -f

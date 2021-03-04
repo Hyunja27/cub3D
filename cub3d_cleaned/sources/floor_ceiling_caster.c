@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 18:37:51 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:24:38 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	fc_kind(t_set *s, int y, int i, int re_y)
 {
 	int tmp;
 
-	if (re_y < 1)
-		re_y = 0;
+	re_y = (re_y < 1) ? 0 : re_y;
 	if (re_y > s->minfo.s_height - 2)
 		re_y = s->minfo.s_height - 1;
 	if (re_y <= y)
