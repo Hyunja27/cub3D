@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 16:48:19 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 17:02:30 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		key_press(int keycode, t_set *set);
 
 int		key_release(int keycode, t_set *set);
 int		key_release_2(int keycode, t_set *set);
+int		key_exit(t_set *set);
 
 void	key_action_2(t_set *s);
 void	key_action(t_set *s);

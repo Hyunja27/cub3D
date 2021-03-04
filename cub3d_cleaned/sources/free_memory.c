@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:23:50 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 11:31:20 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:37:57 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,4 @@ void	free_memory(t_set *set)
 		free(set->minfo.c_path);
 	free(set->p.zBuffer);
 	free(set->spr.sprt);
-	free(set->spr.spriteDistance);
-	free(set->spr.spriteOrder);
 }

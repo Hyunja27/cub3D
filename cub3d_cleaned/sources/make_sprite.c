@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:59:26 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 23:39:37 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:18:25 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,6 @@ void	sprite_cast(t_set *s)
 		x = s->spr.drawStartX;
 		sprite_cast_end(s, x, y, i);
 	}
+	free(s->spr.spriteDistance);
+	free(s->spr.spriteOrder);
 }

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:41:06 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:37:51 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	texture_input(t_set *s, int *tex, int texnum)
 
 void	fc_kind(t_set *s, int y, int i, int re_y)
 {
+	int tmp;
+
 	if (re_y < 1)
 		re_y = 0;
 	if (re_y > s->minfo.s_height - 2)
@@ -60,6 +62,9 @@ void	fc_kind(t_set *s, int y, int i, int re_y)
 	}
 	s->tex.color = make_darker(s->tex.color, \
 	(s->minfo.s_height / 5) - abs(y - re_y));
+	tmp = (y + s->jump) * s->minfo.s_width + i;
+	tmp = (tmp < 0) ? 0 : tmp;
+	tmp = (tmp > s->minfo.s_height) ? s->minfo.s_height : tmp;
 	s->img.data[(y + s->jump) * s->minfo.s_width + i] = s->tex.color;
 }
 

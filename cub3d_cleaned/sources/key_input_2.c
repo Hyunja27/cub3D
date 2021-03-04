@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 22:41:01 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:16:51 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,13 @@ int			key_release(int keycode, t_set *set)
 			set->map1 = 0;
 	}
 	return (key_release_2(keycode, set));
+}
+
+int			key_exit(t_set *set)
+{
+	system("killall afplay");
+	sound_effect(2);
+	mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
+	mlx_destroy_window(set->mlx_ptr, set->win_ptr);
+	exit(0);
 }

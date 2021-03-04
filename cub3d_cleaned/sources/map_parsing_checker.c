@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 16:29:40 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:15:22 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,4 @@ void	get_map_size(t_set *set, int fd, int fd_2, char **line)
 		write(fd_2, "\n", 1);
 		free(*line);
 	}
-	free(*line);
 }

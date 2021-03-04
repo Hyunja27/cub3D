@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/02/26 19:34:08 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:36:26 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	map_parse_flagwhile(t_set *set, char **line, int fd, int *rt)
 			i < 0 ? exit(error_msg("SP")) : 0;
 			set->minfo.sp_path = ft_strdup(*line + i);
 		}
+		free(*line);
 	}
 }
 
@@ -103,6 +104,7 @@ int		map_parse(t_set *set, char *map_name)
 	}
 	line = 0;
 	map_parse_flagwhile(set, &line, fd, &rt);
+	free(line);
 	if (rt <= 0)
 	{
 		printf("\n\nMap file is exist, But it's Data is \
@@ -113,5 +115,6 @@ int		map_parse(t_set *set, char *map_name)
 		get_next_line(fd, &line);
 	get_map(fd, &line, set);
 	close(fd);
+	free(line);
 	return (0);
 }

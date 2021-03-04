@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/02 15:23:21 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 16:58:45 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define F_KEY 3
 # define R_KEY 15
 # define P_KEY 35
+# define EXIT_KEY 17
 # define KEYPRESS 2
 # define KEYRELEASE  3
 
