@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 18:36:26 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:39:29 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	map_parse_flagwhile(t_set *set, char **line, int fd, int *rt)
 			i < 0 ? exit(error_msg("SP")) : 0;
 			set->minfo.sp_path = ft_strdup(*line + i);
 		}
-		free(*line);
 	}
 }
 
