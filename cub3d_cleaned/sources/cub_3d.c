@@ -6,11 +6,18 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 13:37:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 22:45:19 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 18:02:53 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	main_sub(t_set *set)
+{
+	mlx_hook(set->win_ptr, KEYPRESS, 0, key_press, set);
+	mlx_hook(set->win_ptr, KEYRELEASE, 0, key_release, set);
+	mlx_hook(set->win_ptr, EXIT_KEY, 0, key_exit, set);
+}
 
 int		main(int ac, char *av[])
 {
@@ -18,28 +25,27 @@ int		main(int ac, char *av[])
 
 	if (init_basic(&set, ac, av))
 	{
-		printf("\n\nWell.. I got 3 args, but 3rd is no '--save' !!\n\n");
+		printf("\n\nWell.. I got 3 or more args, check '--save' !!\n\n");
 		return (1);
 	}
 	if (map_parse(&set, set.map_path) || set.minfo.floor == -1 || set.minfo.ceiling == -1)
 		return (1);
-	// if (set.minfo.floor == -1 || set.minfo.ceiling == -1)
-	// {
-	// 	printf("\nOh..you entered wrong color code!\n");
-	// 	exit(0);
-	// }
 	if (!check_map(&set))
 	{
 		printf("\n\nI Got Map data, but it has Map Error! check tmp_map\n\n\n");
 		return (0);
 	}
-	sound_bgm();
-	sound_effect(1);
+	if (ac != 3)
+	{
+		sound_bgm();
+		sound_effect(1);
+	}
 	make_window(&set);
 	load_tex(&set);
-	mlx_hook(set.win_ptr, KEYPRESS, 0, key_press, &set);
-	mlx_hook(set.win_ptr, KEYRELEASE, 0, key_release, &set);
-	mlx_hook(set.win_ptr, EXIT_KEY, 0, key_exit, &set);
+	main_sub(&set);
+	// mlx_hook(set.win_ptr, KEYPRESS, 0, key_press, &set);
+	// mlx_hook(set.win_ptr, KEYRELEASE, 0, key_release, &set);
+	// mlx_hook(set.win_ptr, EXIT_KEY, 0, key_exit, &set);
 	mlx_loop_hook(set.mlx_ptr, &main_loop, &set);
 	mlx_loop(set.mlx_ptr);
 	free_memory(&set);

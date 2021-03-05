@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 23:53:53 by spark             #+#    #+#             */
-/*   Updated: 2021/03/05 16:18:56 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 17:42:52 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int		load_file(t_set *set, int num, char *path)
 
 void	load_tex_2(t_set *set)
 {
-	load_file(set, 9, set->minfo.sp_path);
+	if (load_file(set, 9, set->minfo.sp_path))
+	{
+		printf("\n-> Sprite texture path is Not right!\n");
+		exit_cub3d();
+	}
 	load_file(set, 4, "./img/con/octo.xpm");
 	load_file(set, 5, "./img/con/bluefire.xpm");
 	load_file(set, 7, "./img/con/paint.xpm");
@@ -76,8 +80,18 @@ void	load_tex(t_set *set)
 		// exit(0);
 	}
 	if (set->minfo.f_kind)
-		load_file(set, 8, set->minfo.f_path);
+		if (load_file(set, 8, set->minfo.f_path))
+		{
+			printf("\n-> Floor texture path is Not right!\n");
+			exit_cub3d();
+			// exit(0);
+		}
 	if (set->minfo.c_kind)
-		load_file(set, 10, set->minfo.c_path);
+		if (load_file(set, 10, set->minfo.c_path))
+		{
+			printf("\n-> Ceiling texture path is Not right!\n");
+			exit_cub3d();
+			// exit(0);
+		}
 	load_tex_2(set);
 }

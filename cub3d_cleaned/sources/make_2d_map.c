@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 20:58:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/05 15:57:02 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 18:10:03 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	draw_all_rect(t_set *set)
 		while (j < set->minfo.m_width)
 		{
 			if (set->map2[i][j] == 1 || set->map2[i][j] == 9)
-				draw_rect(set, i, j, 0xFFFFFF);
+				draw_rect(set, i, j, 0x2F4F4F);
 			else if (set->map2[i][j] == 2)
-				draw_rect(set, i, j, 0xAAFFAA);
+				draw_rect(set, i, j, 0xB22222);
 			else if (set->map2[i][j] == 3)
-				draw_rect(set, i, j, 0xABDADA);
+				draw_rect(set, i, j, 0x800080);
 			j++;
 		}
 		i++;

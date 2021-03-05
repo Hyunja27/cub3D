@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 20:58:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 23:11:07 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 18:12:00 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	draw_all_rect_lifebar(t_set *set)
 		{
 			while (j < 50)
 			{
-				draw_lifebar(set, i, j, 0x000000);
+				draw_lifebar(set, i, j, 0x898989);
 				j++;
 			}
 		}
-		draw_lifebar(set, i, 0, 0x000000);
-		draw_lifebar(set, i, 50, 0x000000);
+		draw_lifebar(set, i, 0, 0x898989);
+		draw_lifebar(set, i, 50, 0x898989);
 		i++;
 	}
 }
@@ -67,7 +67,7 @@ void	draw_life(t_set *set)
 		j = 1;
 		while (j < (int)set->life)
 		{
-			draw_lifebar(set, i, j, 0xDF0000);
+			draw_lifebar(set, i, j, 0xAC0000);
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/05 16:21:14 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 17:44:46 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		exit_cub3d(void)
 {
+	system("killall afplay");
 	system("leaks cub3D");
 	exit(0);
 }

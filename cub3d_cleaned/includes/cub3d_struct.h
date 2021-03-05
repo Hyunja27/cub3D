@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/05 16:05:46 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 17:03:08 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ typedef struct	s_set
 	int			s_corl;
 	double		life;
 	int			time;
+	long		msec;
 	int			collision;
 	int			next_stage;
 	double		olddir_x;
