@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 20:42:40 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 14:59:10 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int			key_release(int keycode, t_set *set)
 {
 	if (keycode == Q_KEY)
 	{
+		sound_effect(4);
 		if (set->q_action == 0)
 			set->q_action = 1;
 		else

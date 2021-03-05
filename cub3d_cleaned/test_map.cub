@@ -4,7 +4,7 @@ WE ./img/con/wall_dark3.xpm
 EA ./img/con/wall_dark3.xpm
 
 R 960 740
-S ./img/2.xpm
+S ./img/con/ghost.xpm
 F ./img/con/floor_wood.xpm
 C ./img/con/floor_wood.xpm
 
