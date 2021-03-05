@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 11:51:29 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 20:30:32 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:05:46 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,40 +26,40 @@ typedef struct	s_img
 
 typedef struct s_point
 {
-	double posX;
-	double posY;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
-	
-	double cameraX;
-	double raydirX;
-	double raydirY;
+	double posx;
+	double posy;
+	double dirx;
+	double diry;
+	double planex;
+	double planey;
 
-	int		positionX;
-	int		positionY;
+	double camerax;
+	double raydirx;
+	double raydiry;
+
+	int		positionx;
+	int		positiony;
 
 	int		hid_x;
 	int		hid_y;
-	
-	double sideX;
-	double sideY;
 
-	double deltadistX;
-	double deltadistY;
+	double sidex;
+	double sidey;
+
+	double deltadistx;
+	double deltadisty;
 	double perpwalldist;
 
-	int		stepX;
-	int		stepY;
-	
+	int		stepx;
+	int		stepy;
+
 	int		hit;
 	int		hit_side;
 	int		wall_face;
-	
-	int   texture[TEX_NUM][TEX_WIDTH * TEX_HEIGHT];
-	double   step;
-	double   texture_pos;
+
+	int		texture[TEX_NUM][TEX_WIDTH * TEX_HEIGHT];
+	double	step;
+	double	texture_pos;
 	
 	double rspd;
 	double movespeed;
@@ -75,72 +75,71 @@ typedef struct s_sprite
 	int		texnum;
 }				t_sprite;
 
-typedef struct s_spr_cast
+typedef struct		s_spr_cast
 {
-		
-	int			*spriteOrder;
-	int			*spriteDistance;
-	double	x;
-	double	y;
-	int		texnum;
-	double  sp_X; 
-	double  sp_Y;
-	double  invDet;
-	double  tr_X;
-	double  tr_Y;
-	int		spriteScreenX;
-	int     uDiv;
-    int     vDiv;
-    double  vMove;
-    int     vMoveScreen;
-	int     sp_sc_H;
-	int     drawStartY;
-	int     drawEndY;
-	int     sp_sc_W;
-	int     drawStartX;
-	int     drawEndX;
-	int 	texX;
-	int 	texY;
-	int		d;
-	int		spr_color;
-	t_sprite *sprt;
-}				t_spr_cast;
+	int			*spriteorder;
+	int			*spritedistance;
+	double		x;
+	double		y;
+	int			texnum;
+	double		sp_x;
+	double		sp_y;
+	double		invdet;
+	double		tr_x;
+	double		tr_y;
+	int			spritescreenx;
+	int			udiv;
+	int			vdiv;
+	double		vmove;
+	int			vmovescreen;
+	int			sp_sc_h;
+	int			drawstarty;
+	int			drawendy;
+	int			sp_sc_w;
+	int			drawstartx;
+	int			drawendx;
+	int			texx;
+	int			texy;
+	int			d;
+	int			spr_color;
+	t_sprite	*sprt;
+}					t_spr_cast;
 
-typedef struct s_cal_ray
+typedef struct		s_cal_ray
 {
 	int		draw_start;
 	int		draw_end;
-	int		line_screenHeight;
-	double	wallX;
-}				t_cal_ray;
+	int		line_screenheight;
+	double	wallx;
+}					t_cal_ray;
 
-typedef struct s_flr
+typedef struct	s_flr
 {
 	int		x;
 	double	w;
 	int		i;
-	float	rayDirX0;
-	float	rayDirY0;
-	float	rayDirX1;
-	float	rayDirY1;
+	float	raydirx0;
+	float	raydiry0;
+	float	raydirx1;
+	float	raydiry1;
 	int		center;
-	float	posZ;
-	float	rowDistance;
-	float	floorStepX; 
-	float	floorStepY; 
-	float	floorX;
-	float	floorY;
+	float	posz;
+	float	rowdistance;
+	float	floorstepx;
+	float	floorstepy;
+	float	floorx;
+	float	floory;
 	int		tx;
 	int		ty;
 }				t_flr;
 
-typedef struct s_tex
+typedef struct	s_tex
 {
-	int		texY;
-	int		texX;
+	int		texy;
+	int		texx;
 	int		texture_kind;
-	int		floorTexture;
-	int		ceilingTexture;
+	int		floortexture;
+	int		ceilingtexture;
 	int		color;
 }				t_tex;
 
@@ -162,34 +161,32 @@ typedef struct	s_minfo
 	int			c_kind;
 	int			floor;
 	int			ceiling;
-	
 }				t_minfo;
 
-#pragma pack(push, 1) 
+# pragma pack(push, 1)
 
 typedef struct	s_bmp
 {
-	unsigned char bfType1;
-	unsigned char bfType2;         // BMP 파일 매직 넘버
-    unsigned int   bfSize;           // 파일 크기
-    unsigned short bfReserved1;      // 예약
-    unsigned short bfReserved2;      // 예약
-    unsigned int   bfOffBits; 
-	unsigned int   biSize;           // 현재 구조체의 크기
-    int            biWidth;          // 비트맵 이미지의 가로 크기
-    int            biHeight;         // 비트맵 이미지의 세로 크기
-    unsigned short biPlanes;         // 사용하는 색상판의 수
-    unsigned short biBitCount;       // 픽셀 하나를 표현하는 비트 수
-    unsigned int   biCompression;    // 압축 방식
-    unsigned int   biSizeImage;      // 비트맵 이미지의 픽셀 데이터 크기
-    int            biXPelsPerMeter;  // 그림의 가로 해상도(미터당 픽셀)
-    int				biYPelsPerMeter;  // 그림의 세로 해상도(미터당 픽셀)
-    unsigned int	biClrUsed;        // 색상 테이블에서 실제 사용되는 색상 수
-    unsigned int	biClrImportant;   // 빨강
+	unsigned char	bftype1;
+	unsigned char	bftype2;
+	unsigned int	bfsize;
+	unsigned short	bfreserved1;
+	unsigned short	bfreserved2;
+	unsigned int	bfoffbits;
+	unsigned int	bisize;
+	int				biwidth;
+	int				biheight;
+	unsigned short	biplanes;
+	unsigned short	bibitcount;
+	unsigned int	bicompression;
+	unsigned int	bisizeimage;
+	int				bixpelspermeter;
+	int				biypelspermeter;
+	unsigned int	biclrused;
 }				t_bmp;
 
-#pragma pack(pop)
- 
+# pragma pack(pop)
+
 typedef struct	s_set
 {
 	void		*mlx_ptr;
@@ -211,22 +208,22 @@ typedef struct	s_set
 	int			jump_end;
 	int			map1;
 	int**		map2;
-	char*		S_tex;
-	char*		W_tex;
-	char*		N_tex;
-	char*		E_tex;
-	char*		SPR_tex;
+	char*		s_tex;
+	char*		w_tex;
+	char*		n_tex;
+	char*		e_tex;
+	char*		spr_tex;
 	char*		map_path;
-	int		save_flag;
-	int			F_corl;
-	int			S_corl;
+	int			save_flag;
+	int			f_corl;
+	int			s_corl;
 	double		life;
 	int			time;
 	int			collision;
 	int			next_stage;
 	double		olddir_x;
 	double		olddir_y;
-	double		oldplane_x;		
+	double		oldplane_x;
 	t_img		img;
 	t_point		p;
 	t_spr_cast	spr;

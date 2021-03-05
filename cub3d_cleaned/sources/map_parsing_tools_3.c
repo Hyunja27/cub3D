@@ -6,11 +6,17 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 21:15:21 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:21:14 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void		exit_cub3d(void)
+{
+	system("leaks cub3D");
+	exit(0);
+}
 
 void		get_fc_2(t_set *set, int kind, char *line)
 {

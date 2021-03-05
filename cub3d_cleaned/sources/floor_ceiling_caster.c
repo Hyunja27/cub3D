@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 00:26:38 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 20:24:38 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:06:57 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	fc_insert(t_set *s, int y, int re_y)
 {
-	s->flr.rayDirX0 = s->p.dirX - s->p.planeX;
-	s->flr.rayDirY0 = s->p.dirY - s->p.planeY;
-	s->flr.rayDirX1 = s->p.dirX + s->p.planeX;
-	s->flr.rayDirY1 = s->p.dirY + s->p.planeY;
+	s->flr.raydirx0 = s->p.dirx - s->p.planex;
+	s->flr.raydiry0 = s->p.diry - s->p.planey;
+	s->flr.raydirx1 = s->p.dirx + s->p.planex;
+	s->flr.raydiry1 = s->p.diry + s->p.planey;
 	s->flr.center = (y - s->minfo.s_height / 2) + (s->updown * 2);
 	s->flr.center *= y < re_y ? -1 : 1;
-	s->flr.posZ = 0.5 * s->minfo.s_height;
-	s->flr.rowDistance = s->flr.posZ / s->flr.center;
-	s->flr.floorStepX = s->flr.rowDistance * \
-	(s->flr.rayDirX1 - s->flr.rayDirX0) / s->minfo.s_width;
-	s->flr.floorStepY = s->flr.rowDistance * \
-	(s->flr.rayDirY1 - s->flr.rayDirY0) / s->minfo.s_width;
-	s->flr.floorX = s->p.posX + s->flr.rowDistance * s->flr.rayDirX0;
-	s->flr.floorY = s->p.posY + s->flr.rowDistance * s->flr.rayDirY0;
+	s->flr.posz = 0.5 * s->minfo.s_height;
+	s->flr.rowdistance = s->flr.posz / s->flr.center;
+	s->flr.floorstepx = s->flr.rowdistance * \
+	(s->flr.raydirx1 - s->flr.raydirx0) / s->minfo.s_width;
+	s->flr.floorstepy = s->flr.rowdistance * \
+	(s->flr.raydiry1 - s->flr.raydiry0) / s->minfo.s_width;
+	s->flr.floorx = s->p.posx + s->flr.rowdistance * s->flr.raydirx0;
+	s->flr.floory = s->p.posy + s->flr.rowdistance * s->flr.raydiry0;
 }
 
 void	texture_input(t_set *s, int *tex, int texnum)
@@ -48,14 +48,14 @@ void	fc_kind(t_set *s, int y, int i, int re_y)
 	if (re_y <= y)
 	{
 		if (s->minfo.f_kind)
-			texture_input(s, &s->tex.floorTexture, 8);
+			texture_input(s, &s->tex.floortexture, 8);
 		else
 			s->tex.color = s->minfo.floor;
 	}
 	else
 	{
 		if (s->minfo.c_kind)
-			texture_input(s, &s->tex.ceilingTexture, 10);
+			texture_input(s, &s->tex.ceilingtexture, 10);
 		else
 			s->tex.color = s->minfo.ceiling;
 	}
@@ -83,11 +83,11 @@ void	carl_fc(t_set *s)
 		while (i < s->minfo.s_width)
 		{
 			s->flr.tx = (int)(s->img.img_width * \
-			(s->flr.floorX - (int)(s->flr.floorX))) & (s->img.img_width - 1);
+			(s->flr.floorx - (int)(s->flr.floorx))) & (s->img.img_width - 1);
 			s->flr.ty = (int)(s->img.img_height * \
-			(s->flr.floorY - (int)(s->flr.floorY))) & (s->img.img_height - 1);
-			s->flr.floorX += s->flr.floorStepX;
-			s->flr.floorY += s->flr.floorStepY;
+			(s->flr.floory - (int)(s->flr.floory))) & (s->img.img_height - 1);
+			s->flr.floorx += s->flr.floorstepx;
+			s->flr.floory += s->flr.floorstepy;
 			fc_kind(s, y, i, re_y);
 			i++;
 		}

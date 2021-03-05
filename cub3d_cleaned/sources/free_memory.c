@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 20:23:50 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 18:37:57 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:00:40 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	free_memory(t_set *set)
 	while (i < set->minfo.m_height)
 		free(set->map2[i++]);
 	free(set->map2);
-	free(set->S_tex);
-	free(set->W_tex);
-	free(set->N_tex);
-	free(set->E_tex);
-	free(set->SPR_tex);
+	free(set->s_tex);
+	free(set->w_tex);
+	free(set->n_tex);
+	free(set->e_tex);
+	free(set->spr_tex);
 	free(set->minfo.no_path);
 	free(set->minfo.so_path);
 	free(set->minfo.we_path);

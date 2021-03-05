@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:51:24 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 17:02:30 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:19:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int		make_darker(int color, int size);
 void	updown_protect(t_set *s);
 void	collision_damage(t_set *s, double *pos, double m);
 void	jump_door(t_set *s);
+void	exit_cub3d(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 20:58:31 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 17:57:29 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 15:57:02 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	parse_draw_map(t_set *s)
 	int b;
 
 	draw_all_rect(s);
-	i = s->p.posX * MAP_BOX_SIZE;
-	j = s->p.posY * MAP_BOX_SIZE;
+	i = s->p.posx * MAP_BOX_SIZE;
+	j = s->p.posy * MAP_BOX_SIZE;
 	a = -1;
 	while (++a < 2)
 	{

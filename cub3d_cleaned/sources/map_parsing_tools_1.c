@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/04 22:42:46 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 15:49:43 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void	change_map(t_set *set, int **map, char *temp_map, int i)
 		temp_map[j] == 'S' || temp_map[j] == 'N')
 		{
 			set_pos(set, temp_map[j]);
-			set->p.posX = i;
-			set->p.posY = j;
+			set->p.posx = i;
+			set->p.posy = j;
 			temp_map[j] = '0';
 		}
 		(*map)[j] = temp_map[j] == ' ' ? -1 : temp_map[j] - '0';

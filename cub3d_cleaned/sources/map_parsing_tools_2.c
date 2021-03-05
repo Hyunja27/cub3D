@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:57:03 by spark             #+#    #+#             */
-/*   Updated: 2021/03/05 00:36:58 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:11:26 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	dir_setter(t_set *s, int x, int y)
 {
-	s->p.dirX = x;
-	s->p.dirY = y;
+	s->p.dirx = x;
+	s->p.diry = y;
 }
 
 void	set_pos(t_set *set, char pos)
@@ -23,26 +23,26 @@ void	set_pos(t_set *set, char pos)
 	if (pos == 'E')
 	{
 		dir_setter(set, 0, 1);
-		set->p.planeX = 0.66;
-		set->p.planeY = 0;
+		set->p.planex = 0.66;
+		set->p.planey = 0;
 	}
 	if (pos == 'W')
 	{
 		dir_setter(set, 0, -1);
-		set->p.planeX = -0.66;
-		set->p.planeY = 0;
+		set->p.planex = -0.66;
+		set->p.planey = 0;
 	}
 	if (pos == 'S')
 	{
 		dir_setter(set, 1, 0);
-		set->p.planeX = 0;
-		set->p.planeY = -0.66;
+		set->p.planex = 0;
+		set->p.planey = -0.66;
 	}
 	if (pos == 'N')
 	{
 		dir_setter(set, -1, 0);
-		set->p.planeX = 0;
-		set->p.planeY = 0.66;
+		set->p.planex = 0;
+		set->p.planey = 0.66;
 	}
 }
 

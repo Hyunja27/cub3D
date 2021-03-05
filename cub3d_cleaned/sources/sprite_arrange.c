@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 21:53:02 by spark             #+#    #+#             */
-/*   Updated: 2021/02/22 22:03:27 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 15:42:17 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	arrange_sprite(t_set *s)
 	i = -1;
 	while (++i < s->minfo.num_sprite - 1)
 	{
-		max = s->spr.spriteDistance[i];
+		max = s->spr.spritedistance[i];
 		j = i;
 		while (++j < s->minfo.num_sprite)
 		{
-			if (max <= s->spr.spriteDistance[j])
+			if (max <= s->spr.spritedistance[j])
 			{
-				max = s->spr.spriteDistance[j];
-				tmp = s->spr.spriteOrder[i];
-				s->spr.spriteOrder[i] = s->spr.spriteOrder[j];
-				s->spr.spriteOrder[j] = tmp;
-				dis_tmp = s->spr.spriteDistance[i];
-				s->spr.spriteDistance[i] = s->spr.spriteDistance[j];
-				s->spr.spriteDistance[j] = dis_tmp;
+				max = s->spr.spritedistance[j];
+				tmp = s->spr.spriteorder[i];
+				s->spr.spriteorder[i] = s->spr.spriteorder[j];
+				s->spr.spriteorder[j] = tmp;
+				dis_tmp = s->spr.spritedistance[i];
+				s->spr.spritedistance[i] = s->spr.spritedistance[j];
+				s->spr.spritedistance[j] = dis_tmp;
 			}
 		}
 	}

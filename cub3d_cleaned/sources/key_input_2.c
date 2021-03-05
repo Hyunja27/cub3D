@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 22:05:20 by spark             #+#    #+#             */
-/*   Updated: 2021/03/05 14:59:10 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:20:18 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int			key_press(int keycode, t_set *set)
 		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
 		free_memory(set);
-		exit(0);
+		exit_cub3d();
+		// exit(0);
 	}
 	if (keycode == P_KEY)
 	{
@@ -52,7 +53,8 @@ int			key_press(int keycode, t_set *set)
 		mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
 		mlx_destroy_window(set->mlx_ptr, set->win_ptr);
 		free_memory(set);
-		exit(0);
+		exit_cub3d();
+		// exit(0);
 	}
 	return (key_press_2(keycode, set));
 }
@@ -107,5 +109,6 @@ int			key_exit(t_set *set)
 	mlx_destroy_image(set->mlx_ptr, set->img.img_ptr);
 	mlx_destroy_window(set->mlx_ptr, set->win_ptr);
 	free_memory(set);
+	// exit_cub3d();
 	exit(0);
 }

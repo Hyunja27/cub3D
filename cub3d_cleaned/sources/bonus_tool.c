@@ -6,7 +6,7 @@
 /*   By: spark <spark@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 19:55:00 by spark             #+#    #+#             */
-/*   Updated: 2021/03/03 23:39:48 by spark            ###   ########.fr       */
+/*   Updated: 2021/03/05 16:04:41 by spark            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	secret_check(t_set *s)
 {
 	int		tmp;
 
-	tmp = (TEX_HEIGHT) * (s->tex.texY - (s->door * 2)) + s->tex.texX;
+	tmp = (TEX_HEIGHT) * (s->tex.texy - (s->door * 2)) + s->tex.texx;
 	s->tex.color = s->p.texture[s->tex.texture_kind][tmp];
 	if (s->door == 28)
 		s->map2[s->p.hid_x][s->p.hid_y] = 0;
