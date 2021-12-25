@@ -3,7 +3,7 @@ SO ./img/wall_s.xpm
 WE ./img/wall_w.xpm
 EA ./img/wall_e.xpm
 
-R 960 740
+R 1280 940
 S ./img/2.xpm
 F ./img/wood.xpm
 C ./img/wood.xpm
